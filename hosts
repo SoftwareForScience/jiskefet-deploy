@@ -1,0 +1,5 @@
+[webservers]
+vm-jiskefet-api
+
+[dbservers]
+vm-jiskefet-db
