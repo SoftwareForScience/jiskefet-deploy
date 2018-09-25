@@ -1,0 +1,14 @@
+- name: create jiskefet-api user
+  user:
+    name: jiskefet-api
+    password: '$6$DEav2edxHDzuWWjG$O0Fd7TPcUDOpMORgEYlrI2QlbNlt8MOA./n9OG0XCI0ik7vPoXLj5DJopMr0pOtZsVXrc2ScFD8AdZlOJ/pFx/'
+    state: present
+    shell: /bin/bash
+    system: no
+    createhome: yes
+    home: /var/lib/jiskefet
+
+- name: install git
+  yum:
+    name: git
+    state: present

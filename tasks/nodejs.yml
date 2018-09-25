@@ -1,0 +1,22 @@
+- name: Node.js | Get script
+  get_url:
+    url: "https://rpm.nodesource.com/setup_10.x"
+    dest: "{{ temp_folder }}/nodejs.sh"
+
+- name: Node.js | Set execution permission to script
+  file:
+    path: "{{ temp_folder }}/nodejs.sh"
+    mode: "u+x"
+
+- name: Node.js | Execute installation script
+  shell: "{{ temp_folder }}/nodejs.sh"
+
+- name: Node.js | Remove installation script
+  file:
+    path: "{{ temp_folder }}/nodejs.sh"
+    state: absent
+
+- name: Node.js | Install Node.js
+  yum:
+    name: nodejs
+    state: present

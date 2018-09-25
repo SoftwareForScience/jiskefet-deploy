@@ -1,3 +1,10 @@
+# Quick start:
+Install roles from Ansible Galaxy:
+`$ ansible-galaxy install -r requirements.yml`
+
+
+---
+
 ```YML
 ansible.configure         # configuration file for ansible
 hosts                     # list of hosts (aliases)

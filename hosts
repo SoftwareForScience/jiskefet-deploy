@@ -2,4 +2,4 @@
 vm-jiskefet-api
 
 [dbservers]
-vm-jiskefet-db
+# vm-jiskefet-db
