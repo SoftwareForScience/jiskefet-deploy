@@ -1,0 +1,11 @@
+---
+- name: Create an unpriviledged user
+  user:
+    name: jiskefet-api
+    password: '$6$SYwVNQ2ajBjoFe5H$Na3/QxVO86JxWwYY3v6tDZsRUMqPOKN2R8cd8JYtipzzlzbQOPtKfhKlsULYDgS6ywy8mfLAXAbiOkGqZxNlL1'
+    state: present
+    shell: /bin/bash
+    system: no
+    createhome: yes
+    home: /var/lib/jiskefet
+...
