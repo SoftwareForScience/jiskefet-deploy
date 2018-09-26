@@ -1,3 +1,4 @@
+---
 - name: create jiskefet-api user
   user:
     name: jiskefet-api
@@ -7,8 +8,4 @@
     system: no
     createhome: yes
     home: /var/lib/jiskefet
-
-- name: install git
-  yum:
-    name: git
-    state: present
+...

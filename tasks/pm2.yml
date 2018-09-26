@@ -1,0 +1,30 @@
+---
+- name: install "pm2" node.js package
+  npm:
+    name: pm2
+    global: yes
+  become: true
+  become_method: su
+  become_user: root
+
+- name: install "pm2 typescript interperter"
+  command: pm2 install typescript
+  become: true
+  become_method: su
+  become_user: root
+
+- name: list ports to see if proxy is running
+  command: ss -ntl
+  register: out
+
+- debug: var=out.stdout_lines
+
+- name: go to project directory and start project using pm2
+  npm: 
+    path: "{{ path_to_api }}"
+
+- name: go to project directory and start project using pm2
+  command: pm2 start -i max npm -- run start
+  args:
+    chdir: "{{ path_to_api }}"
+...

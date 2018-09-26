@@ -4,34 +4,47 @@
 - name: apply common configuration to all nodes
   hosts: all
   remote_user: root
+  tasks:
+
+    # Create jiskefet-api user
+    - include: tasks/create-jiskefet-user.yml
 
   roles:
     - common
 
 - name: configure and deploy the webservers and application code
   hosts: webservers
-  remote_user: root
+  become_user: jiskefet-api
+  become: yes
+  vars_files:
+    - vars/variables.yml
   vars:
     temp_folder: /tmp
   tasks:
-    # Install prerequisites
-    - include: tasks/prerequisites.yml
+    
+    # Install git
+    - include: tasks/git.yml
 
     # Install Node.js
     - include: tasks/nodejs.yml
 
-    # Install nginx
+    # Install and run nginx
     - include: tasks/nginx.yml
 
-  roles:
-    - web
+    # # Install and run pm2
+    - include: tasks/pm2.yml
+
+#   roles:
+#     - web
 
 # - name: deploy MySQL and configure the databases
 #   hosts: dbservers
-#
+#   remote_user: jiskefet-api
+#   tasks:
+    
+#     # Install MySql (MariaDB)
+#     - include: tasks/mysql.yml
+
 #   roles:
 #     - db
-#
-#
-#
-...
+# ...

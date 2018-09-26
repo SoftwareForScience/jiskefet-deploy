@@ -1,9 +1,3 @@
-# Quick start:
-Install roles from Ansible Galaxy:
-`$ ansible-galaxy install -r requirements.yml`
-
----
-
 # Directory Layout
 See [playbooks best practices: content organization](https://docs.ansible.com/ansible/2.5/user_guide/playbooks_best_practices.html#content-organization) for the recommended ansible directory layout, which the layout below is based on.
 

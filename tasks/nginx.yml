@@ -1,3 +1,4 @@
+---
 - name: Add epel-release repo
   yum:
     name: epel-release
@@ -8,7 +9,40 @@
     name: nginx
     state: present
 
+- name: Make nginx directory
+  file: 
+    path: /etc/nginx/sites-enabled
+    state: directory
+
+- name: Copy proxy.conf from local to remote
+  copy:
+    src: proxy.conf
+    dest: /etc/nginx/sites-enabled/proxy.conf
+  become: true
+  become_method: su
+  become_user: root
+
+# - name: Start/reload the proxy.conf
+#   command: nginx -s reload
+#   become: true
+#   become_method: su
+#   become_user: root
+
+- name: Test nginx config
+  command: nginx -T
+  become: true
+  become_method: su
+  become_user: root
+
 - name: Start NGiNX
   service:
     name: nginx
     state: started
+
+- name: list ports to see if proxy is running
+  command: ss -ntl
+  register: out
+
+- debug: var=out.stdout_lines
+    
+...
