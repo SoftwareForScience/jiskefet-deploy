@@ -1,5 +1,7 @@
 ---
 - name: install git
+  become: yes
+  become_user: root
   yum:
     name: git
     state: present

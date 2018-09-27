@@ -12,30 +12,30 @@
   roles:
     - common
 
-- name: configure and deploy the webservers and application code
-  hosts: webservers
-  become_user: jiskefet-api
-  become: yes
-  vars_files:
-    - vars/variables.yml
-  vars:
-    temp_folder: /tmp
-  tasks:
+# - name: configure and deploy the webservers and application code
+#   hosts: webservers
+#   become_user: jiskefet-api
+#   become: yes
+#   vars_files:
+#     - vars/variables.yml
+#   vars:
+#     temp_folder: /tmp
+#   tasks:
     
-    # Install git
-    - include: tasks/git.yml
+#     # Install git
+#     - include: tasks/git.yml
 
-    # Install Node.js
-    - include: tasks/nodejs.yml
+#     # Install Node.js
+#     - include: tasks/nodejs.yml
 
-    # Install and run nginx
-    - include: tasks/nginx.yml
+#     # Install and run nginx
+#     - include: tasks/nginx.yml
 
-    # Install and run pm2
-    - include: tasks/pm2.yml
+#     # Install and run pm2
+#     - include: tasks/pm2.yml
 
-  roles:
-    - web
+#   roles:
+#     - web
 
 - name: deploy MySQL and configure the databases
   hosts: dbservers
