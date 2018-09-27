@@ -1,15 +1,21 @@
 ---
 - name: Add epel-release repo
+  become: yes
+  become_user: root
   yum:
     name: epel-release
     state: present
 
 - name: Ensure nginx is installed.
+  become: yes
+  become_user: root
   yum:
     name: nginx
     state: present
 
 - name: Make nginx directory
+  become: yes
+  become_user: root
   file: 
     path: /etc/nginx/sites-enabled
     state: directory
@@ -43,6 +49,8 @@
   become_user: root
 
 - name: Start NGiNX
+  become: true
+  become_user: root
   service:
     name: nginx
     state: started

@@ -1,3 +1,12 @@
+# Quick start
+
+- copy **files/ormconfig.json.example** as **files/ormconfig.json** and set your own values.
+- make sure you can connect to vm servers via  
+`$ ssh vm-jiskefet-api`  
+and  
+`$ ssh vm-jiskefet-db`
+- run playbook: `$ ansible-playbook site.yml`
+
 # Directory Layout
 See [playbooks best practices: content organization](https://docs.ansible.com/ansible/2.5/user_guide/playbooks_best_practices.html#content-organization) for the recommended ansible directory layout, which the layout below is based on.
 

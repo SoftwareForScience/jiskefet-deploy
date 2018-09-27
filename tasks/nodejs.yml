@@ -19,6 +19,8 @@
     state: absent
 
 - name: Node.js | Install Node.js
+  become: yes
+  become_user: root
   yum:
     name: nodejs
     state: present
