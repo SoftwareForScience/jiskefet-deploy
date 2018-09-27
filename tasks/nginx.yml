@@ -35,6 +35,8 @@
   become_user: root
 
 - name: Start NGiNX
+  become: true
+  become_user: root
   service:
     name: nginx
     state: started

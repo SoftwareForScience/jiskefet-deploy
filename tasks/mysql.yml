@@ -1,15 +1,34 @@
 --- # Install mariadb via ansible on centOS
-- name: get vars
+- name: Get variables
   include_vars: vars/variables.yml
+
 - name: Install MYSQL
+  become: true
+  become_user: root
   yum:
     name: mariadb-server #debian: mysql-server
     state: present
+
 - name: Install the Python MySQL Support Libraries
+  become: true
+  become_user: root
   yum: pkg=MySQL-python state=latest
-- name: start mysql server and enable it on reboot
+
+- name: Start mysql server and enable it on reboot
+  become: true
+  become_user: root
   service: name=mariadb state=started enabled=true #debian: mysql
-- name: update mysql root password for all root accounts
+
+- name: Remove test db if it exists
+  mysql_db: name=test state=absent
+
+- name: Remove all anonymous users
+  mysql_user: name='' host_all=yes state=absent
+
+- name: Output ansible hostname
+  debug: msg="Hostname is {{ ansible_hostname }}"
+
+- name: Update mysql root password for all root accounts
   mysql_user:
     name: root
     host: "{{ item }}"
@@ -23,9 +42,11 @@
     - 127.0.0.1
     - ::1
     - localhost
-- name: Copy the root credentials as .my.cnf file
-  template: src=root.cnf.j2 dest=~/.my.cnf mode=0600
-- name: Create a New Test DB called MyNewDB
+
+# - name: Copy the root credentials as .my.cnf file
+#   template: src=root.cnf.j2 dest=~/.my.cnf mode=0600
+
+- name: Create a New Test DB called jiskefet
   mysql_db: name=jiskefet state=present login_user=root login_password={{ mysql_root_password }}
       
 #

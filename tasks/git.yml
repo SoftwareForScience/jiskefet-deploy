@@ -4,7 +4,17 @@
     name: git
     state: present
 
-- git:
+- name: checkout jiskefet-api
+  git:
     repo: 'https://github.com/BastiaanReinalda/jiskefet-api.git'
     dest: /var/lib/jiskefet/jiskefet-api
+    force: yes
+
+- name: Copy ormconfig.json from local to remote
+  copy:
+    src: ormconfig.json
+    dest: /var/lib/jiskefet/jiskefet-api/ormconfig.json
+#   become: true
+#   become_method: su
+#   become_user: root
 ...
