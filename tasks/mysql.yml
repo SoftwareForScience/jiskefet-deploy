@@ -32,13 +32,15 @@
   become_user: root
   service: name=mariadb state=started enabled=true #debian: mysql
 
-- name: Remove test db if it exists
-  mysql_db: name=test state=absent
+# need to fix these
 
-- name: Remove all anonymous users
-  become: true
-  become_user: root
-  mysql_user: name='' host_all=yes state=absent
+# - name: Remove test db if it exists
+#   mysql_db: name=test state=absent
+
+# - name: Remove all anonymous users
+#   become: true
+#   become_user: root
+#   mysql_user: name='' host_all=yes state=absent
 
 - name: Output ansible hostname
   debug: msg="Hostname is {{ ansible_hostname }}"

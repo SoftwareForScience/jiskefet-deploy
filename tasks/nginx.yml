@@ -28,19 +28,19 @@
   become_method: su
   become_user: root
 
-- name: Set default port of nginx to an arbitrary port so port 80 is free
-  copy:
-    src: default
-    dest: /etc/nginx/sites-available/default
-  become: true
-  become_method: su
-  become_user: root
-
-# - name: Start/reload the proxy.conf
-#   command: nginx -s reload
+# - name: Set default port of nginx to an arbitrary port so port 80 is free
+#   copy:
+#     src: default
+#     dest: /etc/nginx/sites-available/default
 #   become: true
 #   become_method: su
 #   become_user: root
+
+- name: Start/reload the proxy.conf
+  command: nginx -s reload
+  become: true
+  become_method: su
+  become_user: root
 
 - name: Test nginx config
   command: nginx -T
