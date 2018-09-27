@@ -27,4 +27,10 @@
   command: pm2 start -i max npm -- run start
   args:
     chdir: "{{ path_to_api }}"
+
+- name: set pm2 to run on system startup
+  command: env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u jiskefet-api --hp /home/jiskefet-api
+  become: true
+  become_method: su
+  become_user: root
 ...
