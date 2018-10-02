@@ -20,17 +20,17 @@
 - debug: var=out.stdout_lines
 
 - name: go to project directory and start project using pm2
-  npm: 
-    path: "{{ path_to_api }}"
-
-- name: go to project directory and start project using pm2
   command: pm2 start -i max npm -- run start
   args:
-    chdir: "{{ path_to_api }}"
+    chdir: "/var/lib/jiskefet/jiskefet-api"
+
+- name: save current pm2 processes
+  command: pm2 save
 
 - name: set pm2 to run on system startup
-  command: env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u jiskefet-api --hp /home/jiskefet-api
+  command: env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u jiskefet-api --hp /var/lib/jiskefet
   become: true
   become_method: su
   become_user: root
+
 ...

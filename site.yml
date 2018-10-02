@@ -9,8 +9,8 @@
     # Create jiskefet-api user
     - include: tasks/create-jiskefet-user.yml
 
-  roles:
-    - common
+  # roles:
+  #   - common
 
 - name: configure and deploy the webservers and application code
   hosts: webservers
@@ -28,26 +28,32 @@
     # Install Node.js
     - include: tasks/nodejs.yml
 
+    # Do npm install
+    - include: tasks/npm.yml
+
     # Install and run nginx
     - include: tasks/nginx.yml
+
+    # Install MySql (MariaDB)
+    - include: tasks/mysql.yml
 
     # Install and run pm2
     - include: tasks/pm2.yml
 
-  roles:
-    - web
+  # roles:
+  #   - web
 
-- name: deploy MySQL and configure the databases
-  hosts: dbservers
-  become_user: jiskefet-api
-  become: yes
-  vars_files:
-    - vars/variables.yml
-  tasks:
+# - name: deploy MySQL and configure the databases
+#   hosts: dbservers
+#   become_user: jiskefet-api
+#   become: yes
+#   vars_files:
+#     - vars/variables.yml
+#   tasks:
     
-    # Install MySql (MariaDB)
-    - include: tasks/mysql.yml
+#     # Install MySql (MariaDB)
+#     - include: tasks/mysql.yml
 
-  roles:
-    - db
+#   roles:
+#     - db
 ...

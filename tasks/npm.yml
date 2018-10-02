@@ -1,0 +1,8 @@
+---
+- name: run npm install
+  become: yes
+  become_user: root
+  command: npm install
+  args:
+    chdir: "/var/lib/jiskefet/jiskefet-api"
+...
