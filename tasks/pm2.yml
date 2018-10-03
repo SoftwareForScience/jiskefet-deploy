@@ -19,6 +19,12 @@
 
 - debug: var=out.stdout_lines
 
+# # either create a new or copy the a local ecosystem.config.js for pm2
+# - name: go to project directory and generate an ecosystem.config.js
+#   command: pm2 init
+#   args:
+#     chdir: "/var/lib/jiskefet/jiskefet-api"
+
 - name: go to project directory and start project using pm2
   command: pm2 start -i max npm -- run start
   args:
