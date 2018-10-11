@@ -1,3 +1,10 @@
+# /*
+#  * Copyright (C) 2018 Amsterdam University of Applied Sciences (AUAS)
+#  *
+#  * This software is distributed under the terms of the
+#  * GNU General Public Licence version 3 (GPL) version 3,
+#  * copied verbatim in the file "LICENSE"
+#  */
 ---
 # This playbook deploys the whole application stack in this site.
 
@@ -8,9 +15,6 @@
 
     # Create jiskefet-api user
     - include: tasks/create-jiskefet-user.yml
-
-  # roles:
-  #   - common
 
 - name: configure and deploy the webservers and application code
   hosts: webservers
@@ -37,9 +41,6 @@
     # Install and run pm2
     - include: tasks/pm2.yml
 
-  # roles:
-  #   - web
-
 - name: deploy MySQL and configure the databases
   hosts: dbservers
   become_user: jiskefet-api
@@ -51,6 +52,4 @@
     # Install MySql (MariaDB)
     - include: tasks/mysql.yml
 
-#   roles:
-#     - db
 ...
