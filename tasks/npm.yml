@@ -1,8 +1,15 @@
 ---
-- name: run npm install
+- name: run npm install on jiskefet-api
   become: yes
   become_user: root
   command: npm install
   args:
     chdir: "/var/lib/jiskefet/jiskefet-api"
+
+- name: run npm install on jiskefet-ui
+  become: yes
+  become_user: root
+  command: npm install
+  args:
+    chdir: "/var/lib/jiskefet/jiskefet-ui"
 ...

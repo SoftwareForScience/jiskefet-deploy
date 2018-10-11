@@ -25,10 +25,20 @@
 #   args:
 #     chdir: "/var/lib/jiskefet/jiskefet-api"
 
-- name: go to project directory and start project using pm2
-  command: pm2 start -i max npm -- run start
+- name: go to jiskefet-ui project directory and start project using pm2
+  command: pm2 start -i 4 npm -- run start
   args:
     chdir: "/var/lib/jiskefet/jiskefet-api"
+
+- name: go to jiskefet folder and copy process.json
+  copy:
+    src: process.json
+    dest: /var/lib/jiskefet/process.json
+
+- name: start pm2 with process.json
+  command: pm2 start process.json
+  args:
+    chdir: "/var/lib/jiskefet"
 
 - name: save current pm2 processes
   command: pm2 save
