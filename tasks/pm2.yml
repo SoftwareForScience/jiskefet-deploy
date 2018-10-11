@@ -13,32 +13,24 @@
   become_method: su
   become_user: root
 
+- name: Copy ecosystem.config.js from local to remote
+  copy:
+    src: ecosystem.config.js
+    dest: /var/lib/jiskefet/ecosystem.config.js
+  become: true
+  become_method: su
+  become_user: root
+
+- name: go to jiskefet-ui project directory and start project using pm2
+  command: pm2 start ecosystem.config.js
+  args:
+    chdir: "/var/lib/jiskefet"
+
 - name: list ports to see if proxy is running
   command: ss -ntl
   register: out
 
 - debug: var=out.stdout_lines
-
-# # either create a new or copy the a local ecosystem.config.js for pm2
-# - name: go to project directory and generate an ecosystem.config.js
-#   command: pm2 init
-#   args:
-#     chdir: "/var/lib/jiskefet/jiskefet-api"
-
-- name: go to jiskefet-ui project directory and start project using pm2
-  command: pm2 start -i 4 npm -- run start
-  args:
-    chdir: "/var/lib/jiskefet/jiskefet-api"
-
-- name: go to jiskefet folder and copy process.json
-  copy:
-    src: process.json
-    dest: /var/lib/jiskefet/process.json
-
-- name: start pm2 with process.json
-  command: pm2 start process.json
-  args:
-    chdir: "/var/lib/jiskefet"
 
 - name: save current pm2 processes
   command: pm2 save
