@@ -5,6 +5,7 @@
 #  * GNU General Public Licence version 3 (GPL) version 3,
 #  * copied verbatim in the file "LICENSE"
 #  */
+
 ---
 - name: run npm install on jiskefet-api
   become: yes
@@ -17,6 +18,13 @@
   become: yes
   become_user: root
   command: npm install
+  args:
+    chdir: "/var/lib/jiskefet/jiskefet-ui"
+
+- name: run npm build on jiskefet-ui
+  become: yes
+  become_user: root
+  command: npm run build
   args:
     chdir: "/var/lib/jiskefet/jiskefet-ui"
 ...

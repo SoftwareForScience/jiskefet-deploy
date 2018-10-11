@@ -5,6 +5,7 @@
 #  * GNU General Public Licence version 3 (GPL) version 3,
 #  * copied verbatim in the file "LICENSE"
 #  */
+
 --- # Install mariadb via ansible on centOS
 - name: Get variables
   include_vars: vars/variables.yml

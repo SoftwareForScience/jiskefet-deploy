@@ -5,6 +5,7 @@
 #  * GNU General Public Licence version 3 (GPL) version 3,
 #  * copied verbatim in the file "LICENSE"
 #  */
+
 ---
 - name: install git
   become: yes
@@ -18,7 +19,7 @@
     repo: "https://github.com/BastiaanReinalda/jiskefet-api.git"
     dest: /var/lib/jiskefet/jiskefet-api
     force: yes
-    version: feature/relative-paths
+    version: develop
 
 - name: checkout jiskefet-ui
   git:
