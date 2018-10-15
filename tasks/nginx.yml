@@ -1,15 +1,21 @@
 ---
 - name: Add epel-release repo
+  become: yes
+  become_user: root
   yum:
     name: epel-release
     state: present
 
 - name: Ensure nginx is installed.
+  become: yes
+  become_user: root
   yum:
     name: nginx
     state: present
 
 - name: Make nginx directory
+  become: yes
+  become_user: root
   file: 
     path: /etc/nginx/sites-enabled
     state: directory
@@ -22,11 +28,19 @@
   become_method: su
   become_user: root
 
-# - name: Start/reload the proxy.conf
-#   command: nginx -s reload
+# - name: Set default port of nginx to an arbitrary port so port 80 is free
+#   copy:
+#     src: default
+#     dest: /etc/nginx/sites-available/default
 #   become: true
 #   become_method: su
 #   become_user: root
+
+- name: Start/reload the proxy.conf
+  command: nginx -s reload
+  become: true
+  become_method: su
+  become_user: root
 
 - name: Test nginx config
   command: nginx -T
@@ -35,6 +49,8 @@
   become_user: root
 
 - name: Start NGiNX
+  become: true
+  become_user: root
   service:
     name: nginx
     state: started

@@ -1,15 +1,53 @@
 --- # Install mariadb via ansible on centOS
-- name: get vars
+- name: Get variables
   include_vars: vars/variables.yml
-- name: Install MYSQL
-  yum:
-    name: mariadb-server #debian: mysql-server
-    state: present
-- name: Install the Python MySQL Support Libraries
-  yum: pkg=MySQL-python state=latest
-- name: start mysql server and enable it on reboot
+
+#
+- name: Add official MariaDB repository
+  become: yes
+  become_user: root
+  yum_repository:
+    name: MariaDB
+    description: Official MariaDB repository
+    baseurl: "http://yum.mariadb.org/10.1/centos7-amd64"
+    gpgkey: https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+    gpgcheck: true
+  tags: mariadb
+
+- name: Install packages
+  become: yes
+  become_user: root
+  package:
+    name: "{{ item }}"
+    state: installed
+  with_items: 
+    - MariaDB
+    - MariaDB-server
+    - MySQL-python
+  tags: mariadb
+#
+
+- name: Start mysql server and enable it on reboot
+  become: true
+  become_user: root
   service: name=mariadb state=started enabled=true #debian: mysql
-- name: update mysql root password for all root accounts
+
+# need to fix these
+
+# - name: Remove test db if it exists
+#   mysql_db: name=test state=absent
+
+# - name: Remove all anonymous users
+#   become: true
+#   become_user: root
+#   mysql_user: name='' host_all=yes state=absent
+
+- name: Output ansible hostname
+  debug: msg="Hostname is {{ ansible_hostname }}"
+
+- name: Update mysql root password for all root accounts
+  become: yes
+  become_user: root
   mysql_user:
     name: root
     host: "{{ item }}"
@@ -23,11 +61,24 @@
     - 127.0.0.1
     - ::1
     - localhost
-- name: Copy the root credentials as .my.cnf file
-  template: src=root.cnf.j2 dest=~/.my.cnf mode=0600
-- name: Create a New Test DB called MyNewDB
+    - "%"
+
+# - name: Copy the root credentials as .my.cnf file
+#   template: src=root.cnf.j2 dest=~/.my.cnf mode=0600
+
+- name: Create a New Test DB called jiskefet
   mysql_db: name=jiskefet state=present login_user=root login_password={{ mysql_root_password }}
-      
+
+- name: Add firewall exceptions
+  become: yes
+  become_user: root
+  command: firewall-cmd --permanent --add-service=mysql 
+
+- name: Reload firewall
+  become: yes
+  become_user: root
+  command: firewall-cmd --reload
+
 #
 #
 #templates/root.cnf.j2
