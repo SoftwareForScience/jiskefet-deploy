@@ -1,3 +1,4 @@
 vars/variables.yml
 files/ormconfig.json
 site.retry
+ansible.config.json

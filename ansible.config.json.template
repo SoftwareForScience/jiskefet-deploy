@@ -1,0 +1,19 @@
+{
+    "git_urls": {
+        "jiskefet_api": "https://github.com/",
+        "jiskefet_ui": "https://github.com/"
+    },
+    "database_config": {
+        "type": "mysql",
+        "host": "localhost",
+        "port": 3306,
+        "username": "",
+        "password": "",
+        "database": "",
+        "entities": [
+            "src/**/**.entity{.ts,.js}"
+        ],
+        "synchronize": true
+    },
+    "api_url_constant": "export const API_URL = 'http://localhost/api';"
+}
