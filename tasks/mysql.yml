@@ -7,10 +7,6 @@
 #  */
 
 --- # Install mariadb via ansible on centOS
-- name: Get variables
-  include_vars: vars/variables.yml
-
-#
 - name: Add official MariaDB repository
   become: yes
   become_user: root
@@ -57,11 +53,11 @@
   become: yes
   become_user: root
   mysql_user:
-    name: root
+    name: "{{ database_config.username }}"
     host: "{{ item }}"
-    password: "{{ mysql_root_password }}"
-    login_user: root
-    login_password: "{{ mysql_root_password }}"
+    password: "{{ database_config.password }}"
+    login_user: "{{ database_config.username }}"
+    login_password: "{{ database_config.password }}"
     check_implicit_admin: yes
     priv: "*.*:ALL,GRANT"
   with_items:
@@ -75,7 +71,7 @@
 #   template: src=root.cnf.j2 dest=~/.my.cnf mode=0600
 
 - name: Create a New Test DB called jiskefet
-  mysql_db: name=jiskefet state=present login_user=root login_password={{ mysql_root_password }}
+  mysql_db: name=jiskefet state=present login_user={{ database_config.username }} login_password={{ database_config.password }}
 
 - name: Add firewall exceptions
   become: yes

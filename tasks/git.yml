@@ -16,23 +16,25 @@
 
 - name: checkout jiskefet-api
   git:
-    repo: "https://github.com/BastiaanReinalda/jiskefet-api.git"
+    repo: "{{ git_urls.jiskefet_api }}"
     dest: /var/lib/jiskefet/jiskefet-api
     force: yes
     version: develop
 
 - name: checkout jiskefet-ui
   git:
-    repo: "https://github.com/BastiaanReinalda/jiskefet-ui.git"
+    repo: "{{ git_urls.jiskefet_ui }}"
     dest: /var/lib/jiskefet/jiskefet-ui
     force: yes
-    version: develop
+    version: feature/moved-folders
 
-- name: Copy ormconfig.json from local to remote
+- name: Change api url for jiskefet-ui
   copy:
-    src: ormconfig.json
+    dest: /var/lib/jiskefet/jiskefet-ui/src/app/constants.tsx
+    content: "{{ api_url_constant }}"
+
+- name: Create ormconfig.json file if it does not exist
+  copy:
     dest: /var/lib/jiskefet/jiskefet-api/ormconfig.json
-#   become: true
-#   become_method: su
-#   become_user: root
+    content: "{{ database_config }}"
 ...

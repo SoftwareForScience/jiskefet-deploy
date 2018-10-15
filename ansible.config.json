@@ -1,0 +1,19 @@
+{
+    "git_urls": {
+        "jiskefet_api": "https://github.com/BastiaanReinalda/jiskefet-api.git",
+        "jiskefet_ui": "https://github.com/BastiaanReinalda/jiskefet-ui.git"
+    },
+    "database_config": {
+        "type": "mysql",
+        "host": "192.168.253.152",
+        "port": 3306,
+        "username": "root",
+        "password": "admin1234",
+        "database": "jiskefet",
+        "entities": [
+            "src/**/**.entity{.ts,.js}"
+        ],
+        "synchronize": true
+    },
+    "api_url_constant": "export const API_URL = 'http://192.168.253.157/api/';"
+}
