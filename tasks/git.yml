@@ -1,3 +1,11 @@
+# /*
+#  * Copyright (C) 2018 Amsterdam University of Applied Sciences (AUAS)
+#  *
+#  * This software is distributed under the terms of the
+#  * GNU General Public Licence version 3 (GPL) version 3,
+#  * copied verbatim in the file "LICENSE"
+#  */
+
 ---
 - name: install git
   become: yes
@@ -8,9 +16,17 @@
 
 - name: checkout jiskefet-api
   git:
-    repo: 'https://github.com/BastiaanReinalda/jiskefet-api.git'
+    repo: "https://github.com/BastiaanReinalda/jiskefet-api.git"
     dest: /var/lib/jiskefet/jiskefet-api
     force: yes
+    version: develop
+
+- name: checkout jiskefet-ui
+  git:
+    repo: "https://github.com/BastiaanReinalda/jiskefet-ui.git"
+    dest: /var/lib/jiskefet/jiskefet-ui
+    force: yes
+    version: develop
 
 - name: Copy ormconfig.json from local to remote
   copy:
