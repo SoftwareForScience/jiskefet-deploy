@@ -37,7 +37,7 @@ python | 2.7.5
 
 Component | Requirement 
 --- | --- 
-Minimum CPU | 2 cores   
+CPU | Minimum 2 cores   
 
 **Software**  
 None
