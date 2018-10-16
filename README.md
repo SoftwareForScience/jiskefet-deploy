@@ -43,3 +43,9 @@ CPU | Minimum 2 cores
 None
 
 ### **DB machine specifications**
+
+
+## Deployment diagram
+![alt text][dd]
+
+[dd]: https://github.com/misharigot/sfs-ansible/blob/develop/Deployment_Diagram_Jiskefet.png "Deployment diagram"
