@@ -5,7 +5,7 @@
     },
     "database_config": {
         "type": "mysql",
-        "host": "localhost",
+        "host": "",
         "port": 3306,
         "username": "",
         "password": "",
@@ -15,5 +15,5 @@
         ],
         "synchronize": true
     },
-    "api_url_constant": "export const API_URL = 'http://localhost/api';"
+    "api_url_constant": "export const API_URL = 'http://192.168.56.107/api/';"
 }

@@ -1,0 +1,36 @@
+# /*
+#  * Copyright (C) 2018 Amsterdam University of Applied Sciences (AUAS)
+#  *
+#  * This software is distributed under the terms of the
+#  * GNU General Public Licence version 3 (GPL) version 3,
+#  * copied verbatim in the file "LICENSE"
+#  */
+
+---
+- name: Change api files to remote
+  unarchive:
+    owner: jiskefet-api
+    src: ../jiskefet-api.tar
+    dest: /var/lib/jiskefet
+  become: true
+  become_method: su
+  become_user: root
+
+- name: Copy ui files to remote
+  unarchive:
+    owner: jiskefet-api
+    src: ../jiskefet-ui.tar
+    dest: /var/lib/jiskefet
+  become: true
+  become_method: su
+  become_user: root
+
+- name: Change api url for jiskefet-ui
+  copy:
+    dest: /var/lib/jiskefet/jiskefet-ui/src/app/constants.tsx
+    content: "{{ api_url_constant }}"
+
+- name: Create ormconfig.json file if it does not exist
+  copy:
+    dest: /var/lib/jiskefet/jiskefet-api/ormconfig.json
+    content: "{{ database_config }}"
