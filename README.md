@@ -9,7 +9,7 @@ This is the **Ansible playbook** to deploy the Jiskefet project.
 The **front-end UI** can be found here: https://github.com/BastiaanReinalda/jiskefet-ui  
 And the **back-end API** can be found here: https://github.com/BastiaanReinalda/jiskefet-api  
 
-## Quick start
+## Quick Start
 
 - copy **files/ormconfig.json.example** as **files/ormconfig.json** and set your own values.
 - make sure you can connect to vm servers via  
