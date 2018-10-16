@@ -21,7 +21,7 @@ and
 For more detailed instructions on setting up this project please refer to [these instructions.](https://github.com/misharigot/sfs-ansible/blob/develop/Instruction.md) 
 
 ## System requirements
-**Host machine specifications**  
+### **Host machine specifications**  
 **Hardware**  
 None  
 **Software**  
@@ -32,7 +32,7 @@ ansible | 2.4.2.0
 ansible-playbook | 2.4.2.0  
 python | 2.7.5   
 
-**API and UI machine specifications**  
+### **API and UI machine specifications**  
 **Hardware**  
 
 Component | Requirement 
@@ -42,4 +42,4 @@ Minimum CPU | 2 cores
 **Software**  
 None
 
-**DB machine specifications**
+### **DB machine specifications**
