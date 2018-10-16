@@ -18,6 +18,8 @@ and
 `$ ssh vm-jiskefet-db`
 - run playbook: `$ ansible-playbook site.yml`
 
+For more detailed instructions on setting up this project please refer to [these instructions.](https://github.com/misharigot/sfs-ansible/blob/develop/Instruction.md) 
+
 ## Directory Layout
 See [playbooks best practices: content organization](https://docs.ansible.com/ansible/2.5/user_guide/playbooks_best_practices.html#content-organization) for the recommended ansible directory layout, which the layout below is based on.
 
@@ -40,3 +42,4 @@ roles/
     db/                   # same kind of structure as "common" was above, done for the db role
     web/                  # same kind of structure as "common" was above, done for the web role
 ```
+## System requirements
