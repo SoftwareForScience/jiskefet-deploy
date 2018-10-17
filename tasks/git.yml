@@ -29,9 +29,11 @@
     version: feature/moved-folders
 
 - name: Change api url for jiskefet-ui
-  copy:
-    dest: /var/lib/jiskefet/jiskefet-ui/src/app/constants.tsx
-    content: "{{ api_url_constant }}"
+  lineinfile:
+    path: /var/lib/jiskefet/jiskefet-ui/src/app/constants.tsx
+    regexp: '^(.*)export const API_URL =(.*)$'
+    line: "export const API_URL = {{ api_url_constant }}"
+    backrefs: yes
 
 - name: Create ormconfig.json file if it does not exist
   copy:

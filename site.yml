@@ -28,10 +28,10 @@
   tasks:
     
     # Install git
-    # - include: tasks/git.yml
+    - include: tasks/git.yml
 
-    # Unarchive projects
-    - include: tasks/unarchive.yml
+    # # Unarchive projects
+    # - include: tasks/unarchive.yml
 
     # Install Node.js
     - include: tasks/nodejs.yml
