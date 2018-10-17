@@ -17,7 +17,7 @@ and
 `$ ssh vm-jiskefet-db`
 - run playbook: `$ ansible-playbook site.yml`
 
-For more detailed instructions on setting up this project please refer to [these instructions.](https://github.com/misharigot/sfs-ansible/blob/develop/Instruction.md) 
+For more detailed instructions on setting up this project please refer to [these instructions.](https://github.com/misharigot/sfs-ansible/blob/develop/Instructions.md) 
 
 ## System requirements  
 ### **Host machine specifications**  
