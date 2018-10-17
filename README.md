@@ -52,6 +52,7 @@ CentOS | Linux 7 (Core)
 Name | Version 
 --- | --- 
 CentOS | Linux 7 (Core) 
+MariaDB | 10.1.36-MariaDB
 
 
 ## Deployment diagram
