@@ -9,6 +9,15 @@ The **use_local_repository** variable determines for ansible which repositories 
 "use_local_repository": "yes",
 ```
 
+Be sure to have the \*.tar files in the root of jiskefet-project-v\*\* folder. The hierarchy should be:
+```
+jiskefet-project-v**/
+|
+|–- sfs-ansible/
+|–- jiskefet-api.tar
+|–- jiskefet-ui.tar
+```
+
 Change the github urls to the repositories that need to be used. The URL's do not have to be changed if the "use_local_repository" variable is set to "yes":
 ```json
 "remote_repository_url": {
