@@ -11,7 +11,6 @@ And the **back-end API** can be found here: https://github.com/BastiaanReinalda/
 
 ## Quick Start
 
-- copy **files/ormconfig.json.example** as **files/ormconfig.json** and set your own values.
 - make sure you can connect to vm servers via  
 `$ ssh vm-jiskefet-api`  
 and  
