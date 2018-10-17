@@ -1,7 +1,7 @@
 # Instructions
 ### 1. Configuration file
 To configure the ansible scripts the file ansible.config.json needs to be created in the root of the ansible directory.
-A template to this file has already been created. In this configuration file a few changed need to be made:
+A template to this file has already been created called ansible.config.json.template. In this configuration file a few changed need to be made:
 
 The **use_local_repository** variable determines for ansible which repositories to deploy. By filling in “yes”, ansible will deploy the supplied *.tar files. By filling in “no”, ansible will clone the projects from the urls:
 
@@ -45,7 +45,12 @@ To make a connection to the servers ssh needs to be configured on the machine by
 $ ssh-keygen  -f jiskefet
 Press ENTER twice to set it as default without a passphrase.
 ```
-After that change the ssh config by executing the following command:
+Navigate to the .ssh folder:
+```
+cd ~/.ssh
+```
+
+After that, change the ssh config by executing the following command:
 ```
 $ vi config
 ```
