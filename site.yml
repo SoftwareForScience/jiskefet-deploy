@@ -22,13 +22,18 @@
   become_user: jiskefet-api
   become: yes
   vars_files:
-    - vars/variables.yml
+    - ansible.config.json
   vars:
     temp_folder: /tmp
   tasks:
     
     # Install git
     - include: tasks/git.yml
+      when: use_local_repository == "no"
+
+    # Unarchive projects
+    - include: tasks/unarchive.yml
+      when: use_local_repository == "yes"
 
     # Install Node.js
     - include: tasks/nodejs.yml
@@ -47,7 +52,7 @@
   become_user: jiskefet-api
   become: yes
   vars_files:
-    - vars/variables.yml
+    - ansible.config.json
   tasks:
     
     # Install MySql (MariaDB)

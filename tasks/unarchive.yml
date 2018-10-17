@@ -1,0 +1,29 @@
+# /*
+#  * Copyright (C) 2018 Amsterdam University of Applied Sciences (AUAS)
+#  *
+#  * This software is distributed under the terms of the
+#  * GNU General Public Licence version 3 (GPL) version 3,
+#  * copied verbatim in the file "LICENSE"
+#  */
+
+---
+- name: Unarchive api files to remote
+  unarchive:
+    owner: jiskefet-api
+    src: ../jiskefet-api.tar
+    dest: /var/lib/jiskefet
+  become: true
+  become_method: su
+  become_user: root
+
+- name: Unarchive ui files to remote
+  unarchive:
+    owner: jiskefet-api
+    src: ../jiskefet-ui.tar
+    dest: /var/lib/jiskefet
+  become: true
+  become_method: su
+  become_user: root
+
+- include: change-env-variables.yml
+...
