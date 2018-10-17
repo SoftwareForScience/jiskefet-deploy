@@ -11,11 +11,14 @@ And the **back-end API** can be found here: https://github.com/BastiaanReinalda/
 
 ## Quick Start
 
-- make sure you can connect to vm servers via  
+- Copy the *ansible.config.json.template* as *ansible.config.json*
+- Change the variables to the appropriate values
+- Make sure you can connect to vm servers via  
 `$ ssh vm-jiskefet-api`  
 and  
 `$ ssh vm-jiskefet-db`
-- run playbook: `$ ansible-playbook site.yml`
+- Run playbook: `$ ansible-playbook site.yml`
+- Open a browser and navigate to http://*YOUR_IP_HERE*/api/doc/ to see the swagger documentation of the project.
 
 For more detailed instructions on setting up this project please refer to [these instructions.](https://github.com/misharigot/sfs-ansible/blob/develop/Instructions.md) 
 
