@@ -28,7 +28,7 @@ credentials for the database and the **database** variable to a database name (f
   "synchronize": true
 }
 ```
-*Other variables are not to be changed*
+*Other variables are not to be changed.*
 
 ### 2. Setting up ssh
 To make a connection to the servers ssh needs to be configured on the machine by executing the following command:
@@ -56,7 +56,7 @@ Host jiskefet-db
     Port 22
     IdentityFile ~/.ssh/jiskefet
 ```
-*Do NOT forget to change the ip addresses in the config file*
+*Do NOT forget to change the ip addresses in the config file.*
 
 Execute the following commands to copy the ssh keys to the servers:
 ```
