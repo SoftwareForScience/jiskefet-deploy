@@ -35,17 +35,7 @@
   become: true
   become_user: root
   service: name=mariadb state=started enabled=true #debian: mysql
-
-# need to fix these
-
-# - name: Remove test db if it exists
-#   mysql_db: name=test state=absent
-
-# - name: Remove all anonymous users
-#   become: true
-#   become_user: root
-#   mysql_user: name='' host_all=yes state=absent
-
+  
 - name: Output ansible hostname
   debug: msg="Hostname is {{ ansible_hostname }}"
 
@@ -67,9 +57,6 @@
     - localhost
     - "%"
 
-# - name: Copy the root credentials as .my.cnf file
-#   template: src=root.cnf.j2 dest=~/.my.cnf mode=0600
-
 - name: Create a new DB called {{ database_config.database }}
   mysql_db: name={{ database_config.database }} state=present login_user={{ database_config.username }} login_password={{ database_config.password }}
 
@@ -82,12 +69,4 @@
   become: yes
   become_user: root
   command: firewall-cmd --reload
-
-#
-#
-#templates/root.cnf.j2
-#
-#[client]
-#user=root
-#password={{ mysql_root_pass }}
 ...
