@@ -1,5 +1,6 @@
 {
     "repository_url": {
+        "git_status": "yes/no",
         "jiskefet_api": "https://github.com/",
         "jiskefet_ui": "https://github.com/"
     },

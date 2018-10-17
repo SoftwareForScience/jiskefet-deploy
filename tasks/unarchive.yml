@@ -7,7 +7,7 @@
 #  */
 
 ---
-- name: Change api files to remote
+- name: Unarchive api files to remote
   unarchive:
     owner: jiskefet-api
     src: ../jiskefet-api.tar
@@ -16,7 +16,7 @@
   become_method: su
   become_user: root
 
-- name: Copy ui files to remote
+- name: Unarchive ui files to remote
   unarchive:
     owner: jiskefet-api
     src: ../jiskefet-ui.tar
