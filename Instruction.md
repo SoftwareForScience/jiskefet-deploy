@@ -3,7 +3,7 @@
 To configure the ansible scripts the file ansible.config.json needs to be created in the root of the ansible directory.
 A template to this file has already been created. In this configuration file a few changed need to be made:
 
-The *use_local_repository* variable determines for ansible which repositories to deploy. By filling in “yes”, ansible will deploy the supplied *.tar files. By filling in “no”, ansible will clone the projects from the urls:
+The **use_local_repository** variable determines for ansible which repositories to deploy. By filling in “yes”, ansible will deploy the supplied *.tar files. By filling in “no”, ansible will clone the projects from the urls:
 
 ```json
 "use_local_repository": "yes",
@@ -34,7 +34,7 @@ credentials for the database and the **database** variable to a database name (f
 }
 ```
 
-Replace the *localhost* in this variable with the ip-address of the api machine:
+Replace the **localhost** in this variable with the ip-address of the api machine:
 ```json
 "api_url_constant": "'http://localhost/api/';"
 ```
