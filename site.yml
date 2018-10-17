@@ -35,6 +35,9 @@
     - include: tasks/unarchive.yml
       when: use_local_repository == "yes"
 
+    # Setting environment variables
+    - include: tasks/change-env-variables.yml
+
     # Install Node.js
     - include: tasks/nodejs.yml
 
