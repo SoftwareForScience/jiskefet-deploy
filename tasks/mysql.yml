@@ -70,8 +70,8 @@
 # - name: Copy the root credentials as .my.cnf file
 #   template: src=root.cnf.j2 dest=~/.my.cnf mode=0600
 
-- name: Create a New Test DB called jiskefet
-  mysql_db: name=jiskefet state=present login_user={{ database_config.username }} login_password={{ database_config.password }}
+- name: Create a New Test DB called {{ database_config.database }}
+  mysql_db: name={{ database_config.database }} state=present login_user={{ database_config.username }} login_password={{ database_config.password }}
 
 - name: Add firewall exceptions
   become: yes
