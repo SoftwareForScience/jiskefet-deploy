@@ -57,6 +57,7 @@ Host jiskefet-db
     IdentityFile ~/.ssh/jiskefet
 ```
 *Do NOT forget to change the ip addresses in the config file*
+
 Execute the following commands to copy the ssh keys to the servers:
 ```
 $ ssh-copy-id -i jiskefet.pub jiskefet-api
