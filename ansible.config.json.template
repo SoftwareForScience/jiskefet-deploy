@@ -16,5 +16,5 @@
         ],
         "synchronize": true
     },
-    "api_url_constant": "export const API_URL = 'http://192.168.56.107/api/';"
+    "api_url_constant": "'http://localhost/api/';"
 }
