@@ -26,7 +26,7 @@
   vars:
     temp_folder: /tmp
   tasks:
-    
+
     # Install git
     - include: tasks/git.yml
       when: use_local_repository == "no"

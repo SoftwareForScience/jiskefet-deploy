@@ -15,6 +15,5 @@
             "src/**/**.entity{.ts,.js}"
         ],
         "synchronize": true
-    },
-    "api_url_constant": "'http://localhost/api/';"
+    }
 }
