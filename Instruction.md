@@ -3,14 +3,19 @@
 To configure the ansible scripts the file ansible.config.json needs to be created in the root of the ansible directory.
 A template to this file has already been created. In this configuration file a few changed need to be made:
 
-Change the github urls to the repositories that need to be used (if needed):
+The **use_local_repository** variable determines for ansible which repositories to deploy. By filling in “yes”, ansible will deploy the supplied *.tar files. By filling in “no”, ansible will clone the projects from the urls:
+
 ```json
-"git_urls": {
+"use_local_repository": "yes",
+```
+
+Change the github urls to the repositories that need to be used. The URL's do not have to be changed if the "use_local_repository" variable is set to "yes":
+```json
+"remote_repository_url": {
   "jiskefet_api": "https://github.com/",
   "jiskefet_ui": "https://github.com/"
 },
 ```
-*Changing these URL's is not mandatory if the repositories are are delivered with the ansible script as .tar files*
 
 Change the variable **host** to the ip address of the database server, the **username** and **password** to set the 
 credentials for the database and the **database** variable to a database name (for example jiskefet):
@@ -28,7 +33,11 @@ credentials for the database and the **database** variable to a database name (f
   "synchronize": true
 }
 ```
-*Other variables are not to be changed*
+
+Replace the **localhost** in this variable with the ip-address of the api machine:
+```json
+"api_url_constant": "'http://localhost/api/';"
+```
 
 ### 2. Setting up ssh
 To make a connection to the servers ssh needs to be configured on the machine by executing the following command:
@@ -56,7 +65,8 @@ Host jiskefet-db
     Port 22
     IdentityFile ~/.ssh/jiskefet
 ```
-*Do NOT forget to change the ip addresses in the config file*
+*Do NOT forget to change the ip addresses in the config file.*
+
 Execute the following commands to copy the ssh keys to the servers:
 ```
 $ ssh-copy-id -i jiskefet.pub jiskefet-api
