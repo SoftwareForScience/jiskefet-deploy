@@ -20,13 +20,13 @@ and
 
 For more detailed instructions on setting up this project please refer to [these instructions.](https://github.com/misharigot/sfs-ansible/blob/develop/Instruction.md) 
 
-## System requirements
+## System requirements  
 ### **Host machine specifications**  
 **Hardware**  
 None  
 **Software**  
 
-Package name | Version 
+Name | Version 
 --- | --- 
 ansible | 2.4.2.0  
 ansible-playbook | 2.4.2.0  
@@ -40,9 +40,19 @@ Component | Requirement
 CPU | Minimum 2 cores   
 
 **Software**  
-None
+
+Name | Version 
+--- | --- 
+CentOS | Linux 7 (Core) 
 
 ### **DB machine specifications**
+**Hardware**  
+
+**Software**  
+
+Name | Version 
+--- | --- 
+CentOS | Linux 7 (Core) 
 
 
 ## Deployment diagram
