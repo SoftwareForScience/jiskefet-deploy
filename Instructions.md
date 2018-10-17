@@ -9,7 +9,7 @@ The **use_local_repository** variable determines for ansible which repositories 
 "use_local_repository": "yes",
 ```
 
-Be sure to have the \*.tar files in the root of jiskefet-project-v\*\* folder. The hierarchy should be:
+Be sure to have the \*.tar files in the root of jiskefet-project-v\*\* folder if local repositories are to be used. The hierarchy should be:
 ```
 jiskefet-project-v**/
 |
