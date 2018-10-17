@@ -29,9 +29,11 @@
     
     # Install git
     - include: tasks/git.yml
+      when: use_local_repository == "no"
 
-    # # Unarchive projects
-    # - include: tasks/unarchive.yml
+    # Unarchive projects
+    - include: tasks/unarchive.yml
+      when: use_local_repository == "yes"
 
     # Install Node.js
     - include: tasks/nodejs.yml

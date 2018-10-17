@@ -16,14 +16,14 @@
 
 - name: checkout jiskefet-api
   git:
-    repo: "{{ repository_url.jiskefet_api }}"
+    repo: "{{ remote_repository_url.jiskefet_api }}"
     dest: /var/lib/jiskefet/jiskefet-api
     force: yes
     version: develop
 
 - name: checkout jiskefet-ui
   git:
-    repo: "{{ repository_url.jiskefet_ui }}"
+    repo: "{{ remote_repository_url.jiskefet_ui }}"
     dest: /var/lib/jiskefet/jiskefet-ui
     force: yes
     version: feature/moved-folders

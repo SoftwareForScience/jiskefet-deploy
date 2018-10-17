@@ -1,5 +1,6 @@
 {
-    "repository_url": {
+    "use_local_repository": "no",
+    "remote_repository_url": {
         "jiskefet_api": "https://github.com/",
         "jiskefet_ui": "https://github.com/"
     },
