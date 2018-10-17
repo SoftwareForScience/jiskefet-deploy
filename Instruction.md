@@ -9,7 +9,7 @@ The *use_local_repository* variable determines for ansible which repositories to
 "use_local_repository": "yes",
 ```
 
-Change the github urls to the repositories that need to be used. The URL's do not have to be changed if the "use_local_repository" variable is set to "yes".:
+Change the github urls to the repositories that need to be used. The URL's do not have to be changed if the "use_local_repository" variable is set to "yes":
 ```json
 "remote_repository_url": {
   "jiskefet_api": "https://github.com/",
