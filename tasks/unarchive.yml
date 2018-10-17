@@ -25,12 +25,5 @@
   become_method: su
   become_user: root
 
-- name: Change api url for jiskefet-ui
-  copy:
-    dest: /var/lib/jiskefet/jiskefet-ui/src/app/constants.tsx
-    content: "{{ api_url_constant }}"
-
-- name: Create ormconfig.json file if it does not exist
-  copy:
-    dest: /var/lib/jiskefet/jiskefet-api/ormconfig.json
-    content: "{{ database_config }}"
+- include: change-env-variables.yml
+...
