@@ -6,8 +6,8 @@ how this is done to make a reproduction of data possible and thereby a validatio
 Jiskefet project.  
 
 This is the **Ansible playbook** to deploy the Jiskefet project.   
-The **front-end UI** can be found here: https://github.com/BastiaanReinalda/jiskefet-ui  
-And the **back-end API** can be found here: https://github.com/BastiaanReinalda/jiskefet-api  
+The **front-end UI** can be found here: https://github.com/SoftwareForScience/jiskefet-ui  
+And the **back-end API** can be found here: https://github.com/SoftwareForScience/jiskefet-api  
 
 ## Quick Start
 
@@ -20,7 +20,7 @@ and
 - Run playbook: `$ ansible-playbook site.yml`
 - Open a browser and navigate to http://SERVER_IP_HERE/api/doc/ to see the swagger documentation of the project.
 
-For more detailed instructions on setting up this project please refer to [these instructions.](https://github.com/misharigot/sfs-ansible/blob/develop/Instructions.md) 
+For more detailed instructions on setting up this project please refer to [these instructions.](https://github.com/SoftwareForScience/sfs-ansible/blob/develop/Instructions.md) 
 
 ## System requirements  
 ### **Host machine specifications**  
