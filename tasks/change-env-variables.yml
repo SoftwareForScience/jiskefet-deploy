@@ -1,0 +1,21 @@
+# /*
+#  * Copyright (C) 2018 Amsterdam University of Applied Sciences (AUAS)
+#  *
+#  * This software is distributed under the terms of the
+#  * GNU General Public Licence version 3 (GPL) version 3,
+#  * copied verbatim in the file "LICENSE"
+#  */
+
+---
+- name: Change api url for jiskefet-ui
+  lineinfile:
+    path: /var/lib/jiskefet/jiskefet-ui/src/app/constants.tsx
+    regexp: '^(.*)export const API_URL =(.*)$'
+    line: "export const API_URL = {{ api_url_constant }}"
+    backrefs: yes
+
+- name: Create ormconfig.json file if it does not exist
+  copy:
+    dest: /var/lib/jiskefet/jiskefet-api/ormconfig.json
+    content: "{{ database_config }}"
+...

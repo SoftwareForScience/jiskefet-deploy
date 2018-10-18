@@ -1,3 +1,11 @@
+# /*
+#  * Copyright (C) 2018 Amsterdam University of Applied Sciences (AUAS)
+#  *
+#  * This software is distributed under the terms of the
+#  * GNU General Public Licence version 3 (GPL) version 3,
+#  * copied verbatim in the file "LICENSE"
+#  */
+
 ---
 - name: Add epel-release repo
   become: yes
@@ -6,59 +14,92 @@
     name: epel-release
     state: present
 
-- name: Ensure nginx is installed.
+- name: Ensure semanage is installed for port management
+  become: yes
+  become_user: root
+  yum:
+    name: policycoreutils-python
+    state: present
+
+# Allow errors here
+- name: Allow port 1000 to be run
+  become: yes
+  become_user: root
+  command: semanage port -a -t http_port_t -p tcp 1000
+  ignore_errors: yes
+
+- name: Ensure NGiNX is installed.
   become: yes
   become_user: root
   yum:
     name: nginx
     state: present
 
-- name: Make nginx directory
+- name: Make NGiNX directory for custom configs
   become: yes
   become_user: root
   file: 
-    path: /etc/nginx/sites-enabled
+    path: /etc/nginx/conf.d
     state: directory
 
-- name: Copy proxy.conf from local to remote
+- name: Copy custom proxy.conf from local to remote
   copy:
     src: proxy.conf
-    dest: /etc/nginx/sites-enabled/proxy.conf
+    dest: /etc/nginx/conf.d/proxy.conf
   become: true
   become_method: su
   become_user: root
 
-# - name: Set default port of nginx to an arbitrary port so port 80 is free
-#   copy:
-#     src: default
-#     dest: /etc/nginx/sites-available/default
-#   become: true
-#   become_method: su
-#   become_user: root
-
-- name: Start/reload the proxy.conf
-  command: nginx -s reload
+- name: Replace defualt nginx.conf with new one where the default server runs on port 1000
+  copy:
+    src: nginx.conf
+    dest: /etc/nginx/nginx.conf
   become: true
   become_method: su
   become_user: root
 
-- name: Test nginx config
+- name: Test NGiNX config
   command: nginx -T
   become: true
   become_method: su
   become_user: root
+
+- name: Stop NGiNX services
+  become: true
+  become_user: root
+  service:
+    name: nginx
+    state: stopped
 
 - name: Start NGiNX
   become: true
   become_user: root
   service:
     name: nginx
-    state: started
+    state: restarted
 
 - name: list ports to see if proxy is running
   command: ss -ntl
   register: out
 
 - debug: var=out.stdout_lines
-    
+
+- name: Setup firewall to allow connections to port 80 and 443
+  become: true
+  become_user: root
+  command: "{{ item }}"
+  with_items:
+  - firewall-cmd --permanent --zone=public --add-service=http
+  - firewall-cmd --permanent --zone=public --add-service=https
+  - firewall-cmd --reload
+
+- name: Allow http network to connect in SELinux
+  become: true
+  become_user: root
+  command: setsebool httpd_can_network_connect on -P
+
+- name: Set NGiNX to start on startup
+  become: true
+  become_user: root
+  command: systemctl enable nginx
 ...

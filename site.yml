@@ -1,3 +1,11 @@
+# /*
+#  * Copyright (C) 2018 Amsterdam University of Applied Sciences (AUAS)
+#  *
+#  * This software is distributed under the terms of the
+#  * GNU General Public Licence version 3 (GPL) version 3,
+#  * copied verbatim in the file "LICENSE"
+#  */
+
 ---
 # This playbook deploys the whole application stack in this site.
 
@@ -9,24 +17,32 @@
     # Create jiskefet-api user
     - include: tasks/create-jiskefet-user.yml
 
-  roles:
-    - common
-
 - name: configure and deploy the webservers and application code
   hosts: webservers
   become_user: jiskefet-api
   become: yes
   vars_files:
-    - vars/variables.yml
+    - ansible.config.json
   vars:
     temp_folder: /tmp
   tasks:
-    
+
     # Install git
     - include: tasks/git.yml
+      when: use_local_repository == "no"
+
+    # Unarchive projects
+    - include: tasks/unarchive.yml
+      when: use_local_repository == "yes"
+
+    # Setting environment variables
+    - include: tasks/change-env-variables.yml
 
     # Install Node.js
     - include: tasks/nodejs.yml
+
+    # Do npm install
+    - include: tasks/npm.yml
 
     # Install and run nginx
     - include: tasks/nginx.yml
@@ -34,20 +50,15 @@
     # Install and run pm2
     - include: tasks/pm2.yml
 
-  roles:
-    - web
-
 - name: deploy MySQL and configure the databases
   hosts: dbservers
   become_user: jiskefet-api
   become: yes
   vars_files:
-    - vars/variables.yml
+    - ansible.config.json
   tasks:
     
     # Install MySql (MariaDB)
     - include: tasks/mysql.yml
 
-  roles:
-    - db
 ...
