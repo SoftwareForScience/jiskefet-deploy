@@ -43,6 +43,11 @@ credentials for the database and the **database** variable to a database name (f
 }
 ```
 
+Replace the **localhost** in this variable with the ip-address of the api machine:	
+```json	
+"api_url_constant": "'http://localhost/api/';"	
+```	
+
 ### 2. Setting up ssh
 To make a connection to the servers ssh needs to be configured on the machine by executing the following command:
 ```
