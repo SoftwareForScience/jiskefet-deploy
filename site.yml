@@ -24,9 +24,10 @@
   vars_files:
     - ansible.config.json
   vars:
-    temp_folder: /tmp
-  tasks:
+    - temp_folder: /tmp
+    - target_env: "{{ deploy_environment }}"
 
+  tasks:
     # Install git
     - include: tasks/git.yml
       when: use_local_repository == "no"

@@ -19,12 +19,12 @@
     repo: "{{ remote_repository_url.jiskefet_api }}"
     dest: /var/lib/jiskefet/jiskefet-api
     force: yes
-    version: develop
+    version: "{{ repository_branch.jiskefet_api }}"
 
 - name: checkout jiskefet-ui
   git:
     repo: "{{ remote_repository_url.jiskefet_ui }}"
     dest: /var/lib/jiskefet/jiskefet-ui
     force: yes
-    version: feature/moved-folders
+    version: "{{ repository_branch.jiskefet_ui }}"
 ...

@@ -21,16 +21,16 @@
   become_method: su
   become_user: root
 
-- name: Copy ecosystem.config.js from local to remote
+- name: Copy ecosystem.json from local to remote
   copy:
-    src: ecosystem.config.js
-    dest: /var/lib/jiskefet/ecosystem.config.js
+    src: ecosystem.json
+    dest: /var/lib/jiskefet/ecosystem.json
   become: true
   become_method: su
   become_user: root
 
-- name: go to jiskefet-ui project directory and start project using pm2
-  command: pm2 start ecosystem.config.js
+- name: go to jiskefet-ui project directory and start project in {{ deploy_environment }} environment using pm2
+  command: pm2 start ecosystem.json --env {{ deploy_environment }}
   args:
     chdir: "/var/lib/jiskefet"
 
