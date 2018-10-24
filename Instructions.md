@@ -44,6 +44,13 @@ Set the deploy environment. The available values are:
 "deploy_environment": "dev",
 ```
 
+Change the environment ports, the defaults are set to
+```json
+"dev_port_number": 3000,
+"staging_port_number": 3001,
+"prod_port_number": 3002,
+```
+
 Change the variable **host** to the ip address of the database server, the **username** and **password** to set the 
 credentials for the database and the **database** variable to a database name (for example jiskefet):
 ```json
