@@ -6,19 +6,21 @@ how this is done to make a reproduction of data possible and thereby a validatio
 Jiskefet project.  
 
 This is the **Ansible playbook** to deploy the Jiskefet project.   
-The **front-end UI** can be found here: https://github.com/BastiaanReinalda/jiskefet-ui  
-And the **back-end API** can be found here: https://github.com/BastiaanReinalda/jiskefet-api  
+The **front-end UI** can be found here: https://github.com/SoftwareForScience/jiskefet-ui  
+And the **back-end API** can be found here: https://github.com/SoftwareForScience/jiskefet-api  
 
 ## Quick Start
 
-- copy **files/ormconfig.json.example** as **files/ormconfig.json** and set your own values.
-- make sure you can connect to vm servers via  
+- Copy the *ansible.config.json.template* as *ansible.config.json*
+- Change the variables to the appropriate values
+- Make sure you can connect to vm servers via  
 `$ ssh vm-jiskefet-api`  
 and  
 `$ ssh vm-jiskefet-db`
-- run playbook: `$ ansible-playbook site.yml`
+- Run playbook: `$ ansible-playbook site.yml`
+- Open a browser and navigate to http://SERVER_IP_HERE/api/doc/ to see the swagger documentation of the project.
 
-For more detailed instructions on setting up this project please refer to [these instructions.](https://github.com/misharigot/sfs-ansible/blob/develop/Instruction.md) 
+For more detailed instructions on setting up this project please refer to [these instructions.](https://github.com/SoftwareForScience/sfs-ansible/blob/develop/Instructions.md) 
 
 ## System requirements  
 ### **Host machine specifications**  
@@ -53,6 +55,7 @@ CentOS | Linux 7 (Core)
 Name | Version 
 --- | --- 
 CentOS | Linux 7 (Core) 
+MariaDB | 10.1.36-MariaDB
 
 
 ## Deployment diagram

@@ -27,6 +27,4 @@
     dest: /var/lib/jiskefet/jiskefet-ui
     force: yes
     version: feature/moved-folders
-
-- include: change-env-variables.yml
 ...
