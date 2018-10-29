@@ -14,6 +14,24 @@
     line: "export const API_URL = {{ api_url_constant }}"
     backrefs: yes
 
+- name: Check if {{ deploy_environment }}.env exists
+  stat:
+    path: /var/lib/jiskefet/jiskefet-api/environments/{{ deploy_environment}}.env
+  register: stat_result
+
+- name: Copy {{ deploy_environment }}.env to remote if it does not exist
+  when: stat_result.stat.exists == False 
+  copy:
+    src: files/environments/{{ deploy_environment }}.env.template
+    dest: /var/lib/jiskefet/jiskefet-api/environments/{{ deploy_environment }}.env
+
+- name: Change port number of the API server
+  lineinfile:
+    path: /var/lib/jiskefet/jiskefet-api/environments/{{ deploy_environment }}.env
+    regexp: '^(.*)PORT=(.*)$'
+    line: "PORT={{ lookup('vars', target_env + '_port_number')}}"
+    backrefs: yes   
+
 - name: Create ormconfig.json file if it does not exist
   copy:
     dest: /var/lib/jiskefet/jiskefet-api/ormconfig.json

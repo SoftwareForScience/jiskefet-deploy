@@ -4,6 +4,14 @@
         "jiskefet_api": "https://github.com/",
         "jiskefet_ui": "https://github.com/"
     },
+    "repository_branch":{
+        "jiskefet_api": "master",
+        "jiskefet_ui": "master"
+    },
+    "deploy_environment": "dev",
+    "dev_port_number": 3000,
+    "staging_port_number": 3001,
+    "prod_port_number": 3002,
     "database_config": {
         "type": "mysql",
         "host": "",
