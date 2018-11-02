@@ -30,8 +30,8 @@ None
 
 Name | Version 
 --- | --- 
-ansible | 2.4.2.0  
-ansible-playbook | 2.4.2.0  
+ansible | 2.5 or higher   
+ansible-playbook | 2.5 or higher   
 python | 2.7.5   
 
 ### **API and UI machine specifications**  

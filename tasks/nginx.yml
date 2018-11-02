@@ -50,6 +50,26 @@
   become_method: su
   become_user: root
 
+- name: Insert whitelisted csp sources
+  lineinfile:
+    path: /etc/nginx/conf.d/proxy.conf
+    regexp: 'add_header Content-Security-Policy "default-src ''self'';";'
+    line: '        add_header Content-Security-Policy {{ allow_csp_payload }}'
+    backrefs: yes
+  become: true
+  become_method: su
+  become_user: root
+
+- name: set localhost port to {{ lookup('vars', target_env + '_port_number')}}
+  lineinfile:
+    path: /etc/nginx/conf.d/proxy.conf
+    regexp: 'proxy_pass(.*)$'
+    line: "        proxy_pass http://localhost:{{ lookup('vars', target_env + '_port_number')}}/;"
+    backrefs: yes
+  become: true
+  become_method: su
+  become_user: root
+
 - name: Replace defualt nginx.conf with new one where the default server runs on port 1000
   copy:
     src: nginx.conf
