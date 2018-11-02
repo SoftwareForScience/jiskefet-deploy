@@ -48,8 +48,8 @@
     # Install and run nginx
     - include: tasks/nginx.yml
 
-    # Install and run pm2
-    - include: tasks/pm2.yml
+    # # Install and run pm2
+    # - include: tasks/pm2.yml
 
 - name: deploy MySQL and configure the databases
   hosts: dbservers
