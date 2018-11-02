@@ -7,12 +7,24 @@
 #  */
 
 ---
-- name: Change api url for jiskefet-ui
-  lineinfile:
-    path: /var/lib/jiskefet/jiskefet-ui/src/app/constants.tsx
-    regexp: '^(.*)export const API_URL =(.*)$'
-    line: "export const API_URL = {{ api_url_constant }}"
-    backrefs: yes
+- name: Check if .env exists in jiskefet-ui project
+  stat:
+    path: /var/lib/jiskefet/jiskefet-ui/.env
+  register: stat_result
+
+
+- name: Copy .env to jiskefet-ui project if it does not exist
+  when: stat_result.stat.exists == False 
+  copy:
+    src: files/environments/.env
+    dest: /var/lib/jiskefet/jiskefet-ui/.env
+
+
+- name: Copy {{ deploy_environment }}.env to remote if it does not exist
+  when: stat_result.stat.exists == False 
+  copy:
+    src: files/environments/{{ deploy_environment }}.env
+    dest: /var/lib/jiskefet/jiskefet-api/environments/{{ deploy_environment }}.env
 
 - name: Check if {{ deploy_environment }}.env exists
   stat:
@@ -22,7 +34,7 @@
 - name: Copy {{ deploy_environment }}.env to remote if it does not exist
   when: stat_result.stat.exists == False 
   copy:
-    src: files/environments/{{ deploy_environment }}.env.template
+    src: files/environments/{{ deploy_environment }}.env
     dest: /var/lib/jiskefet/jiskefet-api/environments/{{ deploy_environment }}.env
 
 - name: Change port number of the API server

@@ -67,13 +67,12 @@ credentials for the database and the **database** variable to a database name (f
   "synchronize": true
 }
 ```
+### 2. Environment files
+To make sure the deployed application works, several environment files needs to be changed.  
+These files can be found at `files/environments/`.  
+A template file has been provided. In order to use these files, please remove the .template extension of these files and fill in the values.  
 
-Replace the **localhost** in this variable with the ip-address of the api machine:	
-```json	
-"api_url_constant": "'http://localhost/api/';"	
-```	
-
-### 2. Setting up ssh
+### 3. Setting up ssh
 To make a connection to the servers ssh needs to be configured on the machine by executing the following command:
 ```
 $ ssh-keygen  -f jiskefet
