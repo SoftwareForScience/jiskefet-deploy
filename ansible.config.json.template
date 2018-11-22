@@ -9,9 +9,7 @@
         "jiskefet_ui": "master"
     },
     "deploy_environment": "dev",
-    "dev_port_number": 3000,
-    "staging_port_number": 3001,
-    "prod_port_number": 3002,
+    "api_port_number": 3000,
     "database_config": {
         "type": "mysql",
         "host": "",

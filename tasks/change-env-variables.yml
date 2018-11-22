@@ -13,35 +13,28 @@
   register: stat_result
 
 
-- name: Copy .env to jiskefet-ui project if it does not exist
+- name: Copy jiskefet-ui.env to jiskefet-ui project if it does not exist
   when: stat_result.stat.exists == False 
   copy:
-    src: files/environments/.env
+    src: files/environments/jiskefet-ui.env
     dest: /var/lib/jiskefet/jiskefet-ui/.env
 
-
-- name: Copy {{ deploy_environment }}.env to remote if it does not exist
-  when: stat_result.stat.exists == False 
-  copy:
-    src: files/environments/{{ deploy_environment }}.env
-    dest: /var/lib/jiskefet/jiskefet-api/environments/{{ deploy_environment }}.env
-
-- name: Check if {{ deploy_environment }}.env exists
+- name: Check if .env exists in jiskefet-api project
   stat:
-    path: /var/lib/jiskefet/jiskefet-api/environments/{{ deploy_environment}}.env
+    path: /var/lib/jiskefet/jiskefet-api/.env
   register: stat_result
 
-- name: Copy {{ deploy_environment }}.env to remote if it does not exist
+- name: Copy jiskefet-api.env to remote if it does not exist
   when: stat_result.stat.exists == False 
   copy:
-    src: files/environments/{{ deploy_environment }}.env
-    dest: /var/lib/jiskefet/jiskefet-api/environments/{{ deploy_environment }}.env
+    src: files/environments/jiskefet-api.env
+    dest: /var/lib/jiskefet/jiskefet-api/.env
 
-- name: Change port number of the API server
+- name: Set port number of the API server to {{ api_port_number }}
   lineinfile:
-    path: /var/lib/jiskefet/jiskefet-api/environments/{{ deploy_environment }}.env
+    path: /var/lib/jiskefet/jiskefet-api/.env
     regexp: '^(.*)PORT=(.*)$'
-    line: "PORT={{ lookup('vars', target_env + '_port_number')}}"
+    line: "PORT={{ api_port_number }}"
     backrefs: yes   
 
 - name: Create ormconfig.json file if it does not exist
