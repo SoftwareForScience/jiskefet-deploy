@@ -34,21 +34,9 @@ Specify which branch ansible should pull. The default branch is currently set to
 },
 ```
 
-Set the deploy environment. The available values are:
-
-1. dev 
-2. staging 
-3. prod 
-
+Change the api server's port number, the defaults is set to
 ```json
-"deploy_environment": "dev",
-```
-
-Change the environment ports, the defaults are set to
-```json
-"dev_port_number": 3000,
-"staging_port_number": 3001,
-"prod_port_number": 3002,
+"api_port_number": 3000
 ```
 
 Change the variable **host** to the ip address of the database server, the **username** and **password** to set the 

@@ -8,7 +8,6 @@
         "jiskefet_api": "master",
         "jiskefet_ui": "master"
     },
-    "deploy_environment": "dev",
     "api_port_number": 3000,
     "database_config": {
         "type": "mysql",
