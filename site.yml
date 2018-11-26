@@ -44,6 +44,9 @@
     # Do npm install
     - include: tasks/npm.yml
 
+    # Starts firewalld service
+    - include: tasks/firewall.yml
+
     # Install and run nginx
     - include: tasks/nginx.yml
 
@@ -57,6 +60,9 @@
   vars_files:
     - ansible.config.json
   tasks:
+  
+    # Starts firewalld service
+    - include: tasks/firewall.yml
     
     # Install MySql (MariaDB)
     - include: tasks/mysql.yml
