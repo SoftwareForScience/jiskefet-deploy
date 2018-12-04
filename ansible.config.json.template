@@ -8,10 +8,7 @@
         "jiskefet_api": "master",
         "jiskefet_ui": "master"
     },
-    "deploy_environment": "dev",
-    "dev_port_number": 3000,
-    "staging_port_number": 3001,
-    "prod_port_number": 3002,
+    "api_port_number": 3000,
     "database_config": {
         "type": "mysql",
         "host": "",
@@ -24,6 +21,5 @@
         ],
         "synchronize": true
     },
-    "api_url_constant": "'http://localhost/api/';",
-    "allow_csp_payload": "\"default-src 'self' http://145.92.8.34/ http://jiskefet.heikovdheyden.nl/; script-src 'self' https://use.fontawesome.com/releases/v5.3.1/js/all.js; style-src 'self' 'unsafe-inline' https://cdn.quilljs.com/1.3.6/quill.snow.css; object-src 'none'; font-src 'self' data: fonts.gstatic.com;\";"
+    "allow_csp_payload": "\"default-src 'self' http://137.117.177.74 http://13.93.34.222 http://jiskefet.westeurope.cloudapp.azure.com https://github.com https://api.github.com; script-src 'self' https://use.fontawesome.com/releases/v5.3.1/js/all.js https://github.com https://api.github.com; style-src 'self' 'unsafe-inline'; object-src 'none'; font-src 'self' data: fonts.gstatic.com; img-src https://avatars2.githubusercontent.com http://jiskefet.westeurope.cloudapp.azure.com;\";"
 }

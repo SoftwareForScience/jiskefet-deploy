@@ -34,21 +34,9 @@ Specify which branch ansible should pull. The default branch is currently set to
 },
 ```
 
-Set the deploy environment. The available values are:
-
-1. dev 
-2. staging 
-3. prod 
-
+Change the api server's port number, the defaults is set to
 ```json
-"deploy_environment": "dev",
-```
-
-Change the environment ports, the defaults are set to
-```json
-"dev_port_number": 3000,
-"staging_port_number": 3001,
-"prod_port_number": 3002,
+"api_port_number": 3000
 ```
 
 Change the variable **host** to the ip address of the database server, the **username** and **password** to set the 
@@ -67,13 +55,12 @@ credentials for the database and the **database** variable to a database name (f
   "synchronize": true
 }
 ```
+### 2. Environment files
+To make sure the deployed application works, several environment files needs to be changed.  
+These files can be found at `files/environments/`.  
+A template file has been provided. In order to use these files, please remove the .template extension of these files and fill in the values.  
 
-Replace the **localhost** in this variable with the ip-address of the api machine:	
-```json	
-"api_url_constant": "'http://localhost/api/';"	
-```	
-
-### 2. Setting up ssh
+### 3. Setting up ssh
 To make a connection to the servers ssh needs to be configured on the machine by executing the following command:
 ```
 $ ssh-keygen  -f jiskefet
