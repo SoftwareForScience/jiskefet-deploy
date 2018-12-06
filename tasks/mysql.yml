@@ -35,6 +35,26 @@
   become: true
   become_user: root
   service: name=mariadb state=started enabled=true #debian: mysql
+
+- name: make sql directory at /var/lib/jiskefet
+  file:
+    path: /var/lib/jiskefet/sql
+    state: directory
+    owner: jiskefet-api
+
+- name: Copy create_db_charset_utf8mb4.sql from local to remote
+  copy:
+    src: create_db_charset_utf8mb4.sql
+    dest: /var/lib/jiskefet/sql/create_db_charset_utf8mb4.sql
+  become: true
+  become_method: su
+  become_user: root
+
+- name: Replace create_db_charset_utf8mb4.sql database name with current name.
+  replace:
+    dest: /var/lib/jiskefet/sql/create_db_charset_utf8mb4.sql
+    regexp: 'database_name'
+    replace: '{{ database_config.database }}' 
   
 - name: Output ansible hostname
   debug: msg="Hostname is {{ ansible_hostname }}"
@@ -57,8 +77,13 @@
     - localhost
     - "%"
 
-- name: Create a new DB called {{ database_config.database }}
-  mysql_db: name={{ database_config.database }} state=present login_user={{ database_config.username }} login_password={{ database_config.password }}
+- name: Execute sql file
+  mysql_db: 
+    login_user: '{{ database_config.username }}' 
+    login_password: '{{ database_config.password }}'
+    state: import
+    name: 'all'
+    target: /var/lib/jiskefet/sql/create_db_charset_utf8mb4.sql
 
 - name: Add firewall exceptions
   become: yes
