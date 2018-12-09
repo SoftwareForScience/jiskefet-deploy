@@ -1,6 +1,8 @@
 # Continuous Integration (CI) with Jenkins
 The current folder (`/ci`) contains a separate playbook for setting up a Jenkins CI server.
 
+[To table of contents in README.md](../README.md)
+
 
 # Table of contents
 
