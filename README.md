@@ -1,4 +1,5 @@
-## Description
+# Jiskefet Deployment
+
 This bookkeeping system is a system for A Large Ion Collider Experiment
 (ALICE) to keep track of what is happening to the data produced by the detectors. The electric signals produced by the various detectors which
 together are the ALICE detector are being reconstructed, calibrated, compressed and used in numerous but specific ways. It is important to register  
@@ -7,58 +8,35 @@ Jiskefet project.
 
 This is the **Ansible playbook** to deploy the Jiskefet project.   
 The **front-end UI** can be found here: https://github.com/SoftwareForScience/jiskefet-ui  
-And the **back-end API** can be found here: https://github.com/SoftwareForScience/jiskefet-api  
+And the **back-end API** can be found here: https://github.com/SoftwareForScience/jiskefet-api 
+ 
+##  Table of Contents
+
+- [Quick start](#quick-start)
+- Installation instructions
+  1. [Configuration file](docs/configuration_file)
+  2. [Environment files](docs/environment_files)
+  3. [Setting up ssh](docs/setting_up_ssh)
+  4. [Running the Ansible playbook](docs/running_ansible)
+- General information
+  - [System requirements](docs/system_requirements)
+  - [Deployment diagram](docs/deployment_diagram)
+-  [Continuous integration with Jenkins](ci/readme)
+
 
 ## Quick Start
 
-- Copy the *ansible.config.json.template* as *ansible.config.json*
-- Change the variables to the appropriate values
-- Make sure you can connect to vm servers via  
-`$ ssh vm-jiskefet-api`  
-and  
-`$ ssh vm-jiskefet-db`
-- Run playbook: `$ ansible-playbook site.yml`
-- Open a browser and navigate to http://SERVER_IP_HERE/api/doc/ to see the swagger documentation of the project.
+1. Copy the `ansible.config.json.template` as `ansible.config.json` and change the variables to the appropriate values ([more info](docs/configuration_file)).
+2. Copy the files in `files/environments`, remove '.template' and set the variables ([more info](docs/environment_files)).
+3. Make sure you can connect to two CentOS servers via ssh ([more info](instructions#3-setting-up-ssh)):
+    ```bash 
+    $ ssh vm-jiskefet-api
+    $ ssh vm-jiskefet-db
+    ```
+4. Run playbook: 
+    ```bash
+    $ ansible-playbook site.yml
+    ```
+5. Open a browser and navigate to http://SERVER_IP_HERE/api/doc/ to see the swagger documentation of the project.
 
-For more detailed instructions on setting up this project please refer to [these instructions.](https://github.com/SoftwareForScience/sfs-ansible/blob/develop/Instructions.md) 
-
-## System requirements  
-### **Host machine specifications**  
-**Hardware**  
-None  
-**Software**  
-
-Name | Version 
---- | --- 
-ansible | 2.5 or higher   
-ansible-playbook | 2.5 or higher   
-python | 2.7.5   
-
-### **API and UI machine specifications**  
-**Hardware**  
-
-Component | Requirement 
---- | --- 
-CPU | Minimum 2 cores   
-
-**Software**  
-
-Name | Version 
---- | --- 
-CentOS | Linux 7 (Core) 
-
-### **DB machine specifications**
-**Hardware**  
-
-**Software**  
-
-Name | Version 
---- | --- 
-CentOS | Linux 7 (Core) 
-MariaDB | 10.1.36-MariaDB
-
-
-## Deployment diagram
-![alt text][dd]
-
-[dd]: https://github.com/misharigot/sfs-ansible/blob/develop/Deployment_Diagram_Jiskefet.png "Deployment diagram"
+[Back to table of contents](#table-of-contents)

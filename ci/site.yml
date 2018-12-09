@@ -1,0 +1,25 @@
+# /*
+#  * Copyright (C) 2018 Amsterdam University of Applied Sciences (AUAS)
+#  *
+#  * This software is distributed under the terms of the
+#  * GNU General Public Licence version 3 (GPL) version 3,
+#  * copied verbatim in the file "LICENSE"
+#  */
+
+---
+- name: Configure CI server
+  hosts: ciservers
+  remote_user: root
+  vars_files:
+    - variables.yml
+  roles:
+     - geerlingguy.jenkins
+  become_user: jenkins
+  become: yes
+  tasks:
+    # Open ports for Jenkins
+    - include: tasks/firewall.yml
+    
+    # Configure Jenkins
+    - include: tasks/jenkins.yml
+...
