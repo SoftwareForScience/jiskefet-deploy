@@ -1,5 +1,5 @@
 # System requirements
-[Back to table of contents](../readme)
+[Back to table of contents](../readme.md)
 
 ## Host machine specifications (machine executing ansible playbook(s))
 
@@ -34,4 +34,4 @@ Name | Version
 CentOS | Linux 7 (Core) 
 MariaDB | 10.1.36-MariaDB
 
-[Back to table of contents](../readme)
+[Back to table of contents](../readme.md)

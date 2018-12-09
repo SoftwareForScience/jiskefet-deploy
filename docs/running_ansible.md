@@ -1,5 +1,5 @@
 # 4. Running ansible
-[Back to table of contents](../readme)
+[Back to table of contents](../readme.md)
 
 To deploy the database and web application servers with ansible, open terminal and cd to the project dir:
 ```
@@ -13,4 +13,4 @@ $ ansible-playbook site.yml
 
 Make sure you are running the required version of Ansible, ansible-playbook and python ([see requirements](system_requirements))
 
-[Back to table of contents](../readme)
+[Back to table of contents](../readme.md)

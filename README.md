@@ -14,21 +14,21 @@ And the **back-end API** can be found here: https://github.com/SoftwareForScienc
 
 - [Quick start](#quick-start)
 - Installation instructions
-  1. [Configuration file](docs/configuration_file)
-  2. [Environment files](docs/environment_files)
-  3. [Setting up ssh](docs/setting_up_ssh)
-  4. [Running the Ansible playbook](docs/running_ansible)
+  1. [Configuration file](docs/configuration_file.md)
+  2. [Environment files](docs/environment_files.md)
+  3. [Setting up ssh](docs/setting_up_ssh.md)
+  4. [Running the Ansible playbook](docs/running_ansible.md)
 - General information
-  - [System requirements](docs/system_requirements)
-  - [Deployment diagram](docs/deployment_diagram)
--  [Continuous integration with Jenkins](ci/readme)
+  - [System requirements](docs/system_requirements.md)
+  - [Deployment diagram](docs/deployment_diagram.md)
+-  [Continuous integration with Jenkins](ci/readme.md)
 
 
 ## Quick Start
 
-1. Copy the `ansible.config.json.template` as `ansible.config.json` and change the variables to the appropriate values ([more info](docs/configuration_file)).
-2. Copy the files in `files/environments`, remove '.template' and set the variables ([more info](docs/environment_files)).
-3. Make sure you can connect to two CentOS servers via ssh ([more info](instructions#3-setting-up-ssh)):
+1. Copy the `ansible.config.json.template` as `ansible.config.json` and change the variables to the appropriate values ([more info](docs/configuration_file.md)).
+2. Copy the files in `files/environments`, remove '.template' and set the variables ([more info](docs/environment_files.md)).
+3. Make sure you can connect to two CentOS servers via ssh ([more info](instructions#3-setting-up-ssh.md)):
     ```bash 
     $ ssh vm-jiskefet-api
     $ ssh vm-jiskefet-db

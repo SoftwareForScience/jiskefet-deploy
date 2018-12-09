@@ -1,5 +1,5 @@
 # 1. Configuration file
-[Back to table of contents](../readme)
+[Back to table of contents](../readme.md)
 
 To configure the ansible scripts the file `ansible.config.json` needs to be created in the root of the ansible directory.
 A template to this file has already been created called `ansible.config.json.template`. In this configuration file a few changed need to be made:
@@ -65,4 +65,4 @@ credentials for the database and the `database` variable to a database name. In 
 }
 ```
 
-[Back to table of contents](../readme)
+[Back to table of contents](../readme.md)

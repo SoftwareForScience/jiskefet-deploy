@@ -1,4 +1,6 @@
 # 2. Environment files
+[Back to table of contents](../readme.md)
+
 To make sure the deployed application works, several environment files need to be changed.  
 These files can be found at `files/environments`.  
 A template file has been provided. In order to use these files, please remove the .template extension of these files and fill in the values.
@@ -14,4 +16,4 @@ files/
     |–- jiskefet-api.env.template
 ```
 
-[Back to table of contents](../readme)
+[Back to table of contents](../readme.md)
