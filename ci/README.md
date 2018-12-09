@@ -11,7 +11,7 @@ The current folder (`/ci`) contains a separate playbook for setting up a Jenkins
 The following section describes the steps required to deploy Jenkins on a remote server.
 
 - Copy the `variables.yml.dist` as `variables.yml`. Change the variables to the appropriate values where needed. [More info on these variables](roles/geerlingguy.jenkins/README.md).
-- Make sure you can [connect to the server via ssh](../Instructions.md#3-setting-up-ssh).
+- Make sure you can [connect to the server via ssh](../docs/setting_up_ssh.md).
 - Run playbook.
   ```
   $ ansible-playbook site.yml

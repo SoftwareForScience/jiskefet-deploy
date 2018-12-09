@@ -21,7 +21,7 @@ And the **back-end API** can be found here: https://github.com/SoftwareForScienc
 - General information
   - [System requirements](docs/system_requirements.md)
   - [Deployment diagram](docs/deployment_diagram.md)
--  [Continuous integration with Jenkins](ci/readme.md)
+-  [Continuous integration with Jenkins](ci/README.md)
 
 
 ## Quick Start
