@@ -60,6 +60,14 @@
 - name: Create a new DB called {{ database_config.database }}
   mysql_db: name={{ database_config.database }} state=present login_user={{ database_config.username }} login_password={{ database_config.password }}
 
+
+- name: Restart mysql
+  become: yes
+  become_user: root
+  service:
+    name: mysql
+    state: restarted
+
 - name: Add firewall exceptions
   become: yes
   become_user: root
