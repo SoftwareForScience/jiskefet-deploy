@@ -10,7 +10,7 @@ This is the **Ansible playbook** to deploy the Jiskefet project.
 The **front-end UI** can be found here: https://github.com/SoftwareForScience/jiskefet-ui  
 And the **back-end API** can be found here: https://github.com/SoftwareForScience/jiskefet-api 
  
-##  Table of Contents
+## Table of Contents
 
 - [Quick start](#quick-start)
 - Installation instructions
