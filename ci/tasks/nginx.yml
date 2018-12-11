@@ -21,7 +21,6 @@
     name: policycoreutils-python
     state: present
 
-# Allow errors here
 - name: Allow port 1000 to be run
   become: yes
   become_user: root
@@ -49,26 +48,6 @@
   become: true
   become_method: su
   become_user: root
-
-# - name: Insert whitelisted csp sources
-#   lineinfile:
-#     path: /etc/nginx/conf.d/proxy.conf
-#     regexp: 'add_header Content-Security-Policy "default-src ''self'';";'
-#     line: '        add_header Content-Security-Policy {{ allow_csp_payload }}'
-#     backrefs: yes
-#   become: true
-#   become_method: su
-#   become_user: root
-
-# - name: set localhost port to {{ api_port_number }}
-#   lineinfile:
-#     path: /etc/nginx/conf.d/proxy.conf
-#     regexp: 'proxy_pass(.*)$'
-#     line: '        proxy_pass http://localhost:{{ api_port_number }}/;'
-#     backrefs: yes
-#   become: true
-#   become_method: su
-#   become_user: root
 
 - name: Replace default nginx.conf with new one where the default server runs on port 1000
   copy:

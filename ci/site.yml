@@ -16,7 +16,7 @@
     - temp_folder: /tmp
   pre_tasks:
     # Open ports for Jenkins
-    # - include: tasks/firewall.yml
+     - include: tasks/firewall.yml
   roles:
     - geerlingguy.jenkins
   become_user: jenkins
@@ -30,5 +30,4 @@
     - include: tasks/git.yml
     # Install Node.js
     - include: ../tasks/nodejs.yml
-
 ...

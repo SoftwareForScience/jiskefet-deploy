@@ -8,6 +8,7 @@ The current folder (`/ci`) contains a separate playbook for setting up a Jenkins
 
 1. [Deploy](#Deploy)
 2. [Workflow](#Workflow)
+3. [Webhooks and repo status in Github](#Webhooks-and-repo-status-in-GitHub)
 
 ## Deploy
 The following section describes the steps required to deploy Jenkins on a remote server.
@@ -42,5 +43,44 @@ The general workflow for creating jobs:
     # When Jenkins runs locally
     $ cp -r /Users/Bob/.jenkins/jobs ~/projects/jiskefet-deploy/ci/files/jobs
     ```
+
+[Back to table of contents](#Table-of-contents)
+
+## Webhooks and repo status in GitHub
+The following section describes steps to ensure that Jenkins automatically builds a project when a change is pushed to GitHub and to make Jenkins push build status updates to GitHub.
+
+Settings that need to be configured:  
+(more info on the GitHub plugin for Jenkins can be found [here](https://wiki.jenkins.io/display/JENKINS/GitHub+Plugin))
+
+### GitHub Webhook
+Create a webhook in GitHub with the following settings:
+![webhook-github-example.png could not be found.](../docs/assets/webhook-github-example.png)
+
+The payload URL is the address to your Jenkins web UI.
+
+### Project
+The following settings need to be set in your Jenkins project.
+Projects are displayed in the root of your web UI and look like this:
+![project.png could not be found.](../docs/assets/project-example.png)
+
+#### Git settings
+Project settings for the Jenkins plugin named 'Git plugin'.
+![git-plugin-example.png could not be found.](../docs/assets/git-plugin-example.png)
+
+#### GitHub settings
+Project settings for the Jenkins plugin named 'GitHub plugin'.
+![build-triggers-example.png could not be found.](../docs/assets/build-triggers-example.png)
+
+![post-build-example.png could not be found.](../docs/assets/post-build-example.png)
+
+### Global settings
+These are the global settings in `Manage Jenkins > Configure System`. These 'GitHub Servers' are used to make authenticated HTTP requests between the Jenkins server and GitHub.
+
+Both servers use the credential option 'Secret text' under the field 'Kind'.
+![secret-text-example.png could not be found.](../docs/assets/secret-text-example.png)
+
+The first server uses the same webhook secret as defined in your webhook in GitHub.  
+The second server uses a 'Personal access token' from GitHub as a secret. Such a token can be made at https://github.com/settings/tokens and in this case is bound to a GitHub user.
+![global-options-example.png could not be found.](../docs/assets/global-options-example.png)
 
 [Back to table of contents](#Table-of-contents)
