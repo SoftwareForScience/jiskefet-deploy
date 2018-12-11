@@ -36,6 +36,13 @@
     line: "<denyAnonymousReadAccess>true</denyAnonymousReadAccess>"
     regexp: "<denyAnonymousReadAccess>"
 
+- name: Set owner of jenkins dir to user and group jenkins.
+  file:
+    path: /var/lib/jenkins
+    owner: jenkins
+    group: jenkins
+    recurse: yes
+
 - name: Restart jenkins
   become: true
   become_user: root

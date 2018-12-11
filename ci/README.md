@@ -13,8 +13,8 @@ The current folder (`/ci`) contains a separate playbook for setting up a Jenkins
 ## Deploy
 The following section describes the steps required to deploy Jenkins on a remote server.
 
+- Set your hosts in the `hosts` file and make sure you can [connect to the servers via ssh](../docs/setting_up_ssh.md).
 - Copy the `variables.yml.dist` as `variables.yml`. Change the variables to the appropriate values where needed. [More info on these variables](roles/geerlingguy.jenkins/README.md).
-- Make sure you can [connect to the server via ssh](../docs/setting_up_ssh.md).
 - Run playbook.
   ```
   $ ansible-playbook site.yml
@@ -37,11 +37,11 @@ The general workflow for creating jobs:
     **Example**  
     ```bash
     # When Jenkins runs remotely
-    # scp -r <HOST_ALIAS>:<PATH_ON_HOST> <LOCAL_PATH_TO_COPY_TO>
-    $ scp -r jiskefet-ci:/var/lib/jenkins/jobs ~/projects/jiskefet-deploy/ci/files/jobs
+    # scp -r <HOST_ALIAS>:<PATH_ON_HOST> <LOCAL_PATH_TO_PROJECT>/ci/files
+    $ scp -r jiskefet-ci:/var/lib/jenkins/jobs ~/projects/jiskefet-deploy/ci/files
 
     # When Jenkins runs locally
-    $ cp -r /Users/Bob/.jenkins/jobs ~/projects/jiskefet-deploy/ci/files/jobs
+    $ cp -r /Users/Bob/.jenkins/jobs ~/projects/jiskefet-deploy/ci/files
     ```
 
 [Back to table of contents](#Table-of-contents)

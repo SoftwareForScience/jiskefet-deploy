@@ -1,7 +1,8 @@
-Started on Dec 11, 2018 12:30:00 AM
+Started on Dec 11, 2018 1:35:52 AM
+Started by event from 192.30.252.45 ⇒ http://ci-jiskefet.westeurope.cloudapp.azure.com:8080/github-webhook/ on Tue Dec 11 01:35:52 UTC 2018
 Polling SCM changes on master
 Using strategy: Default
-[poll] Last Built Revision: Revision f975c9481fcf2882dd1da956bb08567504f4f77e (origin/feature/CERN-SSO)
+[poll] Last Built Revision: Revision 897985d6f160fd219d117b4bc7c1ae70e6162cbb (origin/feature/81-jenkins)
  > git rev-parse --is-inside-work-tree # timeout=10
 Fetching changes from the remote Git repositories
  > git config remote.origin.url https://github.com/SoftwareForScience/jiskefet-api.git # timeout=10
@@ -21,5 +22,6 @@ Seen branch in repository origin/master
 Seen branch in repository origin/refactor/21-mocha-to-jest
 Seen 10 remote branches
  > git show-ref --tags -d # timeout=10
-Done. Took 1.1 sec
-No changes
+ > git log --full-history --no-abbrev --format=raw -M -m 897985d6f160fd219d117b4bc7c1ae70e6162cbb..11f28116d0b78350c9fcde8cc99fabc46e7a2c3f # timeout=10
+Done. Took 0.91 sec
+Changes found

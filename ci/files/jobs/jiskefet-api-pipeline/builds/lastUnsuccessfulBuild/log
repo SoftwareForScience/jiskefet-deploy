@@ -1,0 +1,442 @@
+Started by user [8mha:////4EdKZxGxHGRCbCvh73CnKrJfu0zLTQ6WRTk4Igfm6FrpAAAAlx+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAzWEgZu/dLi1CL93MzijEQA+TYahcAAAAA=[0mMisha
+Building in workspace /Users/Misha/.jenkins/workspace/Jiskefet item
+ > git rev-parse --is-inside-work-tree # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/SoftwareForScience/jiskefet-api.git # timeout=10
+Fetching upstream changes from https://github.com/SoftwareForScience/jiskefet-api.git
+ > git --version # timeout=10
+ > git fetch --tags --progress https://github.com/SoftwareForScience/jiskefet-api.git +refs/heads/*:refs/remotes/origin/*
+Seen branch in repository origin/develop
+Seen branch in repository origin/feature/39-developer-section
+Seen branch in repository origin/feature/52-query-only
+Seen branch in repository origin/feature/6-http-responses
+Seen branch in repository origin/feature/81-jenkins
+Seen branch in repository origin/feature/CERN-SSO
+Seen branch in repository origin/feature/infologger
+Seen branch in repository origin/hotfix/cors-c
+Seen branch in repository origin/master
+Seen branch in repository origin/refactor/21-mocha-to-jest
+Seen 10 remote branches
+ > git show-ref --tags -d # timeout=10
+Checking out Revision eb74f6415441dfdbbafd16e6d55eb512350b3198 (origin/feature/81-jenkins)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f eb74f6415441dfdbbafd16e6d55eb512350b3198
+Commit message: "Testing Jenkins"
+ > git rev-list --no-walk eb74f6415441dfdbbafd16e6d55eb512350b3198 # timeout=10
+[Jiskefet item] $ /bin/sh -xe /var/folders/b5/6n0fk_px1j38b932x6vhmjx00000gn/T/jenkins397515837751689509.sh
++ npm i
+npm WARN jiskefet-api@0.0.0 No repository field.
+
+audited 26507 packages in 8.502s
+found 0 vulnerabilities
+
++ npx tslint -c tslint.json 'src/**/*.ts'
++ npm t
+
+> jiskefet-api@0.0.0 test /Users/Misha/.jenkins/workspace/Jiskefet item
+> jest --coverage
+
+FAIL test/controllers/log.service.spec.ts
+  ● Test suite failed to run
+
+    Your test suite must contain at least one test.
+
+      at node_modules/jest/node_modules/jest-cli/build/TestScheduler.js:256:22
+
+FAIL test/utility/auth.utility.spec.ts
+  ● Test suite failed to run
+
+    Your test suite must contain at least one test.
+
+      at node_modules/jest/node_modules/jest-cli/build/TestScheduler.js:256:22
+
+[31m[Nest] 35007   - [39m2018-12-9 13:42:29   [38;5;3m[TypeOrmModule] [39m[31mUnable to connect to the database. Retrying (1)...[39m
+Error: No connection options were found in any of configurations file.
+    at ConnectionOptionsReader.<anonymous> (/Users/Misha/.jenkins/workspace/Jiskefet item/src/connection/ConnectionOptionsReader.ts:41:19)
+    at step (/Users/Misha/.jenkins/workspace/Jiskefet item/node_modules/typeorm/connection/ConnectionOptionsReader.js:32:23)
+    at Object.next (/Users/Misha/.jenkins/workspace/Jiskefet item/node_modules/typeorm/connection/ConnectionOptionsReader.js:13:53)
+    at fulfilled (/Users/Misha/.jenkins/workspace/Jiskefet item/node_modules/typeorm/connection/ConnectionOptionsReader.js:4:58)
+    at <anonymous>
+    at process._tickCallback (internal/process/next_tick.js:188:7)
+[31m[Nest] 35006   - [39m2018-12-9 13:42:29   [38;5;3m[TypeOrmModule] [39m[31mUnable to connect to the database. Retrying (1)...[39m
+Error: No connection options were found in any of configurations file.
+    at ConnectionOptionsReader.<anonymous> (/Users/Misha/.jenkins/workspace/Jiskefet item/src/connection/ConnectionOptionsReader.ts:41:19)
+    at step (/Users/Misha/.jenkins/workspace/Jiskefet item/node_modules/typeorm/connection/ConnectionOptionsReader.js:32:23)
+    at Object.next (/Users/Misha/.jenkins/workspace/Jiskefet item/node_modules/typeorm/connection/ConnectionOptionsReader.js:13:53)
+    at fulfilled (/Users/Misha/.jenkins/workspace/Jiskefet item/node_modules/typeorm/connection/ConnectionOptionsReader.js:4:58)
+    at <anonymous>
+    at process._tickCallback (internal/process/next_tick.js:188:7)
+[31m[Nest] 35007   - [39m2018-12-9 13:42:32   [38;5;3m[TypeOrmModule] [39m[31mUnable to connect to the database. Retrying (2)...[39m[38;5;3m +3008ms[39m
+Error: No connection options were found in any of configurations file.
+    at ConnectionOptionsReader.<anonymous> (/Users/Misha/.jenkins/workspace/Jiskefet item/src/connection/ConnectionOptionsReader.ts:41:19)
+    at step (/Users/Misha/.jenkins/workspace/Jiskefet item/node_modules/typeorm/connection/ConnectionOptionsReader.js:32:23)
+    at Object.next (/Users/Misha/.jenkins/workspace/Jiskefet item/node_modules/typeorm/connection/ConnectionOptionsReader.js:13:53)
+    at fulfilled (/Users/Misha/.jenkins/workspace/Jiskefet item/node_modules/typeorm/connection/ConnectionOptionsReader.js:4:58)
+    at <anonymous>
+[31m[Nest] 35006   - [39m2018-12-9 13:42:32   [38;5;3m[TypeOrmModule] [39m[31mUnable to connect to the database. Retrying (2)...[39m[38;5;3m +3008ms[39m
+Error: No connection options were found in any of configurations file.
+    at ConnectionOptionsReader.<anonymous> (/Users/Misha/.jenkins/workspace/Jiskefet item/src/connection/ConnectionOptionsReader.ts:41:19)
+    at step (/Users/Misha/.jenkins/workspace/Jiskefet item/node_modules/typeorm/connection/ConnectionOptionsReader.js:32:23)
+    at Object.next (/Users/Misha/.jenkins/workspace/Jiskefet item/node_modules/typeorm/connection/ConnectionOptionsReader.js:13:53)
+    at fulfilled (/Users/Misha/.jenkins/workspace/Jiskefet item/node_modules/typeorm/connection/ConnectionOptionsReader.js:4:58)
+    at <anonymous>
+FAIL test/controllers/log.controller.e2e-spec.ts (16.883s)
+  ● LogController › POST /logs › should return status 201
+
+    Timeout - Async callback was not invoked within the 5000ms timeout specified by jest.setTimeout.
+
+      at mapper (node_modules/jest-jasmine2/build/queue_runner.js:41:52)
+
+  ● LogController › POST /logs › should return status 201
+
+    TypeError: Cannot read property 'getHttpServer' of undefined
+
+
+
+      at Object.it (test/controllers/log.controller.e2e-spec.ts:1533:32)
+
+  ● LogController › POST /logs › should return JSON
+
+    Timeout - Async callback was not invoked within the 5000ms timeout specified by jest.setTimeout.
+
+      at mapper (node_modules/jest-jasmine2/build/queue_runner.js:41:52)
+
+  ● LogController › POST /logs › should return JSON
+
+    TypeError: Cannot read property 'getHttpServer' of undefined
+
+
+
+      at Object.it (test/controllers/log.controller.e2e-spec.ts:1540:32)
+
+  ● LogController › POST /logs › should return an object containing "test log" as a title
+
+    Timeout - Async callback was not invoked within the 5000ms timeout specified by jest.setTimeout.
+
+      at mapper (node_modules/jest-jasmine2/build/queue_runner.js:41:52)
+
+  ● LogController › POST /logs › should return an object containing "test log" as a title
+
+    TypeError: Cannot read property 'getHttpServer' of undefined
+
+
+
+      at Object.<anonymous> (test/controllers/log.controller.e2e-spec.ts:1549:103)
+      at test/controllers/log.controller.e2e-spec.ts:1472:179
+      at Object.<anonymous>.__awaiter (test/controllers/log.controller.e2e-spec.ts:1437:12)
+      at Object.it (test/controllers/log.controller.e2e-spec.ts:1546:20)
+
+  ● LogController › GET /logs › should return status 200
+
+    Timeout - Async callback was not invoked within the 5000ms timeout specified by jest.setTimeout.
+
+      at mapper (node_modules/jest-jasmine2/build/queue_runner.js:41:52)
+
+  ● LogController › GET /logs › should return status 200
+
+    TypeError: Cannot read property 'getHttpServer' of undefined
+
+
+
+      at Object.it (test/controllers/log.controller.e2e-spec.ts:1564:32)
+
+  ● LogController › GET /logs › should return JSON
+
+    Timeout - Async callback was not invoked within the 5000ms timeout specified by jest.setTimeout.
+
+      at mapper (node_modules/jest-jasmine2/build/queue_runner.js:41:52)
+
+  ● LogController › GET /logs › should return JSON
+
+    TypeError: Cannot read property 'getHttpServer' of undefined
+
+
+
+      at Object.it (test/controllers/log.controller.e2e-spec.ts:1571:32)
+
+  ● LogController › GET /logs › should return an object with a logs array
+
+    Timeout - Async callback was not invoked within the 5000ms timeout specified by jest.setTimeout.
+
+      at mapper (node_modules/jest-jasmine2/build/queue_runner.js:41:52)
+
+  ● LogController › GET /logs › should return an object with a logs array
+
+    TypeError: Cannot read property 'getHttpServer' of undefined
+
+
+
+      at Object.<anonymous> (test/controllers/log.controller.e2e-spec.ts:1580:103)
+      at test/controllers/log.controller.e2e-spec.ts:1472:179
+      at Object.<anonymous>.__awaiter (test/controllers/log.controller.e2e-spec.ts:1437:12)
+      at Object.it (test/controllers/log.controller.e2e-spec.ts:1577:20)
+
+  ● LogController › GET /logs/{id} › should return status 200
+
+    Timeout - Async callback was not invoked within the 5000ms timeout specified by jest.setTimeout.
+
+      at mapper (node_modules/jest-jasmine2/build/queue_runner.js:41:52)
+
+  ● LogController › GET /logs/{id} › should return status 200
+
+    TypeError: Cannot read property 'getHttpServer' of undefined
+
+
+
+      at Object.it (test/controllers/log.controller.e2e-spec.ts:1595:32)
+
+  ● LogController › GET /logs/{id} › should return JSON
+
+    Timeout - Async callback was not invoked within the 5000ms timeout specified by jest.setTimeout.
+
+      at mapper (node_modules/jest-jasmine2/build/queue_runner.js:41:52)
+
+  ● LogController › GET /logs/{id} › should return JSON
+
+    TypeError: Cannot read property 'getHttpServer' of undefined
+
+
+
+      at Object.it (test/controllers/log.controller.e2e-spec.ts:1602:32)
+
+  ● LogController › GET /logs/{id} › should return an object
+
+    Timeout - Async callback was not invoked within the 5000ms timeout specified by jest.setTimeout.
+
+      at mapper (node_modules/jest-jasmine2/build/queue_runner.js:41:52)
+
+  ● LogController › GET /logs/{id} › should return an object
+
+    TypeError: Cannot read property 'getHttpServer' of undefined
+
+
+
+      at Object.<anonymous> (test/controllers/log.controller.e2e-spec.ts:1611:103)
+      at test/controllers/log.controller.e2e-spec.ts:1472:179
+      at Object.<anonymous>.__awaiter (test/controllers/log.controller.e2e-spec.ts:1437:12)
+      at Object.it (test/controllers/log.controller.e2e-spec.ts:1608:20)
+
+FAIL test/controllers/run.controller.e2e-spec.ts (16.889s)
+  ● RunController › POST /runs › should return status 201
+
+    Timeout - Async callback was not invoked within the 5000ms timeout specified by jest.setTimeout.
+
+      at mapper (node_modules/jest-jasmine2/build/queue_runner.js:41:52)
+
+  ● RunController › POST /runs › should return status 201
+
+    TypeError: Cannot read property 'getHttpServer' of undefined
+
+
+
+      at Object.it (test/controllers/run.controller.e2e-spec.ts:1541:32)
+
+  ● RunController › POST /runs › should return JSON
+
+    Timeout - Async callback was not invoked within the 5000ms timeout specified by jest.setTimeout.
+
+      at mapper (node_modules/jest-jasmine2/build/queue_runner.js:41:52)
+
+  ● RunController › POST /runs › should return JSON
+
+    TypeError: Cannot read property 'getHttpServer' of undefined
+
+
+
+      at Object.it (test/controllers/run.controller.e2e-spec.ts:1548:32)
+
+  ● RunController › POST /runs › should return an object containing "Sl4e12ofb83no92ns" as the activityId
+
+    Timeout - Async callback was not invoked within the 5000ms timeout specified by jest.setTimeout.
+
+      at mapper (node_modules/jest-jasmine2/build/queue_runner.js:41:52)
+
+  ● RunController › POST /runs › should return an object containing "Sl4e12ofb83no92ns" as the activityId
+
+    TypeError: Cannot read property 'getHttpServer' of undefined
+
+
+
+      at Object.<anonymous> (test/controllers/run.controller.e2e-spec.ts:1557:102)
+      at test/controllers/run.controller.e2e-spec.ts:1472:177
+      at Object.<anonymous>.__awaiter (test/controllers/run.controller.e2e-spec.ts:1437:12)
+      at Object.it (test/controllers/run.controller.e2e-spec.ts:1554:20)
+
+  ● RunController › GET /runs › should return status 200
+
+    Timeout - Async callback was not invoked within the 5000ms timeout specified by jest.setTimeout.
+
+      at mapper (node_modules/jest-jasmine2/build/queue_runner.js:41:52)
+
+  ● RunController › GET /runs › should return status 200
+
+    TypeError: Cannot read property 'getHttpServer' of undefined
+
+
+
+      at Object.it (test/controllers/run.controller.e2e-spec.ts:1572:32)
+
+  ● RunController › GET /runs › should return JSON
+
+    Timeout - Async callback was not invoked within the 5000ms timeout specified by jest.setTimeout.
+
+      at mapper (node_modules/jest-jasmine2/build/queue_runner.js:41:52)
+
+  ● RunController › GET /runs › should return JSON
+
+    TypeError: Cannot read property 'getHttpServer' of undefined
+
+
+
+      at Object.it (test/controllers/run.controller.e2e-spec.ts:1579:32)
+
+  ● RunController › GET /runs › should return an object with a runs array
+
+    Timeout - Async callback was not invoked within the 5000ms timeout specified by jest.setTimeout.
+
+      at mapper (node_modules/jest-jasmine2/build/queue_runner.js:41:52)
+
+  ● RunController › GET /runs › should return an object with a runs array
+
+    TypeError: Cannot read property 'getHttpServer' of undefined
+
+
+
+      at Object.<anonymous> (test/controllers/run.controller.e2e-spec.ts:1588:102)
+      at test/controllers/run.controller.e2e-spec.ts:1472:177
+      at Object.<anonymous>.__awaiter (test/controllers/run.controller.e2e-spec.ts:1437:12)
+      at Object.it (test/controllers/run.controller.e2e-spec.ts:1585:20)
+
+  ● RunController › GET /runs/{id} › should return status 200
+
+    Timeout - Async callback was not invoked within the 5000ms timeout specified by jest.setTimeout.
+
+      at mapper (node_modules/jest-jasmine2/build/queue_runner.js:41:52)
+
+  ● RunController › GET /runs/{id} › should return status 200
+
+    TypeError: Cannot read property 'getHttpServer' of undefined
+
+
+
+      at Object.it (test/controllers/run.controller.e2e-spec.ts:1603:32)
+
+  ● RunController › GET /runs/{id} › should return JSON
+
+    Timeout - Async callback was not invoked within the 5000ms timeout specified by jest.setTimeout.
+
+      at mapper (node_modules/jest-jasmine2/build/queue_runner.js:41:52)
+
+  ● RunController › GET /runs/{id} › should return JSON
+
+    TypeError: Cannot read property 'getHttpServer' of undefined
+
+
+
+      at Object.it (test/controllers/run.controller.e2e-spec.ts:1610:32)
+
+  ● RunController › GET /runs/{id} › should return an object
+
+    Timeout - Async callback was not invoked within the 5000ms timeout specified by jest.setTimeout.
+
+      at mapper (node_modules/jest-jasmine2/build/queue_runner.js:41:52)
+
+  ● RunController › GET /runs/{id} › should return an object
+
+    TypeError: Cannot read property 'getHttpServer' of undefined
+
+
+
+      at Object.<anonymous> (test/controllers/run.controller.e2e-spec.ts:1619:102)
+      at test/controllers/run.controller.e2e-spec.ts:1472:177
+      at Object.<anonymous>.__awaiter (test/controllers/run.controller.e2e-spec.ts:1437:12)
+      at Object.it (test/controllers/run.controller.e2e-spec.ts:1616:20)
+
+-------------------------------------|----------|----------|----------|----------|-------------------|
+File                                 |  % Stmts | % Branch |  % Funcs |  % Lines | Uncovered Line #s |
+-------------------------------------|----------|----------|----------|----------|-------------------|
+All files                            |    68.05 |     9.01 |    21.92 |    65.85 |                   |
+ src                                 |    93.48 |        0 |        0 |     92.5 |                   |
+  app.controller.ts                  |    77.78 |      100 |        0 |    71.43 |             16,21 |
+  app.module.ts                      |      100 |      100 |      100 |      100 |                   |
+  app.service.ts                     |       80 |        0 |        0 |    66.67 |                17 |
+ src/controllers                     |    56.86 |        0 |        0 |    52.52 |                   |
+  attachment.controller.ts           |     62.5 |      100 |        0 |    57.14 | 22,31,40,43,44,48 |
+  auth.controller.ts                 |    31.58 |        0 |        0 |    27.78 |... 30,131,132,134 |
+  log.controller.ts                  |    73.68 |      100 |        0 |    70.59 |    24,32,40,49,58 |
+  overview.controller.ts             |       75 |      100 |        0 |       70 |          22,30,31 |
+  run.controller.ts                  |     62.5 |      100 |        0 |    59.09 |... 35,36,46,55,64 |
+  subsystem.controller.ts            |       75 |      100 |        0 |       70 |          21,28,37 |
+  user.controller.ts                 |    56.25 |      100 |        0 |    53.33 |... 67,70,77,79,90 |
+ src/dtos                            |    99.18 |        0 |       50 |    99.09 |                   |
+  create.attachment.dto.ts           |      100 |      100 |      100 |      100 |                   |
+  create.log.dto.ts                  |      100 |      100 |      100 |      100 |                   |
+  create.run.dto.ts                  |      100 |      100 |      100 |      100 |                   |
+  create.subsystemPermission.dto.ts  |    91.67 |        0 |        0 |    91.67 |                61 |
+  linkLogToRun.run.dto.ts            |      100 |      100 |      100 |      100 |                   |
+  linkRunToLog.log.dto.ts            |      100 |      100 |      100 |      100 |                   |
+  query.log.dto.ts                   |      100 |      100 |      100 |      100 |                   |
+  query.overview.dto.ts              |      100 |      100 |      100 |      100 |                   |
+  query.run.dto.ts                   |      100 |      100 |       50 |      100 |                   |
+ src/entities                        |    74.43 |      100 |        0 |     77.6 |                   |
+  attachment.entity.ts               |    85.71 |      100 |        0 |    83.33 |             19,20 |
+  detector.entity.ts                 |    71.43 |      100 |        0 |       80 |             22,25 |
+  detector_quality_history.entity.ts |    68.42 |      100 |        0 |    64.71 | 21,22,31,32,41,42 |
+  detectors_in_run.entity.ts         |    69.23 |      100 |        0 |    77.78 |             17,27 |
+  epn_role_session.entity.ts         |     87.5 |      100 |        0 |    92.31 |                26 |
+  flp_role.entity.ts                 |    83.33 |      100 |        0 |    88.89 |                23 |
+  log.entity.ts                      |    75.86 |      100 |        0 |    76.92 |... 90,105,106,121 |
+  report_preference.entity.ts        |    77.78 |      100 |        0 |    71.43 |             16,17 |
+  run.entity.ts                      |       70 |      100 |        0 |    80.49 |... 14,117,120,123 |
+  run_eor_history.entity.ts          |       75 |      100 |        0 |    71.43 |       20,21,36,37 |
+  run_quality_history.entity.ts      |    73.33 |      100 |        0 |    69.23 |       20,21,30,31 |
+  sub_system.entity.ts               |       80 |      100 |        0 |    85.71 |                21 |
+  sub_system_permission.entity.ts    |       75 |      100 |        0 |    72.22 |    29,30,42,43,78 |
+  sub_system_role.entity.ts          |      100 |      100 |      100 |      100 |                   |
+  tag.entity.ts                      |      100 |      100 |      100 |      100 |                   |
+  user.entity.ts                     |    58.97 |      100 |        0 |    72.41 |... 47,50,53,56,59 |
+  user_filter.entity.ts              |    77.78 |      100 |        0 |    71.43 |             19,20 |
+  user_notification.entity.ts        |    81.82 |      100 |        0 |    77.78 |             16,17 |
+ src/enums                           |      100 |      100 |      100 |      100 |                   |
+  log.origin.enum.ts                 |      100 |      100 |      100 |      100 |                   |
+  log.subtype.enum.ts                |      100 |      100 |      100 |      100 |                   |
+  orderDirection.enum.ts             |      100 |      100 |      100 |      100 |                   |
+  run.runquality.enum.ts             |      100 |      100 |      100 |      100 |                   |
+  run.runtype.enum.ts                |      100 |      100 |      100 |      100 |                   |
+ src/helpers                         |    45.45 |      100 |        0 |       50 |                   |
+  auth.helper.ts                     |    45.45 |      100 |        0 |       50 |    25,26,27,29,30 |
+ src/modules                         |      100 |      100 |      100 |      100 |                   |
+  attachment.module.ts               |      100 |      100 |      100 |      100 |                   |
+  auth.module.ts                     |      100 |      100 |      100 |      100 |                   |
+  log.module.ts                      |      100 |      100 |      100 |      100 |                   |
+  overview.module.ts                 |      100 |      100 |      100 |      100 |                   |
+  run.module.ts                      |      100 |      100 |      100 |      100 |                   |
+  subsystem.module.ts                |      100 |      100 |      100 |      100 |                   |
+  subsystem_permission.module.ts     |      100 |      100 |      100 |      100 |                   |
+  user.module.ts                     |      100 |      100 |      100 |      100 |                   |
+ src/services                        |    31.38 |        0 |     1.79 |    25.79 |                   |
+  attachment.service.ts              |       50 |      100 |        0 |    42.86 |... 33,34,42,45,46 |
+  auth.service.ts                    |    18.87 |        0 |        0 |    15.69 |... 54,155,158,166 |
+  bcrypt.service.ts                  |       60 |      100 |       20 |       50 |       22,23,33,34 |
+  log.service.ts                     |    23.81 |        0 |        0 |       20 |... 36,137,142,146 |
+  overview.service.ts                |    36.84 |        0 |        0 |    29.41 |... 50,51,52,53,55 |
+  run.service.ts                     |    22.92 |        0 |        0 |    19.57 |... 52,153,154,155 |
+  subsystem.service.ts               |    58.33 |      100 |        0 |       50 |    20,28,31,32,39 |
+  subsystem_permission.service.ts    |    36.36 |      100 |        0 |       30 |... 58,60,68,79,80 |
+  user.service.ts                    |    47.06 |        0 |        0 |       40 |... 34,35,37,45,55 |
+ src/strategies                      |    46.67 |        0 |        0 |    38.46 |                   |
+  jwt.strategy.ts                    |    46.67 |        0 |        0 |    38.46 |... 30,33,34,35,37 |
+ src/utility                         |    41.67 |        0 |        0 |       30 |                   |
+  auth.utility.ts                    |    41.67 |        0 |        0 |       30 |... 27,28,29,31,33 |
+ test/controllers                    |    85.71 |      100 |      100 |    83.78 |                   |
+  log.controller.e2e-spec.ts         |    85.71 |      100 |      100 |    83.78 |25,26,28,67,91,114 |
+  run.controller.e2e-spec.ts         |    85.71 |      100 |      100 |    83.78 |25,26,28,75,99,122 |
+-------------------------------------|----------|----------|----------|----------|-------------------|
+Test Suites: 4 failed, 4 total
+Tests:       18 failed, 18 total
+Snapshots:   0 total
+Time:        17.811s
+Ran all test suites.
+npm ERR! Test failed.  See above for more details.
+Build step 'Execute shell' marked build as failure
+Finished: FAILURE

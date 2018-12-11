@@ -16,11 +16,9 @@
     - temp_folder: /tmp
   pre_tasks:
     # Open ports for Jenkins
-     - include: tasks/firewall.yml
+    - include: tasks/firewall.yml
   roles:
     - geerlingguy.jenkins
-  become_user: jenkins
-  become: yes
   tasks:
     # Setup reverse proxy to serve jenkins
     - include: tasks/nginx.yml

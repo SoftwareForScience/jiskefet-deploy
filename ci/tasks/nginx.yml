@@ -49,6 +49,16 @@
   become_method: su
   become_user: root
 
+- name: set localhost port to {{ jenkins_http_port }}
+  lineinfile:
+    path: /etc/nginx/conf.d/proxy.conf
+    regexp: 'proxy_pass(.*)$'
+    line: '        proxy_pass http://localhost:{{ jenkins_http_port }}/;'
+    backrefs: yes
+  become: true
+  become_method: su
+  become_user: root
+
 - name: Replace default nginx.conf with new one where the default server runs on port 1000
   copy:
     src: nginx.conf
