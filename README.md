@@ -8,7 +8,8 @@ Jiskefet project.
 
 This is the **Ansible playbook** to deploy the Jiskefet project.   
 The **front-end UI** can be found here: https://github.com/SoftwareForScience/jiskefet-ui  
-And the **back-end API** can be found here: https://github.com/SoftwareForScience/jiskefet-api 
+And the **back-end API** can be found here: https://github.com/SoftwareForScience/jiskefet-api  
+For the separate **Jenkins CI** playbook, see table of contents.
  
 ## Table of Contents
 
@@ -21,7 +22,7 @@ And the **back-end API** can be found here: https://github.com/SoftwareForScienc
 - General information
   - [System requirements](docs/system_requirements.md)
   - [Deployment diagram](docs/deployment_diagram.md)
--  [Continuous integration with Jenkins](ci/README.md)
+-  [Continuous integration with Jenkins (separate playbook)](ci/README.md)
 
 
 ## Quick Start
