@@ -7,11 +7,26 @@
 #  */
 
 ---
-- name: Setup firewall to allow connections to Jenkins on port specified as var.
+- name: Setup firewall to allow connections to port 80 and 443
   become: true
   become_user: root
   command: "{{ item }}"
   with_items:
-  - firewall-cmd --zone=public --add-port={{ jenkins_http_port }}/tcp --permanent
+  - firewall-cmd --permanent --zone=public --add-service=http
+  - firewall-cmd --permanent --zone=public --add-service=https
   - firewall-cmd --reload
+
+- name: Allow http network to connect in SELinux
+  become: true
+  become_user: root
+  command: setsebool httpd_can_network_connect on -P
+
+# - name: Setup firewall to allow connections to Jenkins on port specified as var.
+#   become: true
+#   become_user: root
+#   command: "{{ item }}"
+#   with_items:
+#   - firewall-cmd --zone=public --add-port={{ jenkins_http_port }}/tcp --permanent
+#   - firewall-cmd --reload
+
 ...

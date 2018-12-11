@@ -12,14 +12,23 @@
   remote_user: root
   vars_files:
     - variables.yml
+  vars:
+    - temp_folder: /tmp
+  pre_tasks:
+    # Open ports for Jenkins
+    # - include: tasks/firewall.yml
   roles:
-     - geerlingguy.jenkins
+    - geerlingguy.jenkins
   become_user: jenkins
   become: yes
   tasks:
-    # Open ports for Jenkins
-    - include: tasks/firewall.yml
-    
+    # Setup reverse proxy to serve jenkins
+    - include: tasks/nginx.yml
     # Configure Jenkins
     - include: tasks/jenkins.yml
+    # Install Git
+    - include: tasks/git.yml
+    # Install Node.js
+    - include: ../tasks/nodejs.yml
+
 ...
