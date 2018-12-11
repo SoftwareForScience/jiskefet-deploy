@@ -1,5 +1,7 @@
 # Continuous Integration (CI) with Jenkins
 The current folder (`/ci`) contains a separate playbook for setting up a Jenkins CI server.
+  
+**Note:** there is currently no support for running both this CI playbook and the base playbook against the same host(s).
 
 [To table of contents in README.md](../README.md#table-of-contents)
 
