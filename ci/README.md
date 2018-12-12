@@ -35,14 +35,19 @@ The following section describes the steps required to deploy Jenkins on a remote
 **Note for running tests:**   
 To be able to run `npm run test` for end-to-end tests in the jiskefet-api, a `.env` should contain the credentials to connect to the test database that is created by this playbook.
 
-`.env` needs to be manually created on the server via ssh. The project is located in either `/var/lib/jenkins/jobs/<project_name>/workspace` (or `/var/lib/jenkins/workspace/<project_name>`). 
+`.env` and `ormconfig.json` need to be manually created on the server via ssh. The project is located in either `/var/lib/jenkins/jobs/<project_name>/workspace` (or `/var/lib/jenkins/workspace/<project_name>`). 
 
-You can copy the staging env for this:  
+You can copy the staging env for creating the `.env`:  
 ```bash
 $ cp PATH_TO_PROJECT/<project_name>/environments/staging.env.template .env
 ```
 
-And then change the test db variables and the JWT secret, which are required for running tests against the db with authenticated API calls.
+You can copy the `ormconfig.json.dist` for creating the `ormconfig.json`:
+```bash
+$ cp PATH_TO_PROJECT/<project_name>/ormconfig.json.dist .ormconfig.json
+```
+
+And then change the test db variables and the JWT secret in the `.env`, which are required for running tests against the db with authenticated API calls.
 
 [Back to table of contents](#Table-of-contents)
 
