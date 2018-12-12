@@ -1,0 +1,32 @@
+Started by an SCM change
+Building in workspace /Users/Misha/.jenkins/workspace/Jiskefet item
+ > git rev-parse --is-inside-work-tree # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/SoftwareForScience/jiskefet-api.git # timeout=10
+Fetching upstream changes from https://github.com/SoftwareForScience/jiskefet-api.git
+ > git --version # timeout=10
+ > git fetch --tags --progress https://github.com/SoftwareForScience/jiskefet-api.git +refs/heads/*:refs/remotes/origin/*
+Seen branch in repository origin/develop
+Seen branch in repository origin/feature/39-developer-section
+Seen branch in repository origin/feature/52-query-only
+Seen branch in repository origin/feature/6-http-responses
+Seen branch in repository origin/feature/81-jenkins
+Seen branch in repository origin/feature/CERN-SSO
+Seen branch in repository origin/feature/infologger
+Seen branch in repository origin/hotfix/cors-c
+Seen branch in repository origin/master
+Seen branch in repository origin/refactor/21-mocha-to-jest
+Seen 10 remote branches
+ > git show-ref --tags -d # timeout=10
+Multiple candidate revisions
+Scheduling another build to catch up with Jiskefet item
+Checking out Revision 38531a3d375f9e91666232dc067defbfe1cbcc42 (origin/feature/52-query-only)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 38531a3d375f9e91666232dc067defbfe1cbcc42
+Commit message: "PoC join users with logs"
+First time build. Skipping changelog.
+[Jiskefet item] $ /bin/sh -xe /var/folders/b5/6n0fk_px1j38b932x6vhmjx00000gn/T/jenkins3557233596094168399.sh
++ tslint -c tslint.json 'src/**/*.ts'
+/var/folders/b5/6n0fk_px1j38b932x6vhmjx00000gn/T/jenkins3557233596094168399.sh: line 2: tslint: command not found
+Build step 'Execute shell' marked build as failure
+Finished: FAILURE

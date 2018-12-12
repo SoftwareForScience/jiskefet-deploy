@@ -1,0 +1,47 @@
+---
+# ------------------------------------------------------------------------------
+# These variables overwrite the vars used in the galaxy role geerlingguy.jenkins.
+# Location of the vars: 
+# - roles/geerlingguy.jenkins/defaults 
+# - roles/geerlingguy.jenkins/vars/<YOUR_OS>
+# ------------------------------------------------------------------------------
+
+# Optional method of pinning a specific version of Jenkins and/or overriding the
+# default Jenkins packaging URL.
+# jenkins_version: "1.644"
+# jenkins_pkg_url: "https://www.example.com"
+
+# Change this to `latest` to update Jenkins if a newer version is available.
+jenkins_package_state: present
+
+jenkins_connection_delay: 5
+jenkins_connection_retries: 60
+jenkins_home: /var/lib/jenkins
+jenkins_http_port: 8080
+jenkins_jar_location: /opt/jenkins-cli.jar
+jenkins_url_prefix: ""
+jenkins_java_options: "-Djenkins.install.runSetupWizard=false"
+
+jenkins_plugins: [
+  git,
+  github,
+  pipeline
+]
+jenkins_plugins_state: present
+jenkins_plugin_updates_expiration: 86400
+jenkins_plugin_timeout: 30
+jenkins_plugins_install_dependencies: true
+
+jenkins_admin_username: admin # Change this
+jenkins_admin_password: admin # Change this
+jenkins_admin_password_file: ""
+
+jenkins_process_user: jenkins
+jenkins_process_group: "{{ jenkins_process_user }}"
+
+jenkins_init_changes:
+  - option: "JENKINS_ARGS"
+    value: "--prefix={{ jenkins_url_prefix }}"
+  - option: "{{ jenkins_java_options_env_var }}"
+    value: "{{ jenkins_java_options }}"
+...
