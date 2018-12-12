@@ -4,6 +4,7 @@
 ## Host machine specifications (machine executing ansible playbook(s))
 
 **Software**  
+
 Name | Version 
 ---- | --- 
 ansible | 2.5 or higher   
@@ -13,11 +14,13 @@ python | 2.7.5
 ## API and UI machine specifications
 
 **Hardware**  
+
 Component | Requirement 
 --- | --- 
 CPU | Minimum 2 cores   
 
 **Software**  
+
 Name | Version 
 ---- | --- 
 CentOS | Linux 7 (Core) 
