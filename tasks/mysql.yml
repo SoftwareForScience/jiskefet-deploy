@@ -93,6 +93,13 @@
     name: 'all'
     target: /var/lib/jiskefet/sql/create_db_charset_utf8mb4.sql
 
+- name: Restart mysql
+  become: yes
+  become_user: root
+  service:
+    name: mysql
+    state: restarted
+
 - name: Add firewall exceptions
   become: yes
   become_user: root
