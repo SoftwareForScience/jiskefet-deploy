@@ -1,0 +1,26 @@
+commit f975c9481fcf2882dd1da956bb08567504f4f77e
+tree b17039f8aec1f61d917891c8055f65e2325a8183
+parent baf8c051ca98318c770b18ecfc3055b03e6d6b30
+author aminChihab <amin_chihab@hotmail.com> 2018-12-10 12:37:50 +0100
+committer aminChihab <amin_chihab@hotmail.com> 2018-12-10 12:37:50 +0100
+
+    Abstract class for auth services which implements an interface for
+    Authentication, and auth services get instaniated by a auth service
+    facory
+
+
+
+:000000 100644 0000000000000000000000000000000000000000 26fea04c6adecdf44db77a2b9de5725abe22c89f A	src/abstracts/auth.service.abstract.ts
+:100644 100644 1f3497552278e9161c4edce78a6e6a72c5e9a971 1f3497552278e9161c4edce78a6e6a72c5e9a971 R100	src/interfaces/userprofile.abstract.ts	src/abstracts/userprofile.abstract.ts
+:100644 100644 770f624bf3725a572b810af941803626d6b62aaa 359ca6084bb42736c2e7c5e062b9d5381861fbeb M	src/app.module.ts
+:100644 100644 d784856c6166a0075b0aa50829fe96a56c2a52fd c0d04022f0b6c7fae66c1ee0af7c3365bed0ff39 M	src/controllers/auth.controller.ts
+:100644 100644 06e253afa55521bba560b60c2758351da9d63810 c418de529c8b44c0a9f6364bb19d837cca381d0b M	src/controllers/user.controller.ts
+:100644 100644 ff37a1594be89172ea82ebaa79eb6489cb506a13 7fd0526c4e8070fb763d3e0528850161f87a41ea M	src/dtos/cern.profile.dto.ts
+:100644 100644 ea4cdedb5748d7d56b573a09ef6b1fcd13662c8b 7af096e83f1ae27435134a5e0f6812b1b62dfa97 M	src/dtos/github.profile.dto.ts
+:000000 100644 0000000000000000000000000000000000000000 2ab2ca3fb88e8079ccd2448ab80c28ef43d8b454 A	src/factories/auth.service.factory.ts
+:000000 100644 0000000000000000000000000000000000000000 f2a34e4b587390a746df7c6338ea7a1ff326f675 A	src/interfaces/authentication.interface.ts
+:100644 100644 eed716615d878a68c89c8da386853fa4cee1fc8e 2c3d4a4c56aca5e52cb5388640065dc6d453f05f M	src/modules/auth.module.ts
+:100644 100644 12b2df1694818a1e2857406da130be20d36fc8cb c462ae43842a17f00029642c7ebc79e6291b56d7 M	src/modules/user.module.ts
+:100644 100644 48fb325483ed740001f922aa485103498d957b5d 5fcba21873c80251a860d1523e50fd308db31372 R087	src/services/auth.service.ts	src/services/cern.auth.service.ts
+:000000 100644 0000000000000000000000000000000000000000 4912fee7b7f5b07905ae176006d172be86181dab A	src/services/github.auth.service.ts
+:100644 100644 368dc5584428fbac12f92244c8a22c391df1614b e64bfa6d13dd9447c2bcc51584db99c7847e429b M	src/strategies/jwt.strategy.ts
