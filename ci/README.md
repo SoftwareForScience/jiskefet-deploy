@@ -17,6 +17,10 @@ The current folder (`/ci`) contains a separate playbook for setting up a Jenkins
 ## Deploy
 The following section describes the steps required to deploy Jenkins on a remote server.
 
+- Make sure you are in the `ci` directory.
+  ```bash
+  $ cd ci
+  ```
 - Set your hosts in the `hosts` file and make sure you can [connect to the servers via ssh](../docs/setting_up_ssh.md).
 - Copy the `variables.yml.dist` as `variables.yml`. Change the variables to the appropriate values where needed. [More info on these variables](roles/geerlingguy.jenkins/README.md).
 - Run playbook.
