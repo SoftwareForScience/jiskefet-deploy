@@ -1,0 +1,14 @@
+{
+    "database_config": {
+        "type": "mysql",
+        "host": "",
+        "port": 3306,
+        "username": "",
+        "password": "",
+        "database": "",
+        "entities": [
+            "src/**/**.entity{.ts,.js}"
+        ],
+        "synchronize": true
+    }
+}

@@ -1,5 +1,7 @@
 # Continuous Integration (CI) with Jenkins
-The current folder (`/ci`) contains a separate playbook for setting up a Jenkins CI server.
+The current folder (`/ci`) contains a separate playbook for setting up a Jenkins CI server. The server will have the following things:
+- Jenkins (behind an nginx reverse proxy).
+- MySQL database for running tests against.
   
 **Note:** there is currently no support for running both this CI playbook and the base playbook against the same host(s).
 
@@ -15,13 +17,37 @@ The current folder (`/ci`) contains a separate playbook for setting up a Jenkins
 ## Deploy
 The following section describes the steps required to deploy Jenkins on a remote server.
 
+- Make sure you are in the `ci` directory.
+
+  ```bash
+  $ cd ci
+  ```
 - Set your hosts in the `hosts` file and make sure you can [connect to the servers via ssh](../docs/setting_up_ssh.md).
 - Copy the `variables.yml.dist` as `variables.yml`. Change the variables to the appropriate values where needed. [More info on these variables](roles/geerlingguy.jenkins/README.md).
 - Run playbook.
-  ```
+
+  ```bash
   $ ansible-playbook site.yml
   ```
 - Open a browser and navigate to http://SERVER_ADDRESS to go to the Jenkins dashboard.
+- Configure jenkins and jobs individually where needed (e.g. setup webhooks). 
+  
+**Note for running tests:**   
+To be able to run `npm run test` for end-to-end tests in the jiskefet-api, a `.env` should contain the credentials to connect to the test database that is created by this playbook.
+
+`.env` and `ormconfig.json` need to be manually created on the server via ssh. The project is located in either `/var/lib/jenkins/jobs/<project_name>/workspace` (or `/var/lib/jenkins/workspace/<project_name>`). 
+
+You can copy the test env template for creating the `.env`:  
+```bash
+$ cp PATH_TO_PROJECT/<project_name>/environments/test.env.template .env
+```
+
+You can copy the `ormconfig.json.dist` for creating the `ormconfig.json`:
+```bash
+$ cp PATH_TO_PROJECT/<project_name>/ormconfig.json.dist .ormconfig.json
+```
+
+And then change the test db variables and the JWT secret in the `.env`, which are required for running tests against the db with authenticated API calls.
 
 [Back to table of contents](#Table-of-contents)
 
@@ -45,6 +71,7 @@ The general workflow for creating jobs:
     # When Jenkins runs locally
     $ cp -r /Users/Bob/.jenkins/jobs ~/projects/jiskefet-deploy/ci/files
     ```
+**WARNING**: Make sure to remove workspaces to ensure that `.env` variables are not being pushed by accident to GitHub. Workspaces exist in `jobs/<jobname>/workspace`.
 
 [Back to table of contents](#Table-of-contents)
 

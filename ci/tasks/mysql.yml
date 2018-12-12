@@ -1,0 +1,111 @@
+# /*
+#  * Copyright (C) 2018 Amsterdam University of Applied Sciences (AUAS)
+#  *
+#  * This software is distributed under the terms of the
+#  * GNU General Public Licence version 3 (GPL) version 3,
+#  * copied verbatim in the file "LICENSE"
+#  */
+
+--- # Install mariadb via ansible on centOS
+- name: Add official MariaDB repository
+  become: yes
+  become_user: root
+  yum_repository:
+    name: MariaDB
+    description: Official MariaDB repository
+    baseurl: "http://yum.mariadb.org/10.1/centos7-amd64"
+    gpgkey: https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+    gpgcheck: true
+  tags: mariadb
+
+- name: Install packages
+  become: yes
+  become_user: root
+  package:
+    name: "{{ item }}"
+    state: installed
+  with_items: 
+    - MariaDB
+    - MariaDB-server
+    - MySQL-python
+  tags: mariadb
+
+- name: Start mysql server and enable it on reboot
+  become: true
+  become_user: root
+  service: name=mariadb state=started enabled=true #debian: mysql
+
+- name: make sql directory at /var/lib/jiskefet
+  file:
+    path: /var/lib/jiskefet/sql
+    state: directory
+    owner: jiskefet-api
+
+- name: Copy my.cnf from local to remote
+  copy:
+    src: my.cnf
+    dest: /etc/my.cnf
+  become: true
+  become_method: su
+  become_user: root
+
+- name: Copy create_db_charset_utf8mb4.sql from local to remote
+  copy:
+    src: create_db_charset_utf8mb4.sql
+    dest: /var/lib/jiskefet/sql/create_db_charset_utf8mb4.sql
+  become: true
+  become_method: su
+  become_user: root
+
+- name: Replace create_db_charset_utf8mb4.sql database name with current name.
+  replace:
+    dest: /var/lib/jiskefet/sql/create_db_charset_utf8mb4.sql
+    regexp: 'database_name'
+    replace: '{{ database_config.database }}' 
+  
+- name: Output ansible hostname
+  debug: msg="Hostname is {{ ansible_hostname }}"
+
+- name: Update mysql root password for all root accounts
+  become: yes
+  become_user: root
+  mysql_user:
+    name: "{{ database_config.username }}"
+    host: "{{ item }}"
+    password: "{{ database_config.password }}"
+    login_user: "{{ database_config.username }}"
+    login_password: "{{ database_config.password }}"
+    check_implicit_admin: yes
+    priv: "*.*:ALL,GRANT"
+  with_items:
+    - "{{ ansible_hostname }}"
+    - 127.0.0.1
+    - ::1
+    - localhost
+    - "%"
+
+- name: Execute sql file
+  mysql_db: 
+    login_user: '{{ database_config.username }}' 
+    login_password: '{{ database_config.password }}'
+    state: import
+    name: 'all'
+    target: /var/lib/jiskefet/sql/create_db_charset_utf8mb4.sql
+
+- name: Restart mysql
+  become: yes
+  become_user: root
+  service:
+    name: mysql
+    state: restarted
+
+- name: Add firewall exceptions
+  become: yes
+  become_user: root
+  command: firewall-cmd --permanent --add-service=mysql 
+
+- name: Reload firewall
+  become: yes
+  become_user: root
+  command: firewall-cmd --reload
+...
