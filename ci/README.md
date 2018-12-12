@@ -45,6 +45,7 @@ The general workflow for creating jobs:
     # When Jenkins runs locally
     $ cp -r /Users/Bob/.jenkins/jobs ~/projects/jiskefet-deploy/ci/files
     ```
+**WARNING**: Make sure to remove workspaces to ensure that `.env` variables are not being pushed by accident to GitHub. Workspaces exist in `jobs/<jobname>/workspace`.
 
 [Back to table of contents](#Table-of-contents)
 
