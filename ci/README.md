@@ -1,5 +1,7 @@
 # Continuous Integration (CI) with Jenkins
-The current folder (`/ci`) contains a separate playbook for setting up a Jenkins CI server.
+The current folder (`/ci`) contains a separate playbook for setting up a Jenkins CI server. The server will have the following things:
+- Jenkins (behind an nginx reverse proxy).
+- MySQL database for running tests against.
   
 **Note:** there is currently no support for running both this CI playbook and the base playbook against the same host(s).
 
@@ -22,6 +24,12 @@ The following section describes the steps required to deploy Jenkins on a remote
   $ ansible-playbook site.yml
   ```
 - Open a browser and navigate to http://SERVER_ADDRESS to go to the Jenkins dashboard.
+- Configure jenkins and jobs individually where needed (e.g. setup webhooks). 
+  
+**Note**:   
+To be able to run `npm run test` for end-to-end tests in the jiskefet-api, a `.env` should contain the credentials to connect to the test database that is created by this playbook.
+
+`.env` needs to be manually created on the server via ssh. The project is located in either `/var/lib/jenkins/workspace/<project_name>` or `/var/lib/jenkins/jobs/<project_name>/workspace`.
 
 [Back to table of contents](#Table-of-contents)
 
