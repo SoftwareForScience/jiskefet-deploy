@@ -37,9 +37,9 @@ To be able to run `npm run test` for end-to-end tests in the jiskefet-api, a `.e
 
 `.env` and `ormconfig.json` need to be manually created on the server via ssh. The project is located in either `/var/lib/jenkins/jobs/<project_name>/workspace` (or `/var/lib/jenkins/workspace/<project_name>`). 
 
-You can copy the staging env for creating the `.env`:  
+You can copy the test env template for creating the `.env`:  
 ```bash
-$ cp PATH_TO_PROJECT/<project_name>/environments/staging.env.template .env
+$ cp PATH_TO_PROJECT/<project_name>/environments/test.env.template .env
 ```
 
 You can copy the `ormconfig.json.dist` for creating the `ormconfig.json`:
