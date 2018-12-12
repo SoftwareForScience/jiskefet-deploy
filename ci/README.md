@@ -18,22 +18,31 @@ The current folder (`/ci`) contains a separate playbook for setting up a Jenkins
 The following section describes the steps required to deploy Jenkins on a remote server.
 
 - Make sure you are in the `ci` directory.
+
   ```bash
   $ cd ci
   ```
 - Set your hosts in the `hosts` file and make sure you can [connect to the servers via ssh](../docs/setting_up_ssh.md).
 - Copy the `variables.yml.dist` as `variables.yml`. Change the variables to the appropriate values where needed. [More info on these variables](roles/geerlingguy.jenkins/README.md).
 - Run playbook.
-  ```
+
+  ```bash
   $ ansible-playbook site.yml
   ```
 - Open a browser and navigate to http://SERVER_ADDRESS to go to the Jenkins dashboard.
 - Configure jenkins and jobs individually where needed (e.g. setup webhooks). 
   
-**Note**:   
+**Note for running tests:**   
 To be able to run `npm run test` for end-to-end tests in the jiskefet-api, a `.env` should contain the credentials to connect to the test database that is created by this playbook.
 
-`.env` needs to be manually created on the server via ssh. The project is located in either `/var/lib/jenkins/workspace/<project_name>` or `/var/lib/jenkins/jobs/<project_name>/workspace`.
+`.env` needs to be manually created on the server via ssh. The project is located in either `/var/lib/jenkins/jobs/<project_name>/workspace` (or `/var/lib/jenkins/workspace/<project_name>`). 
+
+You can copy the staging env for this:  
+```bash
+$ cp PATH_TO_PROJECT/<project_name>/environments/staging.env.template .env
+```
+
+And then change the test db variables and the JWT secret, which are required for running tests against the db with authenticated API calls.
 
 [Back to table of contents](#Table-of-contents)
 
