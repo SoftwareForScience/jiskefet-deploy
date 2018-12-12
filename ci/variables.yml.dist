@@ -1,4 +1,12 @@
 ---
+# The config for the db that gets setup to run tests against
+database_config:
+  "host": "localhost"
+  "port": 3306
+  "username": "root"
+  "password": # Change this
+  "database": "jiskefet_test"
+
 # ------------------------------------------------------------------------------
 # These variables overwrite the vars used in the galaxy role geerlingguy.jenkins.
 # Location of the vars: 

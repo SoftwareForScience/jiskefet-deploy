@@ -17,6 +17,7 @@
   pre_tasks:
     # Open ports for Jenkins
     - include: tasks/firewall.yml
+    - include: ../tasks/create-jiskefet-user.yml
   roles:
     - geerlingguy.jenkins
   tasks:
@@ -28,4 +29,6 @@
     - include: tasks/git.yml
     # Install Node.js
     - include: ../tasks/nodejs.yml
+    # Install MySql (MariaDB)
+    - include: tasks/mysql.yml
 ...
