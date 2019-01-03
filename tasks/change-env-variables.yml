@@ -33,7 +33,7 @@
 - name: Set port number of the API server to {{ api_port_number }}
   lineinfile:
     path: /var/lib/jiskefet/jiskefet-api/.env
-    regexp: '^(.*)PORT=(.*)$'
+    regexp: 'PORT=(.*)$'
     line: "PORT={{ api_port_number }}"
     backrefs: yes   
 
