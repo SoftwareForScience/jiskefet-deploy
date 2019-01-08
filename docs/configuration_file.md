@@ -43,7 +43,7 @@ Specify which branch ansible should pull. The default branch is currently set to
 
 Change the api server's port number, the default is set to 3000.
 ```json
-"api_port_number": 3000
+"PORT": 3000
 ```
 
 ## DB config

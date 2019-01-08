@@ -60,11 +60,11 @@
   become_method: su
   become_user: root
 
-- name: set localhost port to {{ jiskefet_api_general_settings.API_PORT_NUMBER }}
+- name: set localhost port to {{ jiskefet_api_general_settings.PORT }}
   lineinfile:
     path: /etc/nginx/conf.d/proxy.conf
     regexp: 'proxy_pass(.*)$'
-    line: '        proxy_pass http://localhost:{{ jiskefet_api_general_settings.API_PORT_NUMBER }}/;'
+    line: '        proxy_pass http://localhost:{{ jiskefet_api_general_settings.PORT }}/;'
     backrefs: yes
   become: true
   become_method: su

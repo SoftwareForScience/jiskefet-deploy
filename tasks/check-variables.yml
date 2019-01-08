@@ -40,6 +40,13 @@
           or
           (item.value | trim == ''))
 
+  - name: Ensure that CERN url contains no placeholders
+    fail: 
+      msg: "CERN_AUTH_URL contain a placeholder"
+    when: use_cern_sso == "true"
+          and
+          (jiskefet_api_cern_settings.CERN_AUTH_URL is search("CLIENT_ID_HERE"))
+
   - name: Checking jiskefet_api_github_settings
     fail: 
       msg: "Variable {{ item.key }} has not been filled in"
@@ -51,6 +58,13 @@
           (item.value is none)
           or
           (item.value | trim == ''))
+  
+  - name: Ensure that Github url contains no placeholders
+    fail: 
+      msg: "GITHUB_AUTH_URL contain a placeholder"
+    when: use_cern_sso == "false"
+          and
+          (jiskefet_api_github_settings.GITHUB_AUTH_URL is search("CLIENT_ID_HERE"))
   
   - name: Checking jiskefet_ui_settings
     fail: 

@@ -11,7 +11,7 @@
     "use_cern_sso": "false",
     "jiskefet_api_general_settings": {
         "USE_API_PREFIX": "false",
-        "API_PORT_NUMBER": 3000,
+        "PORT": 3000,
         "TYPEORM_CONNECTION": "mysql",
         "TYPEORM_HOST": "",
         "TYPEORM_USERNAME": "",
