@@ -4,22 +4,59 @@
         "jiskefet_api": "https://github.com/",
         "jiskefet_ui": "https://github.com/"
     },
-    "repository_branch":{
+    "repository_branch": {
         "jiskefet_api": "master",
         "jiskefet_ui": "master"
     },
-    "api_port_number": 3000,
-    "database_config": {
-        "type": "mysql",
-        "host": "",
-        "port": 3306,
-        "username": "",
-        "password": "",
-        "database": "",
-        "entities": [
-            "src/**/**.entity{.ts,.js}"
-        ],
-        "synchronize": true
+    "use_cern_sso": "false",
+    "jiskefet_api_general_settings": {
+        "USE_API_PREFIX": "false",
+        "API_PORT_NUMBER": 3000,
+        "TYPEORM_CONNECTION": "mysql",
+        "TYPEORM_HOST": "",
+        "TYPEORM_USERNAME": "",
+        "TYPEORM_PASSWORD": "",
+        "TYPEORM_DATABASE": "",
+        "TYPEORM_PORT": 3306,
+        "TYPEORM_SYNCHRONIZE": "true",
+        "TYPEORM_LOGGING": "false",
+        "TYPEORM_ENTITIES": "src/**/**.entity{.ts,.js}",
+        "TYPEORM_MIGRATIONS": "src/migration/*{.ts,.js}",
+        "TYPEORM_MIGRATIONS_DIR": "src/migration",
+        "JWT_SECRET_KEY": "",
+        "JWT_EXPIRE_TIME":"1h",
+        "SUB_SYSTEM_TOKEN_EXPIRES_IN": "365 days",
+        "USE_INFO_LOGGER": "false"
+    },
+    "jiskefet_api_cern_settings": {
+        "CERN_AUTH_URL": "https://oauth.web.cern.ch/OAuth/Authorize?response_type=code&client_id=<CLIENT_ID_HERE>&redirect_uri=http://127.0.0.1:8080/callback",
+        "CERN_CLIENT_ID": "",
+        "CERN_CLIENT_SECRET": "",
+        "CERN_AUTH_TOKEN_HOST": "https://oauth.web.cern.ch/",
+        "CERN_AUTH_TOKEN_PATH": "oauth/token",
+        "CERN_RESOURCE_API_URL": "https://oauthresource.web.cern.ch/api/user"
+    },
+    "jiskefet_api_github_settings": {
+        "GITHUB_AUTH_URL": "https://github.com/login/oauth/authorize?response_type=code&client_id=<CLIENT_ID_HERE>&redirect_uri=http://localhost:8080/callback&state=yx_4404.!dcbR%40YR44yQ",
+        "GITHUB_CLIENT_ID": "",
+        "GITHUB_CLIENT_SECRET": "",
+        "GITHUB_AUTH_TOKEN_HOST": "https://github.com",
+        "GITHUB_AUTH_TOKEN_PATH": "/login/oauth/access_token",
+        "GITHUB_RESOURCE_API_URL": "https://api.github.com/user"
+    },
+    "jiskefet_api_optional_settings": {
+        "TEST_DB_CONNECTION": "mysql",
+        "TEST_DB_HOST": "localhost",
+        "TEST_DB_USERNAME": "",
+        "TEST_DB_PASSWORD": "",
+        "TEST_DB_DATABASE": "jiskefet_test",
+        "TEST_DB_PORT": "3306",
+        "TEST_DB_SYNCHRONIZE": "true",
+        "TEST_DB_LOGGING": "true",
+        "TEST_DB_ENTITIES": "src/**/**.entity{.ts,.js}"
+    },
+    "jiskefet_ui_settings":{ 
+        "API_URL": "http://localhost:3000/"
     },
     "allow_csp_payload": "\"default-src 'self' http://137.117.177.74 http://13.93.34.222 http://jiskefet.westeurope.cloudapp.azure.com https://github.com https://api.github.com; script-src 'self' https://use.fontawesome.com/releases/v5.3.1/js/all.js https://github.com https://api.github.com; style-src 'self' 'unsafe-inline'; object-src 'none'; font-src 'self' data: fonts.gstatic.com; img-src https://*.githubusercontent.com http://jiskefet.westeurope.cloudapp.azure.com;\";"
 }

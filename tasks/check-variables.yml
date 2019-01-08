@@ -1,0 +1,64 @@
+# /*
+#  * Copyright (C) 2018 Amsterdam University of Applied Sciences (AUAS)
+#  *
+#  * This software is distributed under the terms of the
+#  * GNU General Public Licence version 3 (GPL) version 3,
+#  * copied verbatim in the file "LICENSE"
+#  */
+
+---
+  - name: Verify if hostmachine meets the jiskefet-deploy's playbook Ansible requirement
+    assert:
+      that: "ansible_version.full is version_compare('2.5', '>=')"
+      msg: "You must update Ansible to at least 2.5 to use this playbook."
+
+  # # checking env
+  # - name: debug print
+  #   debug:
+  #     msg: "{{ item.key }} {{ item.value }}"
+  #   with_dict: "{{ jiskefet_api_general_settings }}"
+
+  - name: Checking jiskefet_api_general_settings
+    fail: 
+      msg: "Variable {{ item.key }} has not been filled in"
+    with_dict: "{{ jiskefet_api_general_settings }}"
+    when: ((item.value is undefined)
+          or
+          (item.value is none)
+          or
+          (item.value | trim == ''))
+
+  - name: Checking jiskefet_api_cern_settings
+    fail: 
+      msg: "Variable {{ item.key }} has not been filled in"
+    with_dict: "{{ jiskefet_api_cern_settings }}"
+    when: use_cern_sso == "true"
+          and
+          ((item.value is undefined)
+          or
+          (item.value is none)
+          or
+          (item.value | trim == ''))
+
+  - name: Checking jiskefet_api_github_settings
+    fail: 
+      msg: "Variable {{ item.key }} has not been filled in"
+    with_dict: "{{ jiskefet_api_github_settings }}"
+    when: use_cern_sso == "false"
+          and
+          ((item.value is undefined)
+          or
+          (item.value is none)
+          or
+          (item.value | trim == ''))
+  
+  - name: Checking jiskefet_ui_settings
+    fail: 
+      msg: "Variable {{ item.key }} has not been filled in"
+    with_dict: "{{ jiskefet_ui_settings }}"
+    when: (item.value is undefined)
+          or
+          (item.value is none)
+          or
+          (item.value | trim == '')
+...

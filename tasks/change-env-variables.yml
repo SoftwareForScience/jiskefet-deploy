@@ -19,6 +19,13 @@
     src: files/environments/jiskefet-ui.env
     dest: /var/lib/jiskefet/jiskefet-ui/.env
 
+- name: Set general settings for jiskefet-ui env
+  lineinfile:
+    path: /var/lib/jiskefet/jiskefet-ui/.env
+    regexp: "{{ item.key }}=(.*)$"
+    line: "{{ item.key }}={{ item.value }}"
+  with_dict: "{{ jiskefet_ui_settings }}"
+
 - name: Check if .env exists in jiskefet-api project
   stat:
     path: /var/lib/jiskefet/jiskefet-api/.env
@@ -30,15 +37,46 @@
     src: files/environments/jiskefet-api.env
     dest: /var/lib/jiskefet/jiskefet-api/.env
 
-- name: Set port number of the API server to {{ api_port_number }}
+- name: Set general settings for jiskefet-api env
   lineinfile:
     path: /var/lib/jiskefet/jiskefet-api/.env
-    regexp: 'PORT=(.*)$'
-    line: "PORT={{ api_port_number }}"
-    backrefs: yes   
+    regexp: "{{ item.key }}=(.*)$"
+    line: "{{ item.key }}={{ item.value }}"
+  with_dict: "{{ jiskefet_api_general_settings }}"
 
-- name: Create ormconfig.json file if it does not exist
-  copy:
-    dest: /var/lib/jiskefet/jiskefet-api/ormconfig.json
-    content: "{{ database_config }}"
+- name: Set CERN settings for jiskefet-api env
+  when: use_cern_sso == "true"
+  lineinfile:
+    path: /var/lib/jiskefet/jiskefet-api/.env
+    regexp: "{{ item.key }}=(.*)$"
+    line: "{{ item.key }}={{ item.value }}"
+  with_dict: "{{ jiskefet_api_cern_settings }}"
+
+- name: Set Github settings for jiskefet-api env
+  when: use_cern_sso == "false"
+  lineinfile:
+    path: /var/lib/jiskefet/jiskefet-api/.env
+    regexp: "{{ item.key }}=(.*)$"
+    line: "{{ item.key }}={{ item.value }}"
+  with_dict: "{{ jiskefet_api_github_settings }}"
+
+- name: Set optional settings for jiskefet-api env
+  when: use_cern_sso == "false"
+  lineinfile:
+    path: /var/lib/jiskefet/jiskefet-api/.env
+    regexp: "{{ item.key }}=(.*)$"
+    line: "{{ item.key }}={{ item.value }}"
+  with_dict: "{{ jiskefet_api_optional_settings }}"
+
+# - name: Set port number of the API server to {{ jiskefet_api_general_settings.api_port_number }}
+#   lineinfile:
+#     path: /var/lib/jiskefet/jiskefet-api/.env
+#     regexp: 'PORT=(.*)$'
+#     line: "PORT={{ jiskefet_api_general_settings.api_port_number }}"
+#     # backrefs: yes   
+
+# - name: Create ormconfig.json file if it does not exist
+#   copy:
+#     dest: /var/lib/jiskefet/jiskefet-api/ormconfig.json
+#     content: "{{ database_config }}"
 ...
