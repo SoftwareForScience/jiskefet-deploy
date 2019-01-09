@@ -70,7 +70,7 @@ credentials for the database and the `database` variable to a database name. In 
     },
 ```
 
-## CERN OAuth settings
+## CERN OAuth settings (all fields are required)
 Fill in the settings only if `"USE_CERN_SSO"` flag is set to `"true"`.  
 Please remember to replace the placeholder `"<CLIENT_ID_HERE>"` at the `"CERN_AUTH_URL"` with the `"CERN_CLIENT_ID"`.
 ```json
@@ -84,7 +84,7 @@ Please remember to replace the placeholder `"<CLIENT_ID_HERE>"` at the `"CERN_AU
     },
 ```
 
-## Github OAuth settings
+## Github OAuth settings (all fields are required)
 Fill in the settings only if `"USE_CERN_SSO"` flag is set to `"false"`.  
 Please remember to replace the placeholder `"<CLIENT_ID_HERE>"` at the `"GITHUB_AUTH_URL"` with the `"GITHUB_CLIENT_ID"`.
 ```json
