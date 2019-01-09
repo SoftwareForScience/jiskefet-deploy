@@ -12,14 +12,13 @@
     path: /var/lib/jiskefet/jiskefet-ui/.env
   register: stat_result
 
-
 - name: Copy jiskefet-ui.env to jiskefet-ui project if it does not exist
   when: stat_result.stat.exists == False 
   copy:
     src: files/environments/jiskefet-ui.env.template
     dest: /var/lib/jiskefet/jiskefet-ui/.env
 
-- name: Set general settings for jiskefet-ui env
+- name: Set general settings for jiskefet-ui .env
   lineinfile:
     path: /var/lib/jiskefet/jiskefet-ui/.env
     regexp: "{{ item.key }}=(.*)$"
@@ -37,31 +36,36 @@
     src: files/environments/jiskefet-api.env.template
     dest: /var/lib/jiskefet/jiskefet-api/.env
 
-- name: Set general settings for jiskefet-api env
+- name: Set USE_CERN_SSO flag for jiskefet-api .env
+  lineinfile:
+    path: /var/lib/jiskefet/jiskefet-api/.env
+    regexp: "USE_CERN_SSO=(.*)$"
+    line: "USE_CERN_SSO={{ USE_CERN_SSO }}"
+
+- name: Set general settings for jiskefet-api .env
   lineinfile:
     path: /var/lib/jiskefet/jiskefet-api/.env
     regexp: "{{ item.key }}=(.*)$"
     line: "{{ item.key }}={{ item.value }}"
   with_dict: "{{ jiskefet_api_general_settings }}"
 
-- name: Set CERN settings for jiskefet-api env
-  when: use_cern_sso == "true"
+- name: Set CERN settings for jiskefet-api .env
+  when: USE_CERN_SSO == "true"
   lineinfile:
     path: /var/lib/jiskefet/jiskefet-api/.env
     regexp: "{{ item.key }}=(.*)$"
     line: "{{ item.key }}={{ item.value }}"
   with_dict: "{{ jiskefet_api_cern_settings }}"
 
-- name: Set Github settings for jiskefet-api env
-  when: use_cern_sso == "false"
+- name: Set Github settings for jiskefet-api .env
+  when: USE_CERN_SSO == "false"
   lineinfile:
     path: /var/lib/jiskefet/jiskefet-api/.env
     regexp: "{{ item.key }}=(.*)$"
     line: "{{ item.key }}={{ item.value }}"
   with_dict: "{{ jiskefet_api_github_settings }}"
 
-- name: Set optional settings for jiskefet-api env
-  when: use_cern_sso == "false"
+- name: Set optional settings for jiskefet-api .env
   lineinfile:
     path: /var/lib/jiskefet/jiskefet-api/.env
     regexp: "{{ item.key }}=(.*)$"

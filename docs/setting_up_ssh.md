@@ -1,4 +1,4 @@
-# 3. Setting up ssh
+# 2. Setting up ssh
 [Back to table of contents](../README.md#table-of-contents)
 
 To make a connection to the servers ssh needs to be configured on the machine by executing the following command:
