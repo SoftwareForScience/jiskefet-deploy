@@ -70,31 +70,13 @@ credentials for the database and the `database` variable to a database name. In 
     },
 ```
 
-## CERN OAuth settings (all fields are required)
-Fill in the settings only if `"USE_CERN_SSO"` flag is set to `"true"`.  
-Please remember to replace the placeholder `"<CLIENT_ID_HERE>"` at the `"CERN_AUTH_URL"` with the `"CERN_CLIENT_ID"`.
+## OAuth settings (all fields are required)
+Fill in the OAuth client id, client secret and the redirect uri (this is the callback url).
 ```json
-"jiskefet_api_cern_settings": {
-        "CERN_AUTH_URL": "https://oauth.web.cern.ch/OAuth/Authorize?response_type=code&client_id=<CLIENT_ID_HERE>&redirect_uri=http://127.0.0.1:8080/callback",
-        "CERN_CLIENT_ID": "",
-        "CERN_CLIENT_SECRET": "",
-        "CERN_AUTH_TOKEN_HOST": "https://oauth.web.cern.ch/",
-        "CERN_AUTH_TOKEN_PATH": "oauth/token",
-        "CERN_RESOURCE_API_URL": "https://oauthresource.web.cern.ch/api/user"
-    },
-```
-
-## Github OAuth settings (all fields are required)
-Fill in the settings only if `"USE_CERN_SSO"` flag is set to `"false"`.  
-Please remember to replace the placeholder `"<CLIENT_ID_HERE>"` at the `"GITHUB_AUTH_URL"` with the `"GITHUB_CLIENT_ID"`.
-```json
- "jiskefet_api_github_settings": {
-        "GITHUB_AUTH_URL": "https://github.com/login/oauth/authorize?response_type=code&client_id=<CLIENT_ID_HERE>&redirect_uri=http://localhost:8080/callback&state=yx_4404.!dcbR%40YR44yQ",
-        "GITHUB_CLIENT_ID": "",
-        "GITHUB_CLIENT_SECRET": "",
-        "GITHUB_AUTH_TOKEN_HOST": "https://github.com",
-        "GITHUB_AUTH_TOKEN_PATH": "/login/oauth/access_token",
-        "GITHUB_RESOURCE_API_URL": "https://api.github.com/user"
+"jiskefet_oauth_settings": {
+        "CLIENT_ID": "",
+        "CLIENT_SECRET": "",
+        "AUTH_REDIRECT_URI": ""
     },
 ```
 

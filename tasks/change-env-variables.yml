@@ -49,21 +49,12 @@
     line: "{{ item.key }}={{ item.value }}"
   with_dict: "{{ jiskefet_api_general_settings }}"
 
-- name: Set CERN settings for jiskefet-api .env
-  when: USE_CERN_SSO == "true"
+- name: Set OAuth settings for jiskefet-api .env
   lineinfile:
     path: /var/lib/jiskefet/jiskefet-api/.env
     regexp: "{{ item.key }}=(.*)$"
     line: "{{ item.key }}={{ item.value }}"
-  with_dict: "{{ jiskefet_api_cern_settings }}"
-
-- name: Set Github settings for jiskefet-api .env
-  when: USE_CERN_SSO == "false"
-  lineinfile:
-    path: /var/lib/jiskefet/jiskefet-api/.env
-    regexp: "{{ item.key }}=(.*)$"
-    line: "{{ item.key }}={{ item.value }}"
-  with_dict: "{{ jiskefet_api_github_settings }}"
+  with_dict: "{{ jiskefet_oauth_settings }}"
 
 - name: Set optional settings for jiskefet-api .env
   lineinfile:
