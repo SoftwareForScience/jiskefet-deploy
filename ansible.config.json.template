@@ -10,7 +10,7 @@
     },
     "USE_CERN_SSO": "false",
     "jiskefet_api_general_settings": {
-        "USE_API_PREFIX": "false",
+        "USE_API_PREFIX": "true",
         "PORT": 3000,
         "TYPEORM_CONNECTION": "mysql",
         "TYPEORM_HOST": "",
@@ -30,6 +30,9 @@
         "CLIENT_ID": "",
         "CLIENT_SECRET": "",
         "AUTH_REDIRECT_URI": ""
+    },
+    "jiskefet_cern_oauth_settings": {
+        "CERN_REGISTERED_URI": ""
     },
     "jiskefet_api_optional_settings": {
         "TEST_DB_CONNECTION": "mysql",

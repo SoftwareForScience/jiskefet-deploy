@@ -36,6 +36,18 @@
           or
           (item.value is none)
           or
+          (item.value | trim == '')) 
+
+- name: Checking jiskefet_cern_oauth_settings
+    fail: 
+      msg: "Variable {{ item.key }} has not been filled in"
+    with_dict: "{{ jiskefet_cern_oauth_settings }}"
+    when: USE_CERN_SSO == "true"
+          and
+          ((item.value is undefined)
+          or
+          (item.value is none)
+          or
           (item.value | trim == ''))
   
   - name: Checking jiskefet_ui_settings

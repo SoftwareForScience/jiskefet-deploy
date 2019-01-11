@@ -50,7 +50,7 @@ Change the variable `host` to the ip address of the database server, the `userna
 credentials for the database and the `database` variable to a database name. In most cases the rest of the variables can stay as their defaults.
 ```json
 "jiskefet_api_general_settings": {
-        "USE_API_PREFIX": "false",
+        "USE_API_PREFIX": "true",
         "PORT": 3000,
         "TYPEORM_CONNECTION": "mysql",
         "TYPEORM_HOST": "",
@@ -60,8 +60,6 @@ credentials for the database and the `database` variable to a database name. In 
         "TYPEORM_PORT": 3306,
         "TYPEORM_SYNCHRONIZE": "true",
         "TYPEORM_LOGGING": "false",
-        "TYPEORM_ENTITIES": "src/**/**.entity{.ts,.js}",
-        "TYPEORM_MIGRATIONS": "src/migration/*{.ts,.js}",
         "TYPEORM_MIGRATIONS_DIR": "src/migration",
         "JWT_SECRET_KEY": "",
         "JWT_EXPIRE_TIME":"1h",
@@ -80,6 +78,14 @@ Fill in the OAuth client id, client secret and the redirect uri (this is the cal
     },
 ```
 
+## Jiskefet CERN OAuth setting
+Fill in the values only if the `"USE_CERN_SSO"` setting is set to `"true"`.
+```json
+"jiskefet_cern_oauth_settings": {
+        "CERN_REGISTERED_URI": ""
+    },
+```
+
 ## Mock/test database settings (optional)
 These settings are optional, fill the settings in if you want to run `"npm run test"`. The test will then run against a test database.
 ```json
@@ -92,7 +98,6 @@ These settings are optional, fill the settings in if you want to run `"npm run t
         "TEST_DB_PORT": "3306",
         "TEST_DB_SYNCHRONIZE": "true",
         "TEST_DB_LOGGING": "true",
-        "TEST_DB_ENTITIES": "src/**/**.entity{.ts,.js}"
     },
 ```
 ## Jiskefet UI settings
