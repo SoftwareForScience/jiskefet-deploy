@@ -1,0 +1,71 @@
+Started by user [8mha:////4EdKZxGxHGRCbCvh73CnKrJfu0zLTQ6WRTk4Igfm6FrpAAAAlx+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAzWEgZu/dLi1CL93MzijEQA+TYahcAAAAA=[0mMisha
+Building in workspace /Users/Misha/.jenkins/workspace/Jiskefet item
+ > git rev-parse --is-inside-work-tree # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/SoftwareForScience/jiskefet-api.git # timeout=10
+Fetching upstream changes from https://github.com/SoftwareForScience/jiskefet-api.git
+ > git --version # timeout=10
+ > git fetch --tags --progress https://github.com/SoftwareForScience/jiskefet-api.git +refs/heads/*:refs/remotes/origin/*
+Seen branch in repository origin/develop
+Seen branch in repository origin/feature/39-developer-section
+Seen branch in repository origin/feature/52-query-only
+Seen branch in repository origin/feature/6-http-responses
+Seen branch in repository origin/feature/81-jenkins
+Seen branch in repository origin/feature/CERN-SSO
+Seen branch in repository origin/feature/infologger
+Seen branch in repository origin/hotfix/cors-c
+Seen branch in repository origin/master
+Seen branch in repository origin/refactor/21-mocha-to-jest
+Seen 10 remote branches
+ > git show-ref --tags -d # timeout=10
+Checking out Revision eb74f6415441dfdbbafd16e6d55eb512350b3198 (origin/feature/81-jenkins)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f eb74f6415441dfdbbafd16e6d55eb512350b3198
+Commit message: "Testing Jenkins"
+ > git rev-list --no-walk eb74f6415441dfdbbafd16e6d55eb512350b3198 # timeout=10
+[Jiskefet item] $ /bin/sh -xe /var/folders/b5/6n0fk_px1j38b932x6vhmjx00000gn/T/jenkins9104094350238380848.sh
++ npm i
+
+> fsevents@1.2.4 install /Users/Misha/.jenkins/workspace/Jiskefet item/node_modules/fsevents
+> node install
+
+[fsevents] Success: "/Users/Misha/.jenkins/workspace/Jiskefet item/node_modules/fsevents/lib/binding/Release/node-v57-darwin-x64/fse.node" already installed
+Pass --update-binary to reinstall or --build-from-source to recompile
+
+> bcrypt@3.0.2 install /Users/Misha/.jenkins/workspace/Jiskefet item/node_modules/bcrypt
+> node-pre-gyp install --fallback-to-build
+
+node-pre-gyp WARN Using request for node-pre-gyp https download 
+[bcrypt] Success: "/Users/Misha/.jenkins/workspace/Jiskefet item/node_modules/bcrypt/lib/binding/bcrypt_lib.node" is installed via remote
+
+> fsevents@1.2.4 install /Users/Misha/.jenkins/workspace/Jiskefet item/node_modules/optionator/node_modules/fsevents
+> node install
+
+[fsevents] Success: "/Users/Misha/.jenkins/workspace/Jiskefet item/node_modules/optionator/node_modules/fsevents/lib/binding/Release/node-v57-darwin-x64/fse.node" already installed
+Pass --update-binary to reinstall or --build-from-source to recompile
+
+> @nestjs/core@5.3.7 postinstall /Users/Misha/.jenkins/workspace/Jiskefet item/node_modules/@nestjs/core
+> opencollective
+
+                           Thanks for installing nest 
+                 Please consider donating to our open collective
+                        to help us maintain this package.
+                                         
+                            Number of contributors: 56
+                              Number of backers: 106
+                            Annual budget: US$ 31,662
+                            Current balance: US$ 3,176
+                                         
+             Become a partner: https://opencollective.com/nest/donate
+                                         
+
+> nodemon@1.18.7 postinstall /Users/Misha/.jenkins/workspace/Jiskefet item/node_modules/nodemon
+> node bin/postinstall || exit 0
+
+npm WARN jiskefet-api@0.0.0 No repository field.
+
+added 1505 packages from 964 contributors and audited 26507 packages in 17.769s
+found 0 vulnerabilities
+
++ npx tslint -c tslint.json 'src/**/*.ts'
+Finished: SUCCESS

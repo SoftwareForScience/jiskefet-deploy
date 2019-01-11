@@ -1,0 +1,37 @@
+Started by an SCM change
+Building in workspace /Users/Misha/.jenkins/workspace/Jiskefet item
+Cloning the remote Git repository
+Cloning repository https://github.com/SoftwareForScience/jiskefet-api.git
+ > git init /Users/Misha/.jenkins/workspace/Jiskefet item # timeout=10
+Fetching upstream changes from https://github.com/SoftwareForScience/jiskefet-api.git
+ > git --version # timeout=10
+ > git fetch --tags --progress https://github.com/SoftwareForScience/jiskefet-api.git +refs/heads/*:refs/remotes/origin/*
+ > git config remote.origin.url https://github.com/SoftwareForScience/jiskefet-api.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config remote.origin.url https://github.com/SoftwareForScience/jiskefet-api.git # timeout=10
+Fetching upstream changes from https://github.com/SoftwareForScience/jiskefet-api.git
+ > git fetch --tags --progress https://github.com/SoftwareForScience/jiskefet-api.git +refs/heads/*:refs/remotes/origin/*
+Seen branch in repository origin/develop
+Seen branch in repository origin/feature/39-developer-section
+Seen branch in repository origin/feature/52-query-only
+Seen branch in repository origin/feature/6-http-responses
+Seen branch in repository origin/feature/81-jenkins
+Seen branch in repository origin/feature/CERN-SSO
+Seen branch in repository origin/feature/infologger
+Seen branch in repository origin/hotfix/cors-c
+Seen branch in repository origin/master
+Seen branch in repository origin/refactor/21-mocha-to-jest
+Seen 10 remote branches
+ > git show-ref --tags -d # timeout=10
+Multiple candidate revisions
+Scheduling another build to catch up with Jiskefet item
+Checking out Revision f56a4ee4674cb3ed2ef675e9be4f2eb57b822f0f (origin/feature/6-http-responses)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f f56a4ee4674cb3ed2ef675e9be4f2eb57b822f0f
+Commit message: "Merge branch 'develop' of github.com:SoftwareForScience/jiskefet-api into feature/6-http-responses"
+First time build. Skipping changelog.
+[Jiskefet item] $ /bin/sh -xe /var/folders/b5/6n0fk_px1j38b932x6vhmjx00000gn/T/jenkins2194155316924331719.sh
++ tslint -c tslint.json 'src/**/*.ts'
+/var/folders/b5/6n0fk_px1j38b932x6vhmjx00000gn/T/jenkins2194155316924331719.sh: line 2: tslint: command not found
+Build step 'Execute shell' marked build as failure
+Finished: FAILURE

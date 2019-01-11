@@ -1,0 +1,52 @@
+# /*
+#  * Copyright (C) 2018 Amsterdam University of Applied Sciences (AUAS)
+#  *
+#  * This software is distributed under the terms of the
+#  * GNU General Public Licence version 3 (GPL) version 3,
+#  * copied verbatim in the file "LICENSE"
+#  */
+
+---
+- name: Create backup dir
+  file: path={{ jenkins_home }}/backup_jobs state=directory
+
+- name: Check that jobs exists
+  stat:
+    path: "{{ jenkins_home }}/jobs"
+  register: stat_result
+
+- name: Backup jobs
+  command: cp -r {{ jenkins_home }}/jobs {{ jenkins_home }}/backup_jobs/{{ lookup('pipe', 'date +%Y%m%d%H%M%S') }}
+  when: stat_result.stat.exists == True 
+
+- name: Delete jobs folder
+  file: path={{ jenkins_home }}/jobs state=absent
+
+- name: Create (empty) jobs folder
+  file: path={{ jenkins_home }}/jobs state=directory
+
+- name: Copy job(s) for jiskefet-api
+  copy:
+    src: ../files/jobs
+    dest: "{{ jenkins_home }}"
+
+- name: Deny anonymous read access
+  lineinfile:
+    path: "{{ jenkins_home }}/config.xml"
+    line: "<denyAnonymousReadAccess>true</denyAnonymousReadAccess>"
+    regexp: "<denyAnonymousReadAccess>"
+
+- name: Set owner of jenkins dir to user and group jenkins.
+  file:
+    path: /var/lib/jenkins
+    owner: jenkins
+    group: jenkins
+    recurse: yes
+
+- name: Restart jenkins
+  become: true
+  become_user: root
+  service:
+    name: jenkins
+    state: restarted
+...

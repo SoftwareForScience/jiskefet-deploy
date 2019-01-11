@@ -1,0 +1,31 @@
+Started by user [8mha:////4EdKZxGxHGRCbCvh73CnKrJfu0zLTQ6WRTk4Igfm6FrpAAAAlx+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAzWEgZu/dLi1CL93MzijEQA+TYahcAAAAA=[0mMisha
+Building in workspace /Users/Misha/.jenkins/workspace/Jiskefet item
+ > git rev-parse --is-inside-work-tree # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/SoftwareForScience/jiskefet-api.git # timeout=10
+Fetching upstream changes from https://github.com/SoftwareForScience/jiskefet-api.git
+ > git --version # timeout=10
+ > git fetch --tags --progress https://github.com/SoftwareForScience/jiskefet-api.git +refs/heads/*:refs/remotes/origin/*
+Seen branch in repository origin/develop
+Seen branch in repository origin/feature/39-developer-section
+Seen branch in repository origin/feature/52-query-only
+Seen branch in repository origin/feature/6-http-responses
+Seen branch in repository origin/feature/81-jenkins
+Seen branch in repository origin/feature/CERN-SSO
+Seen branch in repository origin/feature/infologger
+Seen branch in repository origin/hotfix/cors-c
+Seen branch in repository origin/master
+Seen branch in repository origin/refactor/21-mocha-to-jest
+Seen 10 remote branches
+ > git show-ref --tags -d # timeout=10
+Checking out Revision eb74f6415441dfdbbafd16e6d55eb512350b3198 (origin/feature/81-jenkins)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f eb74f6415441dfdbbafd16e6d55eb512350b3198
+Commit message: "Testing Jenkins"
+ > git rev-list --no-walk eb74f6415441dfdbbafd16e6d55eb512350b3198 # timeout=10
+[Jiskefet item] $ /bin/sh -xe /var/folders/b5/6n0fk_px1j38b932x6vhmjx00000gn/T/jenkins8321664361082827268.sh
++ npx tslint -c tslint.json 'src/**/*.ts'
+npx: installed 40 in 2.712s
+Cannot find module 'typescript'
+Build step 'Execute shell' marked build as failure
+Finished: FAILURE
