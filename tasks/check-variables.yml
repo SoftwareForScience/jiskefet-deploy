@@ -61,15 +61,26 @@
       - { key: API_URL, value: "{{ jiskefet_ui_settings.API_URL }}" }
     when: not item.value is match(url_ip)
   
-  - name: Check if AUTH_REDIRECT_URI contains '/callback'
+  # - debug: 
+  #     msg: "{{ jiskefet_oauth_settings.AUTH_REDIRECT_URI.split('/') }}"
+
+  - name: Check if AUTH_REDIRECT_URI contains '/callback' with http(s)
     fail:
       msg: "URL {{ item.key }} does not contain '/callback'"
     with_items:
       - { key: AUTH_REDIRECT_URI, value: "{{ jiskefet_oauth_settings.AUTH_REDIRECT_URI }}" }
-    when: not "{{ item.value.split('/')[3] }}" == 'callback'
-  
-  # - debug: 
-  #     msg: "{{ jiskefet_oauth_settings.AUTH_REDIRECT_URI.split('/') }}"
+    when: item.value is search("http")
+          and
+          not item.value.split('/')[3] == 'callback'
+
+  - name: Check if AUTH_REDIRECT_URI contains '/callback' without http(s)
+    fail:
+      msg: "URL {{ item.key }} does not contain '/callback'"
+    with_items:
+      - { key: AUTH_REDIRECT_URI, value: "{{ jiskefet_oauth_settings.AUTH_REDIRECT_URI }}" }
+    when: not item.value is search("http")
+          and
+          not item.value.split('/')[1] == 'callback'
 
   - name: Checking URL and IP values
     fail: 

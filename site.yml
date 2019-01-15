@@ -36,28 +36,28 @@
     - temp_folder: /tmp
   tasks:
   
-    # # Install git
-    # - include: tasks/git.yml
-    #   when: use_local_repository == "no"
+    # Install git
+    - include: tasks/git.yml
+      when: use_local_repository == "no"
 
-    # # Unarchive projects
-    # - include: tasks/unarchive.yml
-    #   when: use_local_repository == "yes"
+    # Unarchive projects
+    - include: tasks/unarchive.yml
+      when: use_local_repository == "yes"
 
-    # # Setting environment variables
-    # - include: tasks/change-env-variables.yml
+    # Setting environment variables
+    - include: tasks/change-env-variables.yml
 
-    # # Install Node.js
-    # - include: tasks/nodejs.yml
+    # Install Node.js
+    - include: tasks/nodejs.yml
 
-    # # Do npm install
-    # - include: tasks/npm.yml
+    # Do npm install
+    - include: tasks/npm.yml
 
-    # # Starts firewalld service
-    # - include: tasks/firewall.yml
+    # Starts firewalld service
+    - include: tasks/firewall.yml
 
-    # # Install and run nginx
-    # - include: tasks/nginx.yml
+    # Install and run nginx
+    - include: tasks/nginx.yml
 
     # Install and run pm2
     - include: tasks/pm2.yml
@@ -70,10 +70,10 @@
     - ansible.config.json
   tasks:
   
-    # # Starts firewalld service
-    # - include: tasks/firewall.yml
+    # Starts firewalld service
+    - include: tasks/firewall.yml
     
-    # # Install MySql (MariaDB)
-    # - include: tasks/mysql.yml
+    # Install MySql (MariaDB)
+    - include: tasks/mysql.yml
 
 ...
