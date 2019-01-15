@@ -20,7 +20,6 @@
         "TYPEORM_PORT": 3306,
         "TYPEORM_SYNCHRONIZE": "true",
         "TYPEORM_LOGGING": "false",
-        "TYPEORM_MIGRATIONS_DIR": "src/migration",
         "JWT_SECRET_KEY": "",
         "JWT_EXPIRE_TIME":"1h",
         "SUB_SYSTEM_TOKEN_EXPIRES_IN": "365 days",

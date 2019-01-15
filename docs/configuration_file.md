@@ -25,10 +25,10 @@ jiskefet-project-v**/
 ## Deploy from GitHub
 Change the GitHub URLs to the repositories that need to be used. The URLs do not have to be changed if the `"use_local_repository"` variable is set to `"yes"`:
 ```json
-"remote_repository_url": {
-  "jiskefet_api": "https://github.com/",
-  "jiskefet_ui": "https://github.com/"
-},
+ "remote_repository_url": {
+        "jiskefet_api": "https://github.com/SoftwareForScience/jiskefet-api.git",
+        "jiskefet_ui": "https://github.com/SoftwareForScience/jiskefet-ui.git"
+    },
 ```
 
 Specify which branch ansible should pull. The default branch is currently set to master.
@@ -60,7 +60,6 @@ credentials for the database and the `database` variable to a database name. In 
         "TYPEORM_PORT": 3306,
         "TYPEORM_SYNCHRONIZE": "true",
         "TYPEORM_LOGGING": "false",
-        "TYPEORM_MIGRATIONS_DIR": "src/migration",
         "JWT_SECRET_KEY": "",
         "JWT_EXPIRE_TIME":"1h",
         "SUB_SYSTEM_TOKEN_EXPIRES_IN": "365 days",
