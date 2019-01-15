@@ -7,41 +7,50 @@
 #  */
 
 ---
-- name: install "pm2" node.js package
-  npm:
-    name: pm2
-    global: yes
-  become: true
-  become_method: su
-  become_user: root
+# - name: install "pm2" node.js package
+#   npm:
+#     name: pm2
+#     global: yes
+#   become: true
+#   become_method: su
+#   become_user: root
 
-- name: install "pm2 typescript interperter"
-  command: pm2 install typescript
-  become: true
-  become_method: su
-  become_user: root
+# - name: install "pm2 typescript interperter"
+#   command: pm2 install typescript
+#   become: true
+#   become_method: su
+#   become_user: root
 
-- name: Copy ecosystem.json from local to remote
-  copy:
-    src: ecosystem.json
-    dest: /var/lib/jiskefet/ecosystem.json
-  become: true
-  become_method: su
-  become_user: root
+# - name: Copy ecosystem.json from local to remote
+#   copy:
+#     src: ecosystem.json
+#     dest: /var/lib/jiskefet/ecosystem.json
+#   become: true
+#   become_method: su
+#   become_user: root
 
-- name: stop current pm2 daemon if it exits
-  command: pm2 kill
+# - name: stop current pm2 daemon if it exits
+#   command: pm2 kill
 
-- name: go to jiskefet-ui project directory and start project using pm2
-  command: pm2 start ecosystem.json
-  args:
-    chdir: "/var/lib/jiskefet"
+# - name: go to jiskefet-ui project directory and start project using pm2
+#   command: pm2 start ecosystem.json
+#   args:
+#     chdir: "/var/lib/jiskefet"
 
-- name: list ports to see if proxy is running
+- name: list all ports running on current host
   command: ss -ntl
   register: out
 
 - debug: var=out.stdout_lines
+
+- debug: var=out.stdout
+
+- name: check if API is running on port {{ jiskefet_api_general_settings.PORT }}
+  fail:
+    msg: "API is unable to start, please use `pm2 logs` to view the error(s)"
+  # when: not ("{{ jiskefet_api_general_settings.PORT }}" is search('out.stdout'))
+  when: not "{{ jiskefet_api_general_settings.PORT }}" in (out.stdout | join(''))
+  # when: "jiskefet_api_general_settings.PORT.find('v=' ~ out.stdout) == -1"
 
 - name: save current pm2 processes
   command: pm2 save
