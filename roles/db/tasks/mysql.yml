@@ -1,0 +1,77 @@
+# /*
+#  * Copyright (C) 2018 Amsterdam University of Applied Sciences (AUAS)
+#  *
+#  * This software is distributed under the terms of the
+#  * GNU General Public Licence version 3 (GPL) version 3,
+#  * copied verbatim in the file "LICENSE"
+#  */
+
+--- # Install mariadb via ansible on centOS
+- name: Add official MariaDB repository
+  become: yes
+  become_user: root
+  yum_repository:
+    name: MariaDB
+    description: Official MariaDB repository
+    baseurl: "https://yum.mariadb.org/10.1/centos7-amd64"
+    gpgkey: https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+    gpgcheck: true
+  tags: mariadb
+
+- name: Install packages
+  become: yes
+  become_user: root
+  package:
+    name: "{{ item }}"
+    state: installed
+  with_items: 
+    - MariaDB
+    - MariaDB-server
+    - MySQL-python
+  notify: enable mariadb on reboot
+  tags: mariadb
+
+- name: Start mysql server and enable it on reboot
+  become: true
+  become_user: root
+  service: name=mariadb state=started enabled=true #debian: mysql
+
+- name: make sql directory at /var/lib/jiskefet
+  file:
+    path: /var/lib/jiskefet/sql
+    state: directory
+    owner: jiskefet-api
+
+- name: Copy my.cnf.j2 from local to remote
+  template: src=my.conf.j2 dest=/etc/my.conf
+
+- name: Copy create_db_charset_utf8mb4.sql from local to remote
+  template: src=create_db_charset_utf8mb4.sql.j2 dest=/var/lib/jiskefet/sql/create_db_charset_utf8mb4.sql.j2
+
+- name: Update mysql root password for all root accounts
+  become: yes
+  become_user: root
+  mysql_user:
+    name: "{{ jiskefet_api_general_settings.TYPEORM_USERNAME }}"
+    host: "{{ item }}"
+    password: "{{ jiskefet_api_general_settings.TYPEORM_PASSWORD }}"
+    login_user: "{{ jiskefet_api_general_settings.TYPEORM_USERNAME }}"
+    login_password: "{{ jiskefet_api_general_settings.TYPEORM_PASSWORD }}"
+    check_implicit_admin: yes
+    priv: "*.*:ALL,GRANT"
+  with_items:
+    - "{{ ansible_hostname }}"
+    - 127.0.0.1
+    - ::1
+    - localhost
+    - "%"
+
+- name: Execute sql file
+  mysql_db: 
+    login_user: '{{ jiskefet_api_general_settings.TYPEORM_USERNAME }}' 
+    login_password: '{{ jiskefet_api_general_settings.TYPEORM_PASSWORD }}'
+    state: import
+    name: 'all'
+    target: /var/lib/jiskefet/sql/create_db_charset_utf8mb4.sql
+  notify: restart mysql
+...
