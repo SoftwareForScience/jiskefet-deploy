@@ -16,4 +16,14 @@
     system: no
     createhome: yes
     home: /var/lib/jiskefet
+
+- name: create jiskefet-ui user
+  user:
+    name: jiskefet-ui
+    password: '$6$DEav2edxHDzuWWjG$O0Fd7TPcUDOpMORgEYlrI2QlbNlt8MOA./n9OG0XCI0ik7vPoXLj5DJopMr0pOtZsVXrc2ScFD8AdZlOJ/pFx/'
+    state: present
+    shell: /bin/bash
+    system: no
+    createhome: yes
+    home: /var/lib/jiskefet
 ...

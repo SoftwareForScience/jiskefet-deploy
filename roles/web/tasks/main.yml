@@ -1,0 +1,35 @@
+# /*
+#  * Copyright (C) 2018 Amsterdam University of Applied Sciences (AUAS)
+#  *
+#  * This software is distributed under the terms of the
+#  * GNU General Public Licence version 3 (GPL) version 3,
+#  * copied verbatim in the file "LICENSE"
+#  */
+
+---
+# Install git
+- include_task: git.yml
+  when: use_local_repository == "no"
+
+# Unarchive projects
+- include_task: unarchive.yml
+  when: use_local_repository == "yes"
+
+# Setting the environment variables
+- import_task: change-env-variables.yml
+
+# Install Node.js
+- import_task: nodejs.yml
+
+# Do npm install
+- import_task: npm.yml
+
+# Starts firewalld service (move task to common)
+# - include: tasks/firewall.yml
+
+# Install and run nginx
+- import_task: nginx.yml
+
+# Install and run pm2
+- import_task: pm2.yml
+...

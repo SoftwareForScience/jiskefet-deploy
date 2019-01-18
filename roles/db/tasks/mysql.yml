@@ -42,8 +42,14 @@
     state: directory
     owner: jiskefet-api
 
-- name: Copy my.cnf.j2 from local to remote
-  template: src=my.conf.j2 dest=/etc/my.conf
+- name: Copy my.cnf from local to remote
+  copy:
+    src: my.cnf
+    dest: /etc/my.cnf
+  become: true
+  become_method: su
+  become_user: root
+
 
 - name: Copy create_db_charset_utf8mb4.sql from local to remote
   template: src=create_db_charset_utf8mb4.sql.j2 dest=/var/lib/jiskefet/sql/create_db_charset_utf8mb4.sql.j2
