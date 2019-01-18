@@ -43,17 +43,20 @@
     state: directory
 
 - name: Copy custom proxy.conf from local to remote
-  copy:
-    src: proxy.conf
+  template:
+    src: proxy.conf.j2
     dest: /etc/nginx/conf.d/proxy.conf
   become: true
   become_method: su
   become_user: root
 
 - name: Replace defualt nginx.conf with new one where the default server runs on port 1000
-  template: 
-    src: nginx.conf.j2 
+  copy: 
+    src: nginx.conf
     dest: /etc/nginx/nginx.conf
+  become: true
+  become_method: su
+  become_user: root
 
 - name: Test NGiNX config
   command: nginx -T
@@ -68,12 +71,6 @@
     name: nginx
     state: stopped
   notify: restart NGiNX
-
-- name: list ports to see if proxy is running
-  command: ss -ntl
-  register: out
-
-- debug: var=out.stdout_lines
 
 - name: Setup firewall to allow connections to port 80 and 443
   become: true

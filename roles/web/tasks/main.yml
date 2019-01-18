@@ -24,9 +24,6 @@
 # Do npm install
 - import_tasks: npm.yml
 
-# Starts firewalld service (move task to common)
-# - include: tasks/firewall.yml
-
 # Install and run nginx
 - import_tasks: nginx.yml
 
