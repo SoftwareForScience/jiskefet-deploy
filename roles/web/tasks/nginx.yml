@@ -51,7 +51,9 @@
   become_user: root
 
 - name: Replace defualt nginx.conf with new one where the default server runs on port 1000
-  template: src=nginx.conf.j2 /etc/nginx/nginx.conf
+  template: 
+    src: nginx.conf.j2 
+    dest: /etc/nginx/nginx.conf
 
 - name: Test NGiNX config
   command: nginx -T

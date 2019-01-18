@@ -52,7 +52,9 @@
 
 
 - name: Copy create_db_charset_utf8mb4.sql from local to remote
-  template: src=create_db_charset_utf8mb4.sql.j2 dest=/var/lib/jiskefet/sql/create_db_charset_utf8mb4.sql.j2
+  template: 
+    src: create_db_charset_utf8mb4.sql.j2 
+    dest: /var/lib/jiskefet/sql/create_db_charset_utf8mb4.sql
 
 - name: Update mysql root password for all root accounts
   become: yes

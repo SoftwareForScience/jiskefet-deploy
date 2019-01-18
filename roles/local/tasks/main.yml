@@ -7,5 +7,6 @@
 #  */
 
 ---
-
+# Check variables
+- import_tasks: check-variables.yml
 ...

@@ -8,28 +8,28 @@
 
 ---
 # Install git
-- include_task: git.yml
+- include_tasks: git.yml
   when: use_local_repository == "no"
 
 # Unarchive projects
-- include_task: unarchive.yml
+- include_tasks: unarchive.yml
   when: use_local_repository == "yes"
 
 # Setting the environment variables
-- import_task: change-env-variables.yml
+- import_tasks: change-env-variables.yml
 
 # Install Node.js
-- import_task: nodejs.yml
+- import_tasks: nodejs.yml
 
 # Do npm install
-- import_task: npm.yml
+- import_tasks: npm.yml
 
 # Starts firewalld service (move task to common)
 # - include: tasks/firewall.yml
 
 # Install and run nginx
-- import_task: nginx.yml
+- import_tasks: nginx.yml
 
 # Install and run pm2
-- import_task: pm2.yml
+- import_tasks: pm2.yml
 ...

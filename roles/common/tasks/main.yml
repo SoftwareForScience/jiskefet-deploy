@@ -7,5 +7,9 @@
 #  */
 
 ---
+# create jiskefet users
+- import_tasks: create-jiskefet-user.yml
 
+# ensure firewall has been started
+- import_tasks: firewall.yml
 ...
