@@ -18,12 +18,6 @@
       that: "ansible_version.full is version_compare('2.5', '>=')"
       msg: "You must update Ansible to at least 2.5 to use this playbook."
 
-  # # checking env
-  # - name: debug print
-  #   debug:
-  #     msg: "{{ item.key }} {{ item.value }}"
-  #   with_dict: "{{ jiskefet_api_general_settings }}"
-
   - name: Checking jiskefet_api_general_settings
     fail: 
       msg: "Variable {{ item.key }} has not been filled in"
@@ -60,9 +54,6 @@
       - { key: AUTH_REDIRECT_URI, value: "{{ jiskefet_oauth_settings.AUTH_REDIRECT_URI }}" }
       - { key: API_URL, value: "{{ jiskefet_ui_settings.API_URL }}" }
     when: not item.value is match(url_ip)
-  
-  # - debug: 
-  #     msg: "{{ jiskefet_oauth_settings.AUTH_REDIRECT_URI.split('/') }}"
 
   - name: Check if AUTH_REDIRECT_URI contains '/callback' with http(s)
     fail:

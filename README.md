@@ -29,13 +29,13 @@ For the separate **Jenkins CI** playbook, see table of contents.
 1. Copy the `ansible.config.json.template` as `ansible.config.json` and change the variables to the appropriate values ([more info](docs/configuration_file.md)).
 2. Make sure you can connect to two CentOS servers via ssh ([more info](docs/setting_up_ssh.md)):
     ```bash 
-    $ ssh vm-jiskefet-api
-    $ ssh vm-jiskefet-db
+    $ ssh jiskefet-api
+    $ ssh jiskefet-db
     ```
-4. Run playbook: 
+3. Run playbook: 
     ```bash
     $ ansible-playbook site.yml
     ```
-5. Open a browser and navigate to http://SERVER_IP_HERE/api/doc/ to see the swagger documentation of the project.
+4. Open a browser and navigate to http://SERVER_IP_HERE/api/doc/ to see the swagger documentation of the project.
 
 [Back to table of contents](#table-of-contents)
