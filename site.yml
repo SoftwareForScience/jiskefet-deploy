@@ -24,6 +24,16 @@
   roles:
   - common
 
+- name: deploy MySQL and configure the databases
+  hosts: dbservers
+  become_user: jiskefet-api
+  become: yes
+  vars_files:
+    - ansible.config.json
+  
+  roles:
+  - db
+
 - name: configure and deploy the webservers and application code
   hosts: webservers
   become_user: jiskefet-api
@@ -35,15 +45,5 @@
   
   roles:
   - web
-
-- name: deploy MySQL and configure the databases
-  hosts: dbservers
-  become_user: jiskefet-api
-  become: yes
-  vars_files:
-    - ansible.config.json
-  
-  roles:
-  - db
 
 ...
