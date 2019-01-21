@@ -4,3 +4,4 @@ site.retry
 ansible.config.json
 files/environments/*.env
 ci/variables.yml
+.vault_pass.txt

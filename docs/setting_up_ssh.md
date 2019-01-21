@@ -64,7 +64,55 @@ jiskefet-api | SUCCESS => {
 ```
 ## Using ssh with user and password
 There are several ways connecting to the servers defined in the `hosts` file.
+
+### Using `group_vars` folder
+ The files in this folder will apply to the host groups that are defined in the `hosts` file.
+
+The `hosts` file currently contains two groups:
+* `[webservers]`
+* `[dbservers]`
+
+Each of the host groups has it's own folder in the `groups_var` folder. The folder would look as follow:
+```
+group_vars
+|----all
+|     |-- vars.yml
+|     |-- vault.yml
+|
+|----dbservers
+|     |-- vars.yml
+|     |-- vault.yml
+|
+|----webservers
+      |-- vars.yml
+      |-- vault.yml
+```
+
+If all the host groups are using the same variables, please update the file at `group_vars/all/vars.yml` and `group_vars/all/vault.yml`. This file will apply to all the hosts. If the variables are different between the host groups, please update the other files at `groups_vars/*/vars.yml` and `group_vars/*/vault.yml`.
+
+### Using `host_vars` folder
+If you want to have a granular control over all the servers that are in the `hosts` file, you can add `server_name` folder to the `host_vars` folder. This folder follows the same principle as the `group_vars` section above.
+```
+group_vars
+|----webserver1
+|     |-- vars.yml
+|     |-- vault.yml
+|
+|----webserver2
+|     |-- vars.yml
+|     |-- vault.yml
+|
+|----databaseserver1
+|     |-- vars.yml
+|     |-- vault.yml
+|
+|----databaseserver2
+      |-- vars.yml
+      |-- vault.yml
+```
+
 ### Using `hosts` file
+It is possible to set the ssh parameters in the host file as displayed below. The drawback is that the credentials will be exposed. If possible, please refrain from using this setup.
 
 ```ini
 [webservers]
@@ -74,30 +122,39 @@ jiskefet-api  ansible=your_user_here ansible_ssh_pass=your_password_here
 jiskefet-db   ansible=your_user_here ansible_ssh_pass=your_password_here
 ```
 
-### Using `group_vars` folder
- The files in this folder will apply to the host groups that are defined in the `hosts` file.
+## Encryption using ansible-vault
+[A best practice approach](https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html#variables-and-vaults) is to define all the variables, including any sensitive ones in the `vars.yml`. The next is to copy all the sensitive variables such as passwords and other secrets over to the `vault.yml` and prefix the variables with `vault_`. Now all the variables in `vars.yml` that contains sensitive information needs to point to the matching `vault_`variable using jinja2 syntax. An example can be seen below.
 
-The `hosts` file currently contains two groups:
-* `[webservers]`
-* `[dbservers]`
-
-Each of the host groups has it's own file in the `groups_var` folder.
-
-If all the host groups are using the same user and password, please update the file at `group_vars/all.yml`. This file will apply to all the hosts. If the user and or password is different between the host groups, please update the other files at `groups_vars/*.yml`
 ```yaml
-# group_vars/*.yml
+# group_vars/all/vars.yml
 ansible_user: your_user_here
-ansible_ssh_pass: your_password_here
+ansible_ssh_pass: "{{ vault_ansible_ssh_pass }}"
 ```
 
-### Using `host_vars` folder
-If there are several web servers and database servers under the host groups, each using a different user and password to get into the machine,
-
-If you want to have a granular control over all the servers that are in the `hosts` file, you can add `server_name.yml` file to the `host_vars` folder. In the `server_name.yml` file add the fields that you want to overwrite e.g.:
 ```yaml
-# host_vars/server_name.yml
-ansible_user: another_user_here
-ansible_ssh_pass: another_password_here
+# group_vars/all/vault.yml
+vault_ansible_ssh_pass: your_password_here
+
 ```
+The last step is to encrypt the `vault.yml` with the following command:
+```zsh
+ansible-vault encrypt path/group_vars/all/vault.yml
+```
+A prompt will ask you to set a new vault password to encrypt and decrypt the vault. For more information please go to the official documentation from Ansible [here](https://docs.ansible.com/ansible/latest/user_guide/vault.html).
+
+### How to run playbook with encrypted vars.
+There are several options to run the playbook with variables encrypted by ansible-vault. The current implementation uses `ansible.cfg` to set the path to the vault password file.
+
+```cfg
+# If set, configures the path to the Vault password file as an alternative to
+# specifying --vault-password-file on the command line.
+vault_password_file = /path/to/vault_pass.txt
+```
+If you want ansible to prompt the user for input, pass the `--ask-vault-pass` flag to the console.
+```zsh
+ansible-playbook --ask-vault-pass site.yml
+```
+For other options please go to the official documentation from Ansible [here](https://docs.ansible.com/ansible/latest/user_guide/vault.html#providing-vault-passwords).
+
 
 [Back to table of contents](../README.md#table-of-contents)
