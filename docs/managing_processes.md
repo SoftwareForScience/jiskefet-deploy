@@ -17,12 +17,10 @@ PM2 will run under user `jiskefet-api` with the json file below.
 {
     "apps": [
         {   
-            # name of the process
             "name": "API",
             "cwd": "/var/lib/jiskefet/jiskefet-api",
             "script": "npm",
             "args": "run start",
-            # instances will match the number of CPU cores allocated to the machine
             "instances": "max",
             "exec_mode": "cluster",
             "autorestart": true,
