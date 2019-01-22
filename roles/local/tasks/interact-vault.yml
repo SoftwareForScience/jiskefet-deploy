@@ -287,3 +287,6 @@
         hostvars.localhost.correct_path_bool.user_input | bool
         and
         not hostvars.localhost.encrypt_vault_bool.user_input | bool)
+
+- debug:
+    msg: Ignore the following error 'ERROR! Attempting to decrypt but no vault secrets found' and run the playbook again in order to use the new vault.

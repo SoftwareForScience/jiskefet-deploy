@@ -67,7 +67,6 @@
 - name: Stop NGiNX services
   become: true
   become_user: root
-  notify: restart NGiNX
   service:
     name: nginx
     state: stopped
@@ -90,4 +89,5 @@
   become: true
   become_user: root
   command: systemctl enable nginx
+  notify: restart NGiNX
 ...
