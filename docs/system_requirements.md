@@ -24,6 +24,7 @@ CPU | Minimum 2 cores
 Name | Version 
 ---- | --- 
 CentOS | Linux 7 (Core) 
+Git  |  1.8 or higher
 
 ## DB machine specifications
 

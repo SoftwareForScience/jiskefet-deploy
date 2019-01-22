@@ -1,14 +1,19 @@
 # 2. Setting up ssh
+
+- [2. Setting up ssh](#2-setting-up-ssh)
+  - [Using ssh with a key file](#using-ssh-with-a-key-file)
+  - [Using ssh with user and password](#using-ssh-with-user-and-password)
+    - [Using `group_vars` folder](#using-groupvars-folder)
+    - [Using `host_vars` folder](#using-hostvars-folder)
+    - [Using `hosts` file](#using-hosts-file)
+  - [Encryption using ansible-vault](#encryption-using-ansible-vault)
+    - [How to run playbook with encrypted vars.](#how-to-run-playbook-with-encrypted-vars)
+
+
 [Back to table of contents](../README.md#table-of-contents)  
 
-This playbook currently supports two ways of connecting to the servers.
-1. [Using ssh with a key file](#using-ssh-with-a-key-file)
-2. [Using user and password](#using-ssh-with-user-and-password)
-
-Please follow one of the two options presented above.
-
 ## Using ssh with a key file
-To make a connection to the servers ssh needs to be configured on the machine by executing the following command:
+To make a connection to the servers, ssh needs to be configured on the machine by executing the following command:
 ```bash
 $ ssh-keygen  -f jiskefet
 # Press ENTER twice to set it as default without a passphrase.
@@ -38,7 +43,7 @@ Host jiskefet-db
     Port 22
     IdentityFile ~/.ssh/jiskefet
 ```
-*Do NOT forget to change the ip addresses in the config file.*
+*Do NOT forget to change the IP addresses in the config file.*
 
 Execute the following commands to copy the ssh keys to the servers:
 ```bash
@@ -91,9 +96,11 @@ group_vars
 If all the host groups are using the same variables, please update the file at `group_vars/all/vars.yml` and `group_vars/all/vault.yml`. This file will apply to all the hosts. If the variables are different between the host groups, please update the other files at `groups_vars/*/vars.yml` and `group_vars/*/vault.yml`.
 
 ### Using `host_vars` folder
-If you want to have a granular control over all the servers that are in the `hosts` file, you can add `server_name` folder to the `host_vars` folder. This folder follows the same principle as the `group_vars` section above.
+If you want to have granular control over all the servers that are in the `hosts` file, you can add `server_name` folder to the `host_vars` folder. This folder follows the same principle as the `group_vars` section above.
+
+This ansible-playbook has a built in step by step `host_vars` with `host` creation when running `ansible-playbook site.yml`.
 ```
-group_vars
+host_vars
 |----webserver1
 |     |-- vars.yml
 |     |-- vault.yml
@@ -156,7 +163,7 @@ ansible-vault decrypt path/group_vars/all/vault.yml
 There are several options to run the playbook with variables encrypted by ansible-vault. The current implementation uses `ansible.cfg` to set the path to the vault password file.
 
 ```cfg
-# If set, configures the path to the Vault password file as an alternative to
+# If set configures the path to the Vault password file as an alternative to
 # specifying --vault-password-file on the command line.
 vault_password_file = /path/to/vault_pass
 ```

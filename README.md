@@ -18,6 +18,8 @@ For the separate **Jenkins CI** playbook, see table of contents.
   1. [Configuration file](docs/configuration_file.md)
   2. [Setting up ssh](docs/setting_up_ssh.md)
   3. [Running the Ansible playbook](docs/running_ansible.md)
+- Manage processes after installation
+  - [Managing API with pm2](docs/managing_processes.md)
 - General information
   - [System requirements](docs/system_requirements.md)
   - [Deployment diagram](docs/deployment_diagram.md)
