@@ -1,4 +1,4 @@
-# 4. Running ansible
+# 3. Running ansible
 [Back to table of contents](../README.md#table-of-contents)
 
 To deploy the database and web application servers with ansible, open terminal and cd to the project dir:

@@ -1,0 +1,125 @@
+# /*
+#  * Copyright (C) 2018 Amsterdam University of Applied Sciences (AUAS)
+#  *
+#  * This software is distributed under the terms of the
+#  * GNU General Public Licence version 3 (GPL) version 3,
+#  * copied verbatim in the file "LICENSE"
+#  */
+
+---
+  - name: Set facts to check ansible.config.json against.
+    set_fact:
+      url_ip: '(http(s)?:\/\/)?\b(?:(?:2(?:[0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])\.){3}(?:(?:2([0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9]))\b\/?((?:[?&](?:\w+)=(?:\w+))+|[--:\w?@%&+~#=]+)?|([--:\w?@%&+~#=]*\.[a-z]{2,4}\/{0,2})((?:[?&](?:\w+)=(?:\w+))+|[--:\w?@%&+~#=]+)?|(localhost)'
+      boolean: '^(tru|fals)e$'
+      port_number: ^([0-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-9][0-9][0-9][0-9]|[1-9][0-9][0-9][0-9][0-9])$
+      
+  - name: Verify if hostmachine meets the jiskefet-deploy's playbook Ansible requirement
+    assert:
+      that: "ansible_version.full is version_compare('2.5', '>=')"
+      msg: "You must update Ansible to at least 2.5 to use this playbook."
+
+  # # checking env
+  # - name: debug print
+  #   debug:
+  #     msg: "{{ item.key }} {{ item.value }}"
+  #   with_dict: "{{ jiskefet_api_general_settings }}"
+
+  - name: Checking jiskefet_api_general_settings
+    fail: 
+      msg: "Variable {{ item.key }} has not been filled in"
+    with_dict: "{{ jiskefet_api_general_settings }}"
+    when: ((item.value is undefined)
+          or
+          (item.value is none)
+          or
+          (item.value | trim == ''))
+
+  - name: Checking boolean values
+    fail: 
+      msg: "Key {{ item.key }} does not have value 'true' or 'false'"
+    with_items: 
+      - { key: USE_API_PREFIX, value: "{{ jiskefet_api_general_settings.USE_API_PREFIX }}" }
+      - { key: TYPEORM_SYNCHRONIZE, value: "{{ jiskefet_api_general_settings.TYPEORM_SYNCHRONIZE }}" }
+      - { key: TYPEORM_LOGGING, value: "{{ jiskefet_api_general_settings.TYPEORM_LOGGING }}" }
+      - { key: USE_INFO_LOGGER, value: "{{ jiskefet_api_general_settings.USE_INFO_LOGGER }}" }
+    when: not item.value is match(boolean)
+
+  - name: Checking port values
+    fail: 
+      msg: "Key {{ item.key }} does not have a value between range 1 - 65535"
+    with_items: 
+      - { key: PORT, value: "{{ jiskefet_api_general_settings.PORT }}" }
+      - { key: TYPEORM_PORT, value: "{{ jiskefet_api_general_settings.TYPEORM_PORT }}" }
+    when: not item.value is match(port_number)
+
+  - name: Checking URL and IP values
+    fail: 
+      msg: "Key {{ item.key }} is not a valid URL or IP"
+    with_items: 
+      - { key: TYPEORM_HOST, value: "{{ jiskefet_api_general_settings.TYPEORM_HOST }}" }
+      - { key: AUTH_REDIRECT_URI, value: "{{ jiskefet_oauth_settings.AUTH_REDIRECT_URI }}" }
+      - { key: API_URL, value: "{{ jiskefet_ui_settings.API_URL }}" }
+    when: not item.value is match(url_ip)
+  
+  # - debug: 
+  #     msg: "{{ jiskefet_oauth_settings.AUTH_REDIRECT_URI.split('/') }}"
+
+  - name: Check if AUTH_REDIRECT_URI contains '/callback' with http(s)
+    fail:
+      msg: "URL {{ item.key }} does not contain '/callback'"
+    with_items:
+      - { key: AUTH_REDIRECT_URI, value: "{{ jiskefet_oauth_settings.AUTH_REDIRECT_URI }}" }
+    when: item.value is search("http")
+          and
+          not item.value.split('/')[3] == 'callback'
+
+  - name: Check if AUTH_REDIRECT_URI contains '/callback' without http(s)
+    fail:
+      msg: "URL {{ item.key }} does not contain '/callback'"
+    with_items:
+      - { key: AUTH_REDIRECT_URI, value: "{{ jiskefet_oauth_settings.AUTH_REDIRECT_URI }}" }
+    when: not item.value is search("http")
+          and
+          not item.value.split('/')[1] == 'callback'
+
+  - name: Checking URL and IP values
+    fail: 
+      msg: "Key {{ item.key }} is not a valid URL or IP"
+    with_items: 
+      - { key: CERN_REGISTERED_URI, value: "{{ jiskefet_cern_oauth_settings.CERN_REGISTERED_URI }}" }
+    when: USE_CERN_SSO == "true"
+          and
+          not item.value is match(url_ip)
+
+  - name: Checking jiskefet_oauth_settings
+    fail: 
+      msg: "Variable {{ item.key }} has not been filled in"
+    with_dict: "{{ jiskefet_oauth_settings }}"
+    when: ((item.value is undefined)
+          or
+          (item.value is none)
+          or
+          (item.value | trim == '')) 
+
+  - name: Checking jiskefet_cern_oauth_settings
+    fail: 
+      msg: "Variable {{ item.key }} has not been filled in"
+    with_dict: "{{ jiskefet_cern_oauth_settings }}"
+    when: USE_CERN_SSO == "true"
+          and
+          ((item.value is undefined)
+          or
+          (item.value is none)
+          or
+          (item.value | trim == ''))
+  
+  - name: Checking jiskefet_ui_settings
+    fail: 
+      msg: "Variable {{ item.key }} has not been filled in"
+    with_dict: "{{ jiskefet_ui_settings }}"
+    when: (item.value is undefined)
+          or
+          (item.value is none)
+          or
+          (item.value | trim == '')
+...

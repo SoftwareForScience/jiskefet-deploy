@@ -37,11 +37,18 @@
   args:
     chdir: "/var/lib/jiskefet"
 
-- name: list ports to see if proxy is running
+- name: list all ports running on current host
   command: ss -ntl
   register: out
 
 - debug: var=out.stdout_lines
+
+- debug: var=out.stdout
+
+- name: check if API is running on port {{ jiskefet_api_general_settings.PORT }}
+  fail:
+    msg: "API is unable to start, please use `pm2 logs` to view the error(s)"
+  when: 'jiskefet_api_general_settings.PORT|string not in out.stdout'
 
 - name: save current pm2 processes
   command: pm2 save

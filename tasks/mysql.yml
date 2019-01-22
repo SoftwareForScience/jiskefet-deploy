@@ -62,7 +62,7 @@
   replace:
     dest: /var/lib/jiskefet/sql/create_db_charset_utf8mb4.sql
     regexp: 'database_name'
-    replace: '{{ database_config.database }}' 
+    replace: '{{ jiskefet_api_general_settings.TYPEORM_DATABASE }}' 
   
 - name: Output ansible hostname
   debug: msg="Hostname is {{ ansible_hostname }}"
@@ -71,11 +71,11 @@
   become: yes
   become_user: root
   mysql_user:
-    name: "{{ database_config.username }}"
+    name: "{{ jiskefet_api_general_settings.TYPEORM_USERNAME }}"
     host: "{{ item }}"
-    password: "{{ database_config.password }}"
-    login_user: "{{ database_config.username }}"
-    login_password: "{{ database_config.password }}"
+    password: "{{ jiskefet_api_general_settings.TYPEORM_PASSWORD }}"
+    login_user: "{{ jiskefet_api_general_settings.TYPEORM_USERNAME }}"
+    login_password: "{{ jiskefet_api_general_settings.TYPEORM_PASSWORD }}"
     check_implicit_admin: yes
     priv: "*.*:ALL,GRANT"
   with_items:
@@ -87,8 +87,8 @@
 
 - name: Execute sql file
   mysql_db: 
-    login_user: '{{ database_config.username }}' 
-    login_password: '{{ database_config.password }}'
+    login_user: '{{ jiskefet_api_general_settings.TYPEORM_USERNAME }}' 
+    login_password: '{{ jiskefet_api_general_settings.TYPEORM_PASSWORD }}'
     state: import
     name: 'all'
     target: /var/lib/jiskefet/sql/create_db_charset_utf8mb4.sql

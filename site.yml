@@ -9,11 +9,20 @@
 ---
 # This playbook deploys the whole application stack in this site.
 
+- name: pre check run
+  hosts: localhost
+  vars_files: 
+    - ansible.config.json
+  tasks:
+  
+    # Check if ansible.config.json has been filled in
+    - include: tasks/check-variables.yml
+
 - name: apply common configuration to all nodes
   hosts: all
   remote_user: root
   tasks:
-
+  
     # Create jiskefet-api user
     - include: tasks/create-jiskefet-user.yml
 
@@ -25,8 +34,8 @@
     - ansible.config.json
   vars:
     - temp_folder: /tmp
-  
   tasks:
+  
     # Install git
     - include: tasks/git.yml
       when: use_local_repository == "no"
