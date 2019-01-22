@@ -67,10 +67,10 @@
 - name: Stop NGiNX services
   become: true
   become_user: root
+  notify: restart NGiNX
   service:
     name: nginx
     state: stopped
-  notify: restart NGiNX
 
 - name: Setup firewall to allow connections to port 80 and 443
   become: true

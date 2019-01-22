@@ -13,7 +13,7 @@
   hosts: localhost
   vars_files: 
     - ansible.config.json
-  
+
   roles:
   - local
 
@@ -45,5 +45,4 @@
   
   roles:
   - web
-
 ...

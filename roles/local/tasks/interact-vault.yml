@@ -11,7 +11,7 @@
     prompt: "Do you want to setup ssh for host: {{ host }}? (yes/no)"
   register: setup_vault_bool
   delegate_to: localhost
-  when: unable_to_connect_hosts.results | length > 0
+  when: unable_to_connect_to_hosts.results | length > 0
 
 - name: Check if ./host_vars/{{ host }}/vault.yml exists
   stat:
@@ -32,6 +32,20 @@
   register: correct_path_bool
   delegate_to: localhost
   when: (hostvars.localhost.setup_vault_bool.user_input | bool
+        and
+        not vault_yml_exists.stat.exists)
+
+- name: Creating directory at ./host_vars
+  file:
+    path: ./host_vars
+    state: directory
+  when: ((hostvars.localhost.setup_vault_bool.user_input | bool
+        and
+        hostvars.localhost.correct_path_bool.user_input is defined)
+        and
+        hostvars.localhost.correct_path_bool.user_input | bool)
+        or
+        (vault_yml_exists.stat is defined
         and
         not vault_yml_exists.stat.exists)
 
@@ -83,6 +97,7 @@
     line: "{{ item }}"
   with_items:
     - "---"
+    - "ansible_user: root"
     - "ansible_ssh_pass: \"{{ '{{' }} vault_ansible_ssh_pass {{ '}}' }}\""
   when: ((hostvars.localhost.setup_vault_bool.user_input | bool
         and
@@ -139,7 +154,7 @@
 - name: Write to vault.yml
   lineinfile:
     path: ./host_vars/{{ host }}/vault.yml
-    regexp: '^vault_ansible_ssh_pass:'
+    regexp: 'vault_ansible_ssh_pass:'
     line: "vault_ansible_ssh_pass: {{ hostvars.localhost.user_ssh_pass.user_input }}"
   when: ((hostvars.localhost.setup_vault_bool.user_input | bool
         and
@@ -147,7 +162,7 @@
         and 
         hostvars.localhost.correct_path_bool.user_input | bool
         and
-        vault_yml_exists.stat.exists)
+        not vault_yml_exists.stat.exists)
 
 - pause:
     prompt: "Do you want to encrypt the vault.yml? (yes/no)"
@@ -200,7 +215,13 @@
         and
         not vault_pass_exists.stat.exists)
 
-- name: Update ansible.cfg
+- name: Check if ansible.cfg contains "vault_"
+  shell: grep vault_ ansible.cfg
+  register: grep_result
+  ignore_errors: yes
+  when: hostvars.localhost.setup_vault_bool.user_input | bool
+
+- name: Write to ansible.cfg
   lineinfile:
     path: ansible.cfg
     insertafter: 'inventory = hosts'
@@ -210,7 +231,9 @@
     - vault_identity_list = common@.vault_pass.common
   when: (vault_yml_exists.stat is defined
         and
-        not vault_yml_exists.stat.exists)
+        not vault_yml_exists.stat.exists
+        and
+        grep_result.rc != 0)
 
 - pause:
     prompt: "Please enter the vault password"

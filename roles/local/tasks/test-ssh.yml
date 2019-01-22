@@ -7,33 +7,68 @@
 #  */
 
 ---
-- name: printing hostvars
-  debug:
-    var: "hostvars"
-
 - name: Check if connection is possible using ssh key
   command: ssh -o User=root -o ConnectTimeout=10 -o PreferredAuthentications=publickey -o PubkeyAuthentication=yes {{ item }} echo "Passed"
-  register: result
+  register: result_using_key
   connection: local
   ignore_errors: yes
   changed_when: False
   with_inventory_hostnames:
     - all
 
-- name: filter result where stdout==''
+- name: filter result_using_key where host is unable to connect
   debug: 
     var: item
-  register: unable_to_connect_hosts
-  with_items: "{{ result | json_query(get_host) }}"
+  register: unable_to_connect_hosts_key
+  with_items: "{{ result_using_key | json_query(get_host) }}"
   vars:
     get_host: "results[?stdout==''].{ host: item }"
 
-- debug: 
-    msg: "Unable to connect to host '{{ item.item.host }}' using ssh key. For help, please refer to the documentation at
+- name: Check if connection is possible using username and password
+  command: sshpass -p {{ hostvars[item.item.host].ansible_ssh_pass }} ssh -o User=root -o ConnectTimeout=10 -o PreferredAuthentications=password {{ item.item.host }} echo "Passed"
+  register: result_using_actual_pass
+  connection: local
+  ignore_errors: yes
+  changed_when: False
+  with_items:
+    - "{{ unable_to_connect_hosts_key.results }}"
+  when: (hostvars[item.item.host].ansible_ssh_pass is defined)
+
+- name: Check if connection is possible using username without password
+  command: sshpass -p "" ssh -o User=root -o ConnectTimeout=10 -o PreferredAuthentications=password {{ item.item.host }} echo "Passed"
+  register: result_using_non_existing_pass
+  connection: local
+  ignore_errors: yes
+  changed_when: False
+  with_items:
+    - "{{ unable_to_connect_hosts_key.results }}"
+  when: (hostvars[item.item.host].ansible_ssh_pass is undefined)
+
+- set_fact:
+    result_using_pass: "{{ result_using_non_existing_pass if (result_using_actual_pass.results.0.skip_reason is defined) else result_using_actual_pass}}"
+  delegate_to: localhost
+
+- name: Filter again for username and password
+  debug: 
+    var: item
+  register: unable_to_connect_hosts_pass
+  with_items: "{{ result_using_pass | json_query(get_host) }}"
+  vars:
+    get_host: "results[?stdout==''].{host: _ansible_item_label.item.host}"
+
+- set_fact:
+    unable_to_connect_to_hosts: "{{ unable_to_connect_hosts_pass if ((unable_to_connect_hosts_pass.results | length) < (unable_to_connect_hosts_key.results | length)) else unable_to_connect_hosts_key}}"
+  delegate_to: localhost
+
+- name: unable to connect with ssh
+  debug: 
+    msg: "Unable to connect to host '{{ item.item.host }}' using ssh. For help, please refer to the documentation at
           https://github.com/SoftwareForScience/jiskefet-deploy/blob/master/docs/setting_up_ssh.md"
-  when: ((item.stdout is undefined)
+  when: ((not item.item.host is undefined)
         or
-        (item.stdout is none)
+        (not item.item.host is none)
         or
-        (item.stdout | trim == ''))
-  with_items: "{{ unable_to_connect_hosts.results }}"
+        (not item.item.host | trim == ''))
+        and
+        unable_to_connect_to_hosts.results | length > 0
+  with_items: "{{ unable_to_connect_to_hosts.results }}"

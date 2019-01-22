@@ -7,17 +7,17 @@
 #  */
 
 ---
-- name: restart firewalld
-  become: true
-  become_user: root
-  service:
-    name: firewalld
-    state: restarted
-
 - name: restart NGiNX
   become: true
   become_user: root
   service:
     name: nginx
+    state: restarted
+
+- name: restart firewalld
+  become: true
+  become_user: root
+  service:
+    name: firewalld
     state: restarted
 ...

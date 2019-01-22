@@ -7,3 +7,4 @@ ci/variables.yml
 .vault_pass.common
 /group_vars/*
 /host_vars/*
+.vault_*
