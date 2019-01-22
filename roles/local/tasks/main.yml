@@ -8,5 +8,17 @@
 
 ---
 # Check variables
-- import_tasks: check-variables.yml
+# - import_tasks: check-variables.yml
+
+# Check ssh
+- import_tasks: test-ssh.yml
+
+# Do vault interaction
+- include_tasks: interact-vault.yml
+  with_items: "{{ unable_to_connect_hosts | json_query(get_hosts) }}"
+  vars:
+    get_hosts: "results[*].item.host"
+  loop_control:
+    loop_var: host
+  when: unable_to_connect_hosts.results | length > 0
 ...

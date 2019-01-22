@@ -1,3 +1,0 @@
----
-ansible_ssh_pass: "{{ vault_ansible_ssh_pass }}"
-random_value: webservers

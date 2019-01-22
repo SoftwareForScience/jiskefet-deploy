@@ -1,0 +1,39 @@
+# /*
+#  * Copyright (C) 2018 Amsterdam University of Applied Sciences (AUAS)
+#  *
+#  * This software is distributed under the terms of the
+#  * GNU General Public Licence version 3 (GPL) version 3,
+#  * copied verbatim in the file "LICENSE"
+#  */
+
+---
+- name: printing hostvars
+  debug:
+    var: "hostvars"
+
+- name: Check if connection is possible using ssh key
+  command: ssh -o User=root -o ConnectTimeout=10 -o PreferredAuthentications=publickey -o PubkeyAuthentication=yes {{ item }} echo "Passed"
+  register: result
+  connection: local
+  ignore_errors: yes
+  changed_when: False
+  with_inventory_hostnames:
+    - all
+
+- name: filter result where stdout==''
+  debug: 
+    var: item
+  register: unable_to_connect_hosts
+  with_items: "{{ result | json_query(get_host) }}"
+  vars:
+    get_host: "results[?stdout==''].{ host: item }"
+
+- debug: 
+    msg: "Unable to connect to host '{{ item.item.host }}' using ssh key. For help, please refer to the documentation at
+          https://github.com/SoftwareForScience/jiskefet-deploy/blob/master/docs/setting_up_ssh.md"
+  when: ((item.stdout is undefined)
+        or
+        (item.stdout is none)
+        or
+        (item.stdout | trim == ''))
+  with_items: "{{ unable_to_connect_hosts.results }}"

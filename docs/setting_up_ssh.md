@@ -142,13 +142,23 @@ ansible-vault encrypt path/group_vars/all/vault.yml
 ```
 A prompt will ask you to set a new vault password to encrypt and decrypt the vault. For more information please go to the official documentation from Ansible [here](https://docs.ansible.com/ansible/latest/user_guide/vault.html).
 
+To edit the encrypted files, please execute the following command:
+```zsh
+ansible-vault edit path/group_vars/all/vault.yml
+```
+
+To remove encryption from the vault files, execute the following command:
+```zsh
+ansible-vault decrypt path/group_vars/all/vault.yml
+```
+
 ### How to run playbook with encrypted vars.
 There are several options to run the playbook with variables encrypted by ansible-vault. The current implementation uses `ansible.cfg` to set the path to the vault password file.
 
 ```cfg
 # If set, configures the path to the Vault password file as an alternative to
 # specifying --vault-password-file on the command line.
-vault_password_file = /path/to/vault_pass.txt
+vault_password_file = /path/to/vault_pass
 ```
 If you want ansible to prompt the user for input, pass the `--ask-vault-pass` flag to the console.
 ```zsh
