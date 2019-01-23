@@ -13,6 +13,8 @@
   command: npm install
   args:
     chdir: "/var/lib/jiskefet/jiskefet-api"
+  tags:
+    - git_pull
 
 - name: run npm install on jiskefet-ui
   become: yes
@@ -20,6 +22,8 @@
   command: npm install
   args:
     chdir: "/var/lib/jiskefet/jiskefet-ui"
+  tags:
+    - git_pull
 
 - name: run npm build on jiskefet-ui
   become: yes
@@ -27,4 +31,7 @@
   command: npm run build
   args:
     chdir: "/var/lib/jiskefet/jiskefet-ui"
+  notify: restart NGiNX
+  tags:
+    - git_pull
 ...

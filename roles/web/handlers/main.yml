@@ -13,6 +13,8 @@
   service:
     name: nginx
     state: restarted
+  tags:
+    - git_pull
 
 - name: restart firewalld
   become: true

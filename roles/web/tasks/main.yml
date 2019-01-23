@@ -10,6 +10,8 @@
 # Install git
 - include_tasks: git.yml
   when: use_local_repository == "no"
+  tags:
+    - git_pull
 
 # Unarchive projects
 - include_tasks: unarchive.yml
