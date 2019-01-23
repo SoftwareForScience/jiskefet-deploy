@@ -31,11 +31,15 @@
 
 - name: stop current pm2 daemon if it exits
   command: pm2 kill
+  tags:
+    - git_pull
 
-- name: go to jiskefet-ui project directory and start project using pm2
+- name: go to jiskefet project directory and start project using pm2
   command: pm2 start ecosystem.json
   args:
     chdir: "/var/lib/jiskefet"
+  tags:
+    - git_pull
 
 - name: check if API is running on port {{ jiskefet_api_general_settings.PORT }}
   wait_for:
@@ -45,6 +49,8 @@
 
 - name: save current pm2 processes
   command: pm2 save
+  tags:
+    - git_pull
 
 - name: set pm2 to run on system startup
   command: env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u jiskefet-api --hp /var/lib/jiskefet

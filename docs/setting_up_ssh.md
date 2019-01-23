@@ -145,18 +145,18 @@ vault_ansible_ssh_pass: your_password_here
 ```
 The last step is to encrypt the `vault.yml` with the following command:
 ```zsh
-ansible-vault encrypt path/group_vars/all/vault.yml
+$ ansible-vault encrypt path/group_vars/all/vault.yml
 ```
 A prompt will ask you to set a new vault password to encrypt and decrypt the vault. For more information please go to the official documentation from Ansible [here](https://docs.ansible.com/ansible/latest/user_guide/vault.html).
 
 To edit the encrypted files, please execute the following command:
 ```zsh
-ansible-vault edit path/group_vars/all/vault.yml
+$ ansible-vault edit path/group_vars/all/vault.yml
 ```
 
 To remove encryption from the vault files, execute the following command:
 ```zsh
-ansible-vault decrypt path/group_vars/all/vault.yml
+$ ansible-vault decrypt path/group_vars/all/vault.yml
 ```
 
 ### How to run playbook with encrypted vars.
@@ -169,7 +169,7 @@ vault_password_file = /path/to/vault_pass
 ```
 If you want ansible to prompt the user for input, pass the `--ask-vault-pass` flag to the console.
 ```zsh
-ansible-playbook --ask-vault-pass site.yml
+$ ansible-playbook --ask-vault-pass site.yml
 ```
 For other options please go to the official documentation from Ansible [here](https://docs.ansible.com/ansible/latest/user_guide/vault.html#providing-vault-passwords).
 

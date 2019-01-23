@@ -1,4 +1,10 @@
 # System requirements
+
+- [System requirements](#system-requirements)
+  - [Host machine specifications (machine executing ansible playbook(s))](#host-machine-specifications-machine-executing-ansible-playbooks)
+  - [API and UI machine specifications](#api-and-ui-machine-specifications)
+  - [DB machine specifications](#db-machine-specifications)
+
 [Back to table of contents](../README.md#table-of-contents)
 
 ## Host machine specifications (machine executing ansible playbook(s))

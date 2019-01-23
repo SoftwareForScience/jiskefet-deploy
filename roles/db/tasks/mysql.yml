@@ -75,6 +75,7 @@
     - "%"
 
 - name: Execute sql file
+  ignore_errors: yes
   mysql_db: 
     login_user: '{{ jiskefet_api_general_settings.TYPEORM_USERNAME }}' 
     login_password: '{{ jiskefet_api_general_settings.TYPEORM_PASSWORD }}'
