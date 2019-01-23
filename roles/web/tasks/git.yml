@@ -20,6 +20,8 @@
     dest: /var/lib/jiskefet/jiskefet-api
     force: yes
     version: "{{ repository_branch.jiskefet_api }}"
+  tags:
+    - git_pull
 
 - name: checkout jiskefet-ui
   git:
@@ -27,4 +29,6 @@
     dest: /var/lib/jiskefet/jiskefet-ui
     force: yes
     version: "{{ repository_branch.jiskefet_ui }}"
+  tags:
+    - git_pull
 ...

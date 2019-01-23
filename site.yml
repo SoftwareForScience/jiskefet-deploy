@@ -9,13 +9,30 @@
 ---
 # This playbook deploys the whole application stack in this site.
 
+- name: pre check run
+  hosts: localhost
+  vars_files: 
+    - ansible.config.json
+
+  roles:
+  - local
+
 - name: apply common configuration to all nodes
   hosts: all
   remote_user: root
-  tasks:
+  
+  roles:
+  - common
 
-    # Create jiskefet-api user
-    - include: tasks/create-jiskefet-user.yml
+- name: deploy MySQL and configure the databases
+  hosts: dbservers
+  become_user: jiskefet-api
+  become: yes
+  vars_files:
+    - ansible.config.json
+  
+  roles:
+  - db
 
 - name: configure and deploy the webservers and application code
   hosts: webservers
@@ -26,45 +43,6 @@
   vars:
     - temp_folder: /tmp
   
-  tasks:
-    # Install git
-    - include: tasks/git.yml
-      when: use_local_repository == "no"
-
-    # Unarchive projects
-    - include: tasks/unarchive.yml
-      when: use_local_repository == "yes"
-
-    # Setting environment variables
-    - include: tasks/change-env-variables.yml
-
-    # Install Node.js
-    - include: tasks/nodejs.yml
-
-    # Do npm install
-    - include: tasks/npm.yml
-
-    # Starts firewalld service
-    - include: tasks/firewall.yml
-
-    # Install and run nginx
-    - include: tasks/nginx.yml
-
-    # Install and run pm2
-    - include: tasks/pm2.yml
-
-- name: deploy MySQL and configure the databases
-  hosts: dbservers
-  become_user: jiskefet-api
-  become: yes
-  vars_files:
-    - ansible.config.json
-  tasks:
-  
-    # Starts firewalld service
-    - include: tasks/firewall.yml
-    
-    # Install MySql (MariaDB)
-    - include: tasks/mysql.yml
-
+  roles:
+  - web
 ...
