@@ -46,5 +46,5 @@
     "jiskefet_ui_settings":{ 
         "API_URL": "http://localhost:3000/"
     },
-    "allow_csp_payload": "\"default-src 'self' http://137.117.177.74 http://13.93.34.222 http://jiskefet.westeurope.cloudapp.azure.com https://github.com https://api.github.com; script-src 'self' https://use.fontawesome.com/releases/v5.3.1/js/all.js https://github.com https://api.github.com; style-src 'self' 'unsafe-inline'; object-src 'none'; font-src 'self' data: fonts.gstatic.com; img-src https://*.githubusercontent.com http://jiskefet.westeurope.cloudapp.azure.com;\";"
+    "allow_csp_payload": "\"default-src 'self' http://{{ansible_default_ipv4.address}} https://{{ansible_default_ipv4.address}} https://github.com https://api.github.com; script-src 'self' https://use.fontawesome.com/releases/v5.3.1/js/all.js https://github.com https://api.github.com; style-src 'self' 'unsafe-inline'; object-src 'none'; font-src 'self' data: fonts.gstatic.com; img-src https://*.githubusercontent.com http://{{ ansible_default_ipv4.address }} https://{{ansible_default_ipv4.address}};\""
 }

@@ -13,7 +13,7 @@
   yum_repository:
     name: MariaDB
     description: Official MariaDB repository
-    baseurl: "http://yum.mariadb.org/10.1/centos7-amd64"
+    baseurl: "https://yum.mariadb.org/10.1/centos7-amd64"
     gpgkey: https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
     gpgcheck: true
   tags: mariadb
@@ -28,8 +28,8 @@
     - MariaDB
     - MariaDB-server
     - MySQL-python
+  notify: enable mariadb on reboot
   tags: mariadb
-#
 
 - name: Start mysql server and enable it on reboot
   become: true
@@ -50,22 +50,11 @@
   become_method: su
   become_user: root
 
-- name: Copy create_db_charset_utf8mb4.sql from local to remote
-  copy:
-    src: create_db_charset_utf8mb4.sql
-    dest: /var/lib/jiskefet/sql/create_db_charset_utf8mb4.sql
-  become: true
-  become_method: su
-  become_user: root
 
-- name: Replace create_db_charset_utf8mb4.sql database name with current name.
-  replace:
+- name: Copy create_db_charset_utf8mb4.sql from local to remote
+  template: 
+    src: create_db_charset_utf8mb4.sql.j2 
     dest: /var/lib/jiskefet/sql/create_db_charset_utf8mb4.sql
-    regexp: 'database_name'
-    replace: '{{ jiskefet_api_general_settings.TYPEORM_DATABASE }}' 
-  
-- name: Output ansible hostname
-  debug: msg="Hostname is {{ ansible_hostname }}"
 
 - name: Update mysql root password for all root accounts
   become: yes
@@ -86,27 +75,12 @@
     - "%"
 
 - name: Execute sql file
+  ignore_errors: yes
   mysql_db: 
     login_user: '{{ jiskefet_api_general_settings.TYPEORM_USERNAME }}' 
     login_password: '{{ jiskefet_api_general_settings.TYPEORM_PASSWORD }}'
     state: import
     name: 'all'
     target: /var/lib/jiskefet/sql/create_db_charset_utf8mb4.sql
-
-- name: Restart mysql
-  become: yes
-  become_user: root
-  service:
-    name: mysql
-    state: restarted
-
-- name: Add firewall exceptions
-  become: yes
-  become_user: root
-  command: firewall-cmd --permanent --add-service=mysql 
-
-- name: Reload firewall
-  become: yes
-  become_user: root
-  command: firewall-cmd --reload
+  notify: restart mysql
 ...

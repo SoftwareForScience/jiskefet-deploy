@@ -1,0 +1,24 @@
+# /*
+#  * Copyright (C) 2018 Amsterdam University of Applied Sciences (AUAS)
+#  *
+#  * This software is distributed under the terms of the
+#  * GNU General Public Licence version 3 (GPL) version 3,
+#  * copied verbatim in the file "LICENSE"
+#  */
+
+---
+# Check variables
+- import_tasks: check-variables.yml
+
+# Check ssh
+- import_tasks: test-ssh.yml
+
+# Do vault interaction
+- include_tasks: interact-vault.yml
+  with_items: "{{ unable_to_connect_to_hosts | json_query(get_hosts) }}"
+  vars:
+    get_hosts: "results[*].item.host"
+  loop_control:
+    loop_var: host
+  when: unable_to_connect_to_hosts.results | length > 0
+...

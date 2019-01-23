@@ -18,6 +18,8 @@ For the separate **Jenkins CI** playbook, see table of contents.
   1. [Configuration file](docs/configuration_file.md)
   2. [Setting up ssh](docs/setting_up_ssh.md)
   3. [Running the Ansible playbook](docs/running_ansible.md)
+- Manage processes after installation
+  - [Managing API with pm2](docs/managing_processes.md)
 - General information
   - [System requirements](docs/system_requirements.md)
   - [Deployment diagram](docs/deployment_diagram.md)
@@ -27,15 +29,15 @@ For the separate **Jenkins CI** playbook, see table of contents.
 ## Quick Start
 
 1. Copy the `ansible.config.json.template` as `ansible.config.json` and change the variables to the appropriate values ([more info](docs/configuration_file.md)).
-2. Make sure you can connect to two CentOS servers via ssh ([more info](docs/setting_up_ssh.md)):
+2. Make sure that the two CentOS server are online ([more info](docs/setting_up_ssh.md)):
     ```bash 
-    $ ssh vm-jiskefet-api
-    $ ssh vm-jiskefet-db
+    $ ping IP_ADDR_SERVER_1
+    $ ping IP_ADDR_SERVER_2
     ```
-4. Run playbook: 
+3. Run playbook twice (first time an ansible-vault will be setup, second time to deploy the application stack): 
     ```bash
     $ ansible-playbook site.yml
     ```
-5. Open a browser and navigate to http://SERVER_IP_HERE/api/doc/ to see the swagger documentation of the project.
+4. Open a browser and navigate to http://SERVER_IP_HERE/api/doc/ to see the swagger documentation of the project.
 
 [Back to table of contents](#table-of-contents)

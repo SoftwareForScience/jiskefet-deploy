@@ -1,4 +1,16 @@
 # 1. Configuration file
+
+- [1. Configuration file](#1-configuration-file)
+  - [Deploy from .tar](#deploy-from-tar)
+  - [Deploy from GitHub](#deploy-from-github)
+  - [USE_CERN_SSO flag](#usecernsso-flag)
+  - [Jiskefet API settings (all fields are required)](#jiskefet-api-settings-all-fields-are-required)
+  - [OAuth settings (all fields are required)](#oauth-settings-all-fields-are-required)
+  - [Jiskefet CERN OAuth setting](#jiskefet-cern-oauth-setting)
+  - [Mock/test database settings (optional)](#mocktest-database-settings-optional)
+  - [Jiskefet UI settings](#jiskefet-ui-settings)
+
+
 [Back to table of contents](../README.md#table-of-contents)
 
 To configure the ansible scripts the file `ansible.config.json` needs to be created in the root of the ansible directory.
