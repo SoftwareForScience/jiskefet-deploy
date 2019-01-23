@@ -29,12 +29,12 @@ For the separate **Jenkins CI** playbook, see table of contents.
 ## Quick Start
 
 1. Copy the `ansible.config.json.template` as `ansible.config.json` and change the variables to the appropriate values ([more info](docs/configuration_file.md)).
-2. Make sure you can connect to two CentOS servers via ssh ([more info](docs/setting_up_ssh.md)):
+2. Make sure that the two CentOS server are online ([more info](docs/setting_up_ssh.md)):
     ```bash 
-    $ ssh jiskefet-api
-    $ ssh jiskefet-db
+    $ ping IP_ADDR_SERVER_1
+    $ ping IP_ADDR_SERVER_2
     ```
-3. Run playbook: 
+3. Run playbook twice (first time an ansible-vault will be setup, second time to deploy the application stack): 
     ```bash
     $ ansible-playbook site.yml
     ```

@@ -10,6 +10,7 @@ Name | Version
 ansible | 2.5 or higher   
 ansible-playbook | 2.5 or higher   
 python | 2.7.5   
+python-jmespath | 0.9 or higher 
 
 ## API and UI machine specifications
 
