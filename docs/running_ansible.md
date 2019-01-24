@@ -30,6 +30,6 @@ $ ansible-playbook site.yml --tags git_pull
 ```
 
 
-Make sure you are running the required version of Ansible, ansible-playbook and python ([see requirements](system_requirements))
+Make sure you are running the required version of Ansible, ansible-playbook and python ([see requirements](./system_requirements.md))
 
 [Back to table of contents](../README.md#table-of-contents)
