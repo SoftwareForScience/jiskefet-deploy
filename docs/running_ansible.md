@@ -18,10 +18,12 @@ $ ansible-playbook site.yml
 ```
 
 ## Ansible tags
-This ansible playbook currently supports the following tags:
-Tag name | Description 
----- | --- 
-git_pull | Pulls the latest version from the specified branch from git and deploys it to the servers. (this tag cannot complete without failure if the command `ansible-playbook site.yml` has not been executed)
+This ansible playbook currently supports the following tags:  
+
+Tag name | Description  
+---- | ---   
+git_pull | Pulls the latest version from the specified branch from git and deploys it to the servers. (this tag cannot complete without failure if the command `ansible-playbook site.yml` has not been executed)  
+
 To use these tags in ansible, execute the following command:
 ```zsh
 $ ansible-playbook site.yml --tags git_pull
