@@ -115,7 +115,7 @@ These settings are optional, fill the settings in if you want to run `"npm run t
 Fill in the API endpoint for the front end to make request against.
 ```json
 "jiskefet_ui_settings":{ 
-        "API_URL": "http://localhost:3000/"
+        "API_URL": "http://localhost:3000/api/"
     },
 ```
 
