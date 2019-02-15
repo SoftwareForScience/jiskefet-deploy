@@ -8,3 +8,4 @@ ci/variables.yml
 /group_vars/*
 /host_vars/*
 .vault_*
+ansible.config.yml

@@ -1,0 +1,27 @@
+# /*
+#  * Copyright (C) 2018 Amsterdam University of Applied Sciences (AUAS)
+#  *
+#  * This software is distributed under the terms of the
+#  * GNU General Public Licence version 3 (GPL) version 3,
+#  * copied verbatim in the file "LICENSE"
+#  */
+
+---
+- name: Set ansible default facts for jiskefet
+  set_fact:
+    USE_CERN_SSO: "{{ USE_CERN_SSO if (USE_CERN_SSO is defined) else 'false'}}"
+    jiskefet_api_general_settings: 
+      USE_API_BASE_PATH: "{{ jiskefet_api_general_settings.USE_API_BASE_PATH if ((jiskefet_api_general_settings.USE_API_BASE_PATH is defined) and (jiskefet_api_general_settings.USE_API_BASE_PATH | trim != '')) else 'true'}}"
+      PORT: "{{ jiskefet_api_general_settings.PORT if ((jiskefet_api_general_settings.PORT is defined) and (jiskefet_api_general_settings.PORT | trim != '')) else 3000}}"
+      TYPEORM_CONNECTION: "{{ jiskefet_api_general_settings.TYPEORM_CONNECTION if ((jiskefet_api_general_settings.TYPEORM_CONNECTION is defined) and (jiskefet_api_general_settings.TYPEORM_CONNECTION | trim != '')) else 'mysql'}}"
+      TYPEORM_PORT: "{{ jiskefet_api_general_settings.TYPEORM_PORT if ((jiskefet_api_general_settings.TYPEORM_PORT is defined) and (jiskefet_api_general_settings.TYPEORM_PORT | trim != '')) else 3306}}"
+      TYPEORM_SYNCHRONIZE: "{{ jiskefet_api_general_settings.TYPEORM_SYNCHRONIZE if ((jiskefet_api_general_settings.TYPEORM_SYNCHRONIZE is defined) and (jiskefet_api_general_settings.TYPEORM_SYNCHRONIZE | trim != '')) else 'true'}}"
+      TYPEORM_LOGGING: "{{ jiskefet_api_general_settings.TYPEORM_LOGGING if ((jiskefet_api_general_settings.TYPEORM_LOGGING is defined) and (jiskefet_api_general_settings.TYPEORM_LOGGING | trim != '')) else 'false'}}" 
+      USE_INFO_LOGGER: "{{ jiskefet_api_general_settings.USE_INFO_LOGGER if ((jiskefet_api_general_settings.USE_INFO_LOGGER is defined) and (jiskefet_api_general_settings.USE_INFO_LOGGER | trim != '')) else 'false'}}"
+    remote_repository_url:
+      jiskefet_api: "{{ remote_repository_url.jiskefet_api if ((remote_repository_url is defined) and (remote_repository_url.jiskefet_api is defined) and (remote_repository_url.jiskefet_api | trim != '')) else 'https://github.com/SoftwareForScience/jiskefet-api.git'}}"
+      jiskefet_ui: "{{ remote_repository_url.jiskefet_ui if ((remote_repository_url is defined) and (remote_repository_url.jiskefet_ui is defined) and (remote_repository_url.jiskefet_ui | trim != '')) else 'https://github.com/SoftwareForScience/jiskefet-ui.git'}}"
+    repository_branch:
+      jiskefet_api: "{{ repository_branch.jiskefet_api if ((repository_branch is defined) and (repository_branch.jiskefet_api is defined) and (repository_branch.jiskefet_api | trim != '')) else 'master'}}"
+      jiskefet_ui: "{{ repository_branch.jiskefet_ui if ((repository_branch is defined) and (repository_branch.jiskefet_ui is defined) and (repository_branch.jiskefet_ui | trim != '')) else 'master'}}"
+  delegate_to: all

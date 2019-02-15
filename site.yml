@@ -12,7 +12,7 @@
 - name: pre check run
   hosts: localhost
   vars_files: 
-    - ansible.config.json
+    - ansible.config.yml
 
   roles:
   - local
@@ -29,7 +29,7 @@
   become_user: jiskefet-api
   become: yes
   vars_files:
-    - ansible.config.json
+    - ansible.config.yml
   
   roles:
   - db
@@ -39,7 +39,7 @@
   become_user: jiskefet-api
   become: yes
   vars_files:
-    - ansible.config.json
+    - ansible.config.yml
   vars:
     - temp_folder: /tmp
   

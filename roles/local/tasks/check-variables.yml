@@ -9,7 +9,7 @@
 ---
 - name: Set facts to check ansible.config.json against.
   set_fact:
-    url_ip: '(http(s)?:\/\/)?\b(?:(?:2(?:[0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])\.){3}(?:(?:2([0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9]))\b\/?((?:[?&](?:\w+)=(?:\w+))+|[--:\w?@%&+~#=]+)?|([--:\w?@%&+~#=]*\.[a-z]{2,4}\/{0,2})((?:[?&](?:\w+)=(?:\w+))+|[--:\w?@%&+~#=]+)?|(localhost)'
+    url_ip: '(http(s)?:\/\/)?\b(?:(?:2(?:[0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])\.){3}(?:(?:2([0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9]))\b\/?((?:[?&](?:\w+)=(?:\w+))+|[--:\w?@%&+~#=]+)?|([--:\w?@%&+~#=]*\.[a-z]{2,4}\/{0,2})((?:[?&](?:\w+)=(?:\w+))+|[--:\w?@%&+~#=]+)?|(http(s)?:\/\/)?(localhost)(\.+)?'
     boolean: '^(tru|fals)e$'
     port_number: ^([0-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-9][0-9][0-9][0-9]|[1-9][0-9][0-9][0-9][0-9])$
     
@@ -32,7 +32,7 @@
   fail: 
     msg: "Key {{ item.key }} does not have value 'true' or 'false'"
   with_items: 
-    - { key: USE_API_PREFIX, value: "{{ jiskefet_api_general_settings.USE_API_PREFIX }}" }
+    - { key: USE_API_BASE_PATH, value: "{{ jiskefet_api_general_settings.USE_API_BASE_PATH }}" }
     - { key: TYPEORM_SYNCHRONIZE, value: "{{ jiskefet_api_general_settings.TYPEORM_SYNCHRONIZE }}" }
     - { key: TYPEORM_LOGGING, value: "{{ jiskefet_api_general_settings.TYPEORM_LOGGING }}" }
     - { key: USE_INFO_LOGGER, value: "{{ jiskefet_api_general_settings.USE_INFO_LOGGER }}" }
@@ -58,7 +58,7 @@
 - name: Check if jiskefet_ui_settings.API_URL ends with /api/
   fail: 
     msg: "{{ jiskefet_ui_settings.API_URL }} end with /api/"
-  when: jiskefet_api_general_settings.USE_API_PREFIX == 'true'
+  when: jiskefet_api_general_settings.USE_API_BASE_PATH == 'true'
         and
         not jiskefet_ui_settings.API_URL is match('.*(\/api\/)$')
 

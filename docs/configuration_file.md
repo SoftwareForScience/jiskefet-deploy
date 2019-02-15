@@ -62,7 +62,7 @@ Change the variable `host` to the ip address of the database server, the `userna
 credentials for the database and the `database` variable to a database name. In most cases the rest of the variables can stay as their defaults.
 ```json
 "jiskefet_api_general_settings": {
-        "USE_API_PREFIX": "true",
+        "USE_API_BASE_PATH": "true",
         "PORT": 3000,
         "TYPEORM_CONNECTION": "mysql",
         "TYPEORM_HOST": "",
