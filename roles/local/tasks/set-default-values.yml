@@ -7,8 +7,19 @@
 #  */
 
 ---
+- name: workaround for no vault_ansible_ssh_pass for localhost
+  set_fact: 
+    vault_ansible_ssh_pass: ''
+  delegate_to: localhost
+
 - name: Set ansible default facts for jiskefet
   set_fact:
+    remote_repository_url:
+      jiskefet_api: "{{ remote_repository_url.jiskefet_api if ((remote_repository_url is defined) and (remote_repository_url.jiskefet_api is defined) and (remote_repository_url.jiskefet_api | trim != '')) else 'https://github.com/SoftwareForScience/jiskefet-api.git'}}"
+      jiskefet_ui: "{{ remote_repository_url.jiskefet_ui if ((remote_repository_url is defined) and (remote_repository_url.jiskefet_ui is defined) and (remote_repository_url.jiskefet_ui | trim != '')) else 'https://github.com/SoftwareForScience/jiskefet-ui.git'}}"
+    repository_branch:
+      jiskefet_api: "{{ repository_branch.jiskefet_api if ((repository_branch is defined) and (repository_branch.jiskefet_api is defined) and (repository_branch.jiskefet_api | trim != '')) else 'master'}}"
+      jiskefet_ui: "{{ repository_branch.jiskefet_ui if ((repository_branch is defined) and (repository_branch.jiskefet_ui is defined) and (repository_branch.jiskefet_ui | trim != '')) else 'master'}}"
     USE_CERN_SSO: "{{ USE_CERN_SSO if (USE_CERN_SSO is defined) else 'false'}}"
     jiskefet_api_general_settings: 
       USE_API_BASE_PATH: "{{ jiskefet_api_general_settings.USE_API_BASE_PATH if ((jiskefet_api_general_settings.USE_API_BASE_PATH is defined) and (jiskefet_api_general_settings.USE_API_BASE_PATH | trim != '')) else 'true'}}"
@@ -17,11 +28,23 @@
       TYPEORM_PORT: "{{ jiskefet_api_general_settings.TYPEORM_PORT if ((jiskefet_api_general_settings.TYPEORM_PORT is defined) and (jiskefet_api_general_settings.TYPEORM_PORT | trim != '')) else 3306}}"
       TYPEORM_SYNCHRONIZE: "{{ jiskefet_api_general_settings.TYPEORM_SYNCHRONIZE if ((jiskefet_api_general_settings.TYPEORM_SYNCHRONIZE is defined) and (jiskefet_api_general_settings.TYPEORM_SYNCHRONIZE | trim != '')) else 'true'}}"
       TYPEORM_LOGGING: "{{ jiskefet_api_general_settings.TYPEORM_LOGGING if ((jiskefet_api_general_settings.TYPEORM_LOGGING is defined) and (jiskefet_api_general_settings.TYPEORM_LOGGING | trim != '')) else 'false'}}" 
+      JWT_EXPIRE_TIME: "{{ jiskefet_api_general_settings.JWT_EXPIRE_TIME if ((jiskefet_api_general_settings.JWT_EXPIRE_TIME is defined) and (jiskefet_api_general_settings.JWT_EXPIRE_TIME | trim != '')) else '1h'}}" 
+      SUB_SYSTEM_TOKEN_EXPIRES_IN: "{{ jiskefet_api_general_settings.SUB_SYSTEM_TOKEN_EXPIRES_IN if ((jiskefet_api_general_settings.SUB_SYSTEM_TOKEN_EXPIRES_IN is defined) and (jiskefet_api_general_settings.SUB_SYSTEM_TOKEN_EXPIRES_IN | trim != '')) else '365 days'}}" 
       USE_INFO_LOGGER: "{{ jiskefet_api_general_settings.USE_INFO_LOGGER if ((jiskefet_api_general_settings.USE_INFO_LOGGER is defined) and (jiskefet_api_general_settings.USE_INFO_LOGGER | trim != '')) else 'false'}}"
-    remote_repository_url:
-      jiskefet_api: "{{ remote_repository_url.jiskefet_api if ((remote_repository_url is defined) and (remote_repository_url.jiskefet_api is defined) and (remote_repository_url.jiskefet_api | trim != '')) else 'https://github.com/SoftwareForScience/jiskefet-api.git'}}"
-      jiskefet_ui: "{{ remote_repository_url.jiskefet_ui if ((remote_repository_url is defined) and (remote_repository_url.jiskefet_ui is defined) and (remote_repository_url.jiskefet_ui | trim != '')) else 'https://github.com/SoftwareForScience/jiskefet-ui.git'}}"
-    repository_branch:
-      jiskefet_api: "{{ repository_branch.jiskefet_api if ((repository_branch is defined) and (repository_branch.jiskefet_api is defined) and (repository_branch.jiskefet_api | trim != '')) else 'master'}}"
-      jiskefet_ui: "{{ repository_branch.jiskefet_ui if ((repository_branch is defined) and (repository_branch.jiskefet_ui is defined) and (repository_branch.jiskefet_ui | trim != '')) else 'master'}}"
-  delegate_to: all
+    jiskefet_api_optional_settings:
+      TEST_DB_CONNECTION: "{{ jiskefet_api_optional_settings.TEST_DB_CONNECTION if ((jiskefet_api_optional_settings.TEST_DB_CONNECTION is defined) and (jiskefet_api_optional_settings.TEST_DB_CONNECTION | trim != '')) else 'mysql'}}"
+      TEST_DB_PORT: "{{ jiskefet_api_optional_settings.TEST_DB_PORT if ((jiskefet_api_optional_settings.TEST_DB_PORT is defined) and (jiskefet_api_optional_settings.TEST_DB_PORT | trim != '')) else 3306}}"
+      TEST_DB_SYNCHRONIZE: "{{ jiskefet_api_optional_settings.TEST_DB_SYNCHRONIZE if ((jiskefet_api_optional_settings.TEST_DB_SYNCHRONIZE is defined) and (jiskefet_api_optional_settings.TEST_DB_SYNCHRONIZE | trim != '')) else 'true'}}"
+      TEST_DB_LOGGING: "{{ jiskefet_api_optional_settings.TEST_DB_LOGGING if ((jiskefet_api_optional_settings.TEST_DB_LOGGING is defined) and (jiskefet_api_optional_settings.TEST_DB_LOGGING | trim != '')) else 'true'}}"
+  delegate_to: "{{ item }}"
+  with_items:
+    - "{{ groups.all }}"
+    - localhost
+  delegate_facts: true
+
+# - name: check if remote_repository_url has been delegated to the other hosts.
+#   debug: 
+#     msg: "{{ hostvars[item]['jiskefet_api_general_settings'] }}"
+#   with_items:
+#    - "{{ groups.all }}"
+#    - localhost
