@@ -7,7 +7,7 @@
 #  */
 
 ---
-- name: workaround for no vault_ansible_ssh_pass for localhost
+- name: workaround for no vault_ansible_ssh_pass variable for localhost
   set_fact: 
     vault_ansible_ssh_pass: ''
   delegate_to: localhost
@@ -20,7 +20,7 @@
     repository_branch:
       jiskefet_api: "{{ repository_branch.jiskefet_api if ((repository_branch is defined) and (repository_branch.jiskefet_api is defined) and (repository_branch.jiskefet_api | trim != '')) else 'master'}}"
       jiskefet_ui: "{{ repository_branch.jiskefet_ui if ((repository_branch is defined) and (repository_branch.jiskefet_ui is defined) and (repository_branch.jiskefet_ui | trim != '')) else 'master'}}"
-    USE_CERN_SSO: "{{ USE_CERN_SSO if (USE_CERN_SSO is defined) else 'false'}}"
+    USE_CERN_SSO: "{{ USE_CERN_SSO if ((USE_CERN_SSO is defined) and (USE_CERN_SSO | trim != '')) else 'false'}}"
     jiskefet_api_general_settings: 
       USE_API_BASE_PATH: "{{ jiskefet_api_general_settings.USE_API_BASE_PATH if ((jiskefet_api_general_settings.USE_API_BASE_PATH is defined) and (jiskefet_api_general_settings.USE_API_BASE_PATH | trim != '')) else 'true'}}"
       PORT: "{{ jiskefet_api_general_settings.PORT if ((jiskefet_api_general_settings.PORT is defined) and (jiskefet_api_general_settings.PORT | trim != '')) else 3000}}"
@@ -41,10 +41,4 @@
     - "{{ groups.all }}"
     - localhost
   delegate_facts: true
-
-# - name: check if remote_repository_url has been delegated to the other hosts.
-#   debug: 
-#     msg: "{{ hostvars[item]['jiskefet_api_general_settings'] }}"
-#   with_items:
-#    - "{{ groups.all }}"
-#    - localhost
+  

@@ -28,10 +28,10 @@ jiskefet_api_general_settings:
   ## https://github.com/typeorm/typeorm/blob/master/docs/connection-options.md#common-connection-options
   # TYPEORM_CONNECTION: mysql
 
-  TYPEORM_HOST: ''
-  TYPEORM_USERNAME: ''
-  TYPEORM_PASSWORD: ''
-  TYPEORM_DATABASE: ''
+  TYPEORM_HOST:
+  TYPEORM_USERNAME:
+  TYPEORM_PASSWORD:
+  TYPEORM_DATABASE:
   ## TYPEORM_PORT is set to 3306 by default, please uncomment the line below if another TYPEORM_PORT is used.
   # TYPEORM_PORT: 3306
 
@@ -41,7 +41,7 @@ jiskefet_api_general_settings:
   ## TYPEORM_LOGGING is set to 'false' by default, please uncomment the line below if you wish to see the logging of TYPEORM.
   # TYPEORM_LOGGING: 'true'
 
-  JWT_SECRET_KEY: ''
+  JWT_SECRET_KEY:
 
   ## JWT_EXPIRE_TIME is set to '1h' by default, the user's session will be invalidated if he is inactive for more than 1 hour.
   JWT_EXPIRE_TIME: 1h
@@ -54,28 +54,29 @@ jiskefet_api_general_settings:
   # USE_INFO_LOGGER: 'true'
 
 jiskefet_oauth_settings:
-  CLIENT_ID: ''
-  CLIENT_SECRET: ''
-  AUTH_REDIRECT_URI: ''
+  CLIENT_ID:
+  CLIENT_SECRET:
+  AUTH_REDIRECT_URI:
 jiskefet_cern_oauth_settings:
   ## CERN_REGISTERED_URI only needs to be filled in when using CERN SSO
-  CERN_REGISTERED_URI: ''
+  CERN_REGISTERED_URI:
 jiskefet_api_optional_settings:
   ## These are settings for when running tests
   # TEST_DB_CONNECTION: mysql
   TEST_DB_HOST: localhost
-  TEST_DB_USERNAME: ''
-  TEST_DB_PASSWORD: ''
+  TEST_DB_USERNAME:
+  TEST_DB_PASSWORD:
   TEST_DB_DATABASE: jiskefet_test
-  # TEST_DB_PORT: '3306'
-  # TEST_DB_SYNCHRONIZE: 'true'
-  # TEST_DB_LOGGING: 'true'
+  # TEST_DB_PORT:3306
+  # TEST_DB_SYNCHRONIZE: 'true''
+  # TEST_DB_LOGGING: 'true
 jiskefet_ui_settings:
-  API_URL: http://localhost:{{ jiskefet_api_general_settings.PORT }}/api/
+  API_URL: http://{{ ansible_default_ipv4.address }}/api/
 allow_csp_payload: >-
-  "default-src 'self' http://{{ ansible_default_ipv4.address }} 
+  "default-src 'self' http://{{ ansible_default_ipv4.address }}
   https://{{ ansible_default_ipv4.address }} https://github.com https://api.github.com;
   script-src 'self' https://use.fontawesome.com/releases/v5.3.1/js/all.js https://github.com
   https://api.github.com; style-src 'self' 'unsafe-inline'; object-src 'none';
-  font-src 'self data: fonts.gstatic.com; img-src https://*.githubusercontent.com
+  font-src 'self'; data fonts.gstatic.com; img-src https://*.githubusercontent.com
   http://{{ ansible_default_ipv4.address }} https://{{ ansible_default_ipv4.address }};"
+
