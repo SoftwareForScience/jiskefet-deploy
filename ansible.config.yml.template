@@ -73,9 +73,9 @@ jiskefet_api_optional_settings:
 jiskefet_ui_settings:
   API_URL: http://localhost:{{ jiskefet_api_general_settings.PORT }}/api/
 allow_csp_payload: >-
-  '"default-src ''self'' http://{{ ansible_default_ipv4.address }}
+  "default-src 'self' http://{{ ansible_default_ipv4.address }} 
   https://{{ ansible_default_ipv4.address }} https://github.com https://api.github.com;
-  script-src ''self'' https://use.fontawesome.com/releases/v5.3.1/js/all.js https://github.com
-  https://api.github.com; style-src ''self'' ''unsafe-inline''; object-src ''none'';
-  font-src ''self'' data: fonts.gstatic.com; img-src https://*.githubusercontent.com
-  http://{{ ansible_default_ipv4.address }} https://{{ ansible_default_ipv4.address }};"'
+  script-src 'self' https://use.fontawesome.com/releases/v5.3.1/js/all.js https://github.com
+  https://api.github.com; style-src 'self' 'unsafe-inline'; object-src 'none';
+  font-src 'self data: fonts.gstatic.com; img-src https://*.githubusercontent.com
+  http://{{ ansible_default_ipv4.address }} https://{{ ansible_default_ipv4.address }};"
