@@ -104,8 +104,8 @@ remote_repository_url | object that contains the two repository URL's
  ∟ jiskefet_api | git URL for the jiskefet API repository 
  ∟ jiskefet_ui | git URL for the jiskefet UI repository 
 repository_branch | object that contains the branches that git should pull 
- ∟ jiskefet_api | a specific branch to pull for jiskefet_api project | e.g. `'develop'` 
- ∟ jiskefet_ui | a specific branch to pull for the jiskefet_ui project |  e.g. `'develop'` 
+ ∟ jiskefet_api | a specific branch to pull for jiskefet_api project, default is set to `'master'` | e.g. `'develop'` 
+ ∟ jiskefet_ui | a specific branch to pull for the jiskefet_ui project, default is set to `'master'` |  e.g. `'develop'` 
 jiskefet_api_general_settings | object that contains all the general settings 
  ∟ USE_API_BASE_PATH | adds `'/api'` to the API url, default is set to `'true'` | `'true'` or `'false'` 
  ∟ PORT | set port number of the jiskefet API project, default port is `'3000'` | number between 1 - 65535 
@@ -118,6 +118,7 @@ jiskefet_api_general_settings | object that contains all the general settings
  ∟ USE_INFO_LOGGER | specify whether the application should use InfoLogger, default is set to `'false'` | `'true'` or `'false'` 
 jiskefet_api_optional_settings | object that contains the optional settings of the jiskefet API project 
  ∟ TEST_DB_CONNECTION | set the connection type of TYPEORM, currently only `'mysql'` is supported | please see the [official docs](https://github.com/typeorm/typeorm/blob/master/docs/connection-options.md#what-is-connectionoptions) 
+  ∟ TEST_DB_DATABASE | set the test database name | if left empty/undefined, it will prefix the `'TYPEORM_DATABASE'` value with `'test_'` 
  ∟ TEST_DB_PORT | set the database port, default is set to `'3306'` | number between 1 - 65535 
  ∟ TEST_DB_SYNCHRONIZE | set if the database should synchronize with the models in the `'src/entities'` folder | `'true'` or `'false'` 
  ∟ TEST_DB_LOGGING | enables logging of all queries and errors, default is set to `'false'` | `'true'` or `'false'`

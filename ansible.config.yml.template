@@ -66,7 +66,7 @@ jiskefet_api_optional_settings:
   TEST_DB_HOST: localhost
   TEST_DB_USERNAME:
   TEST_DB_PASSWORD:
-  TEST_DB_DATABASE: jiskefet_test
+  # TEST_DB_DATABASE: 
   # TEST_DB_PORT:3306
   # TEST_DB_SYNCHRONIZE: 'true''
   # TEST_DB_LOGGING: 'true

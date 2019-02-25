@@ -12,6 +12,10 @@
     vault_ansible_ssh_pass: ''
   delegate_to: localhost
 
+- name: Set database name as a fact
+  set_fact:
+    DATABASE_NAME: "{{ jiskefet_api_general_settings.TYPEORM_DATABASE }}"
+
 - name: Set ansible default facts for jiskefet
   set_fact:
     remote_repository_url:
@@ -33,6 +37,7 @@
       USE_INFO_LOGGER: "{{ jiskefet_api_general_settings.USE_INFO_LOGGER if ((jiskefet_api_general_settings.USE_INFO_LOGGER is defined) and (jiskefet_api_general_settings.USE_INFO_LOGGER | trim != '')) else 'false'}}"
     jiskefet_api_optional_settings:
       TEST_DB_CONNECTION: "{{ jiskefet_api_optional_settings.TEST_DB_CONNECTION if ((jiskefet_api_optional_settings.TEST_DB_CONNECTION is defined) and (jiskefet_api_optional_settings.TEST_DB_CONNECTION | trim != '')) else 'mysql'}}"
+      TEST_DB_DATABASE: "{{ jiskefet_api_optional_settings.TEST_DB_DATABASE if ((jiskefet_api_optional_settings.TEST_DB_DATABASE is defined) and (jiskefet_api_optional_settings.TEST_DB_DATABASE | trim != '')) else 'test_{{ DATABASE_NAME }}'}}"
       TEST_DB_PORT: "{{ jiskefet_api_optional_settings.TEST_DB_PORT if ((jiskefet_api_optional_settings.TEST_DB_PORT is defined) and (jiskefet_api_optional_settings.TEST_DB_PORT | trim != '')) else 3306}}"
       TEST_DB_SYNCHRONIZE: "{{ jiskefet_api_optional_settings.TEST_DB_SYNCHRONIZE if ((jiskefet_api_optional_settings.TEST_DB_SYNCHRONIZE is defined) and (jiskefet_api_optional_settings.TEST_DB_SYNCHRONIZE | trim != '')) else 'true'}}"
       TEST_DB_LOGGING: "{{ jiskefet_api_optional_settings.TEST_DB_LOGGING if ((jiskefet_api_optional_settings.TEST_DB_LOGGING is defined) and (jiskefet_api_optional_settings.TEST_DB_LOGGING | trim != '')) else 'true'}}"
@@ -41,4 +46,3 @@
     - "{{ groups.all }}"
     - localhost
   delegate_facts: true
-  
