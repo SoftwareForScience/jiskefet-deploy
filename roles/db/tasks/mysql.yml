@@ -87,11 +87,10 @@
 - name: Add daily backup cron job
   cron:
     name: "jiskefet-db-backup"
-    user: '{{ jiskefet_api_general_settings.TYPEORM_USERNAME }}'
     minute: "0"
     hour: "0"
     day: "*"
     weekday: "*"
     month: "*"
-    job: 'jiskefetdb > /var/lib/mysql/{{ jiskefet_api_general_settings.TYPEORM_DATABASE }}/backup-`date +\%Y-\%m-\%dT\%H-\%M-\%S`.sql'
+    job: '/usr/bin/mysqldump jiskefetdb > /var/lib/jiskefet/backup-`date +\%Y-\%m-\%dT\%H-\%M-\%S`.sql'
 ...
