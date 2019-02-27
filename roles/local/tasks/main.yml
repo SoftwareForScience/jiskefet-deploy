@@ -7,6 +7,9 @@
 #  */
 
 ---
+# Set default variables
+- import_tasks: set-default-values.yml
+
 # Check variables
 - import_tasks: check-variables.yml
 

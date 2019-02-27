@@ -50,11 +50,15 @@
   become_method: su
   become_user: root
 
-
 - name: Copy create_db_charset_utf8mb4.sql from local to remote
   template: 
     src: create_db_charset_utf8mb4.sql.j2 
     dest: /var/lib/jiskefet/sql/create_db_charset_utf8mb4.sql
+
+- name: Copy create_test_db_charset_utf8mb4.sql from local to remote
+  template: 
+    src: create_test_db_charset_utf8mb4.sql.j2 
+    dest: /var/lib/jiskefet/sql/create_test_db_charset_utf8mb4.sql.sql
 
 - name: Update mysql root password for all root accounts
   become: yes
@@ -74,7 +78,7 @@
     - localhost
     - "%"
 
-- name: Execute sql file
+- name: Create main database
   ignore_errors: yes
   mysql_db: 
     login_user: '{{ jiskefet_api_general_settings.TYPEORM_USERNAME }}' 
@@ -82,5 +86,15 @@
     state: import
     name: 'all'
     target: /var/lib/jiskefet/sql/create_db_charset_utf8mb4.sql
+  notify: restart mysql
+
+- name: Create test database
+  ignore_errors: yes
+  mysql_db: 
+    login_user: '{{ jiskefet_api_optional_settings.TEST_DB_USERNAME }}' 
+    login_password: '{{ jiskefet_api_optional_settings.TEST_DB_PASSWORD }}'
+    state: import
+    name: 'all'
+    target: /var/lib/jiskefet/sql/create_test_db_charset_utf8mb4.sql
   notify: restart mysql
 ...

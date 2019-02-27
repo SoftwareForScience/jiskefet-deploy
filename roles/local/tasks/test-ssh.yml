@@ -32,7 +32,9 @@
   changed_when: False
   with_items:
     - "{{ unable_to_connect_hosts_key.results }}"
-  when: (hostvars[item.item.host].ansible_ssh_pass is defined)
+  when: (hostvars[item.item.host].ansible_ssh_pass is defined
+        and
+        unable_to_connect_hosts_key.results | length > 0)
 
 - name: Check if connection is possible using username without password
   command: sshpass -p "" ssh -o User=root -o ConnectTimeout=10 -o PreferredAuthentications=password {{ item.item.host }} echo "Passed"
@@ -42,17 +44,22 @@
   changed_when: False
   with_items:
     - "{{ unable_to_connect_hosts_key.results }}"
-  when: (hostvars[item.item.host].ansible_ssh_pass is undefined)
+  when: (hostvars[item.item.host].ansible_ssh_pass is undefined
+        and
+        unable_to_connect_hosts_key.results | length > 0)
 
 - set_fact:
     result_using_pass: "{{ result_using_non_existing_pass if (result_using_actual_pass.results.0.skip_reason is defined) else result_using_actual_pass}}"
   delegate_to: localhost
+  when: (result_using_actual_pass.results | length > 0)
+        or
+        (result_using_non_existing_pass.results | length > 0)
 
 - name: Filter again for username and password
   debug: 
     var: item
   register: unable_to_connect_hosts_pass
-  with_items: "{{ result_using_pass | json_query(get_host) }}"
+  with_items: "{{ result_using_pass | default({}) | json_query(get_host) }}"
   vars:
     get_host: "results[?stdout==''].{host: _ansible_item_label.item.host}"
 
