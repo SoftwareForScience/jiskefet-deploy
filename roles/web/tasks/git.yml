@@ -16,19 +16,19 @@
 
 - name: checkout jiskefet-api
   git:
-    repo: "{{ remote_repository_url.jiskefet_api }}"
+    repo: "{{ remote_repository_url.JISKEFET_API }}"
     dest: /var/lib/jiskefet/jiskefet-api
     force: yes
-    version: "{{ repository_branch.jiskefet_api }}"
+    version: "{{ repository_branch.JISKEFET_API }}"
   tags:
     - git_pull
 
 - name: checkout jiskefet-ui
   git:
-    repo: "{{ remote_repository_url.jiskefet_ui }}"
+    repo: "{{ remote_repository_url.JISKEFET_UI }}"
     dest: /var/lib/jiskefet/jiskefet-ui
     force: yes
-    version: "{{ repository_branch.jiskefet_ui }}"
+    version: "{{ repository_branch.JISKEFET_UI }}"
   tags:
     - git_pull
 ...

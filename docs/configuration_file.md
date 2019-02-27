@@ -37,21 +37,21 @@ jiskefet-project-v**/
 ## Deploy from GitHub
 If `use_local_repository` is set to `'no'`, the project will be retrieved from GitHub. The default repository URL's are:
 ```yaml
-jiskefet_api: 'https://github.com/SoftwareForScience/jiskefet-api.git'
-jiskefet_ui: 'https://github.com/SoftwareForScience/jiskefet-ui.git'
+JISKEFET_API: 'https://github.com/SoftwareForScience/jiskefet-api.git'
+JISKEFET_UI: 'https://github.com/SoftwareForScience/jiskefet-ui.git'
 ```
 If the repository URL's are different, please add the following to the `ansible.config.yml` file:
 ```yaml
 remote_repository_url:
-  jiskefet_api: 'FILL_IN_YOUR_REPOSITORY_URL_HERE'
-  jiskefet_ui: 'FILL_IN_YOUR_REPOSITORY_URL_HERE'
+  JISKEFET_API: 'FILL_IN_YOUR_REPOSITORY_URL_HERE'
+  JISKEFET_UI: 'FILL_IN_YOUR_REPOSITORY_URL_HERE'
 ```
 
 The default branch it pulls is currently set to `'master'`. If you want to specify another branch, please add the following to the `ansible.config.yml` file:
 ```yaml
 repository_branch:
-  jiskefet_api: 'FILL_IN_YOUR_BRANCH_HERE'
-  jiskefet_ui: 'FILL_IN_YOUR_BRANCH_HERE'
+  JISKEFET_API: 'FILL_IN_YOUR_BRANCH_HERE'
+  JISKEFET_UI: 'FILL_IN_YOUR_BRANCH_HERE'
 ```
 
 ## USE_CERN_SSO flag
@@ -101,11 +101,11 @@ A list of extra configuration fields is provided in order to overwrite the defau
 Name | Explanation | possible values/ examples 
 ---- | ---- | ---- 
 remote_repository_url | object that contains the two repository URL's 
- ∟ jiskefet_api | git URL for the jiskefet API repository 
- ∟ jiskefet_ui | git URL for the jiskefet UI repository 
+ ∟ JISKEFET_API | git URL for the jiskefet API repository 
+ ∟ JISKEFET_UI | git URL for the jiskefet UI repository 
 repository_branch | object that contains the branches that git should pull 
- ∟ jiskefet_api | a specific branch to pull for jiskefet_api project, default is set to `'master'` | e.g. `'develop'` 
- ∟ jiskefet_ui | a specific branch to pull for the jiskefet_ui project, default is set to `'master'` |  e.g. `'develop'` 
+ ∟ JISKEFET_API | a specific branch to pull for JISKEFET_API project, default is set to `'master'` | e.g. `'develop'` 
+ ∟ JISKEFET_UI | a specific branch to pull for the JISKEFET_UI project, default is set to `'master'` |  e.g. `'develop'` 
 jiskefet_api_general_settings | object that contains all the general settings 
  ∟ USE_API_BASE_PATH | adds `'/api'` to the API url, default is set to `'true'` | `'true'` or `'false'` 
  ∟ PORT | set port number of the jiskefet API project, default port is `'3000'` | number between 1 - 65535 
