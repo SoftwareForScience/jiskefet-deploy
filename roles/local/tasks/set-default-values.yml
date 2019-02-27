@@ -15,6 +15,11 @@
 - name: Set database name as a fact
   set_fact:
     DATABASE_NAME: "{{ jiskefet_api_general_settings.TYPEORM_DATABASE }}"
+  delegate_to: "{{ item }}"
+  with_items:
+    - "{{ groups.all }}"
+    - localhost
+  delegate_facts: true
 
 - name: Set ansible default facts for jiskefet
   set_fact:
