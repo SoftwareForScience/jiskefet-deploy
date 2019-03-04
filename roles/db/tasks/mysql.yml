@@ -106,5 +106,5 @@
     day: "*"
     weekday: "*"
     month: "*"
-    job: '/usr/bin/mysqldump jiskefetdb > /var/lib/jiskefet/backup-`date +\%Y-\%m-\%dT\%H-\%M-\%S`.sql'
+    job: '/usr/bin/mysqldump -u{{ jiskefet_api_general_settings.TYPEORM_USERNAME }} -p{{ jiskefet_api_general_settings.TYPEORM_PASSWORD}} {{ jiskefet_api_general_settings.TYPEORM_DATABASE }} > /var/lib/jiskefet/backup-`date +\%Y-\%m-\%dT\%H-\%M-\%S`.sql'
 ...
