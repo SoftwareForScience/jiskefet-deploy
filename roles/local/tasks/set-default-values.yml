@@ -1,0 +1,53 @@
+# /*
+#  * Copyright (C) 2018 Amsterdam University of Applied Sciences (AUAS)
+#  *
+#  * This software is distributed under the terms of the
+#  * GNU General Public Licence version 3 (GPL) version 3,
+#  * copied verbatim in the file "LICENSE"
+#  */
+
+---
+- name: workaround for no vault_ansible_ssh_pass variable for localhost
+  set_fact: 
+    vault_ansible_ssh_pass: ''
+  delegate_to: localhost
+
+- name: Set database name as a fact
+  set_fact:
+    DATABASE_NAME: "{{ jiskefet_api_general_settings.TYPEORM_DATABASE }}"
+  delegate_to: "{{ item }}"
+  with_items:
+    - "{{ groups.all }}"
+    - localhost
+  delegate_facts: true
+
+- name: Set ansible default facts for jiskefet
+  set_fact:
+    remote_repository_url:
+      JISKEFET_API: "{{ remote_repository_url.JISKEFET_API if ((remote_repository_url is defined) and (remote_repository_url.JISKEFET_API is defined) and (remote_repository_url.JISKEFET_API | trim != '')) else 'https://github.com/SoftwareForScience/jiskefet-api.git'}}"
+      JISKEFET_UI: "{{ remote_repository_url.JISKEFET_UI if ((remote_repository_url is defined) and (remote_repository_url.JISKEFET_UI is defined) and (remote_repository_url.JISKEFET_UI | trim != '')) else 'https://github.com/SoftwareForScience/jiskefet-ui.git'}}"
+    repository_branch:
+      JISKEFET_API: "{{ repository_branch.JISKEFET_API if ((repository_branch is defined) and (repository_branch.JISKEFET_API is defined) and (repository_branch.JISKEFET_API | trim != '')) else 'master'}}"
+      JISKEFET_UI: "{{ repository_branch.JISKEFET_UI if ((repository_branch is defined) and (repository_branch.JISKEFET_UI is defined) and (repository_branch.JISKEFET_UI | trim != '')) else 'master'}}"
+    USE_CERN_SSO: "{{ USE_CERN_SSO if ((USE_CERN_SSO is defined) and (USE_CERN_SSO | trim != '')) else 'false'}}"
+    jiskefet_api_general_settings: 
+      USE_API_BASE_PATH: "{{ jiskefet_api_general_settings.USE_API_BASE_PATH if ((jiskefet_api_general_settings.USE_API_BASE_PATH is defined) and (jiskefet_api_general_settings.USE_API_BASE_PATH | trim != '')) else 'true'}}"
+      PORT: "{{ jiskefet_api_general_settings.PORT if ((jiskefet_api_general_settings.PORT is defined) and (jiskefet_api_general_settings.PORT | trim != '')) else 3000}}"
+      TYPEORM_CONNECTION: "{{ jiskefet_api_general_settings.TYPEORM_CONNECTION if ((jiskefet_api_general_settings.TYPEORM_CONNECTION is defined) and (jiskefet_api_general_settings.TYPEORM_CONNECTION | trim != '')) else 'mysql'}}"
+      TYPEORM_PORT: "{{ jiskefet_api_general_settings.TYPEORM_PORT if ((jiskefet_api_general_settings.TYPEORM_PORT is defined) and (jiskefet_api_general_settings.TYPEORM_PORT | trim != '')) else 3306}}"
+      TYPEORM_SYNCHRONIZE: "{{ jiskefet_api_general_settings.TYPEORM_SYNCHRONIZE if ((jiskefet_api_general_settings.TYPEORM_SYNCHRONIZE is defined) and (jiskefet_api_general_settings.TYPEORM_SYNCHRONIZE | trim != '')) else 'true'}}"
+      TYPEORM_LOGGING: "{{ jiskefet_api_general_settings.TYPEORM_LOGGING if ((jiskefet_api_general_settings.TYPEORM_LOGGING is defined) and (jiskefet_api_general_settings.TYPEORM_LOGGING | trim != '')) else 'false'}}" 
+      JWT_EXPIRE_TIME: "{{ jiskefet_api_general_settings.JWT_EXPIRE_TIME if ((jiskefet_api_general_settings.JWT_EXPIRE_TIME is defined) and (jiskefet_api_general_settings.JWT_EXPIRE_TIME | trim != '')) else '1h'}}" 
+      SUB_SYSTEM_TOKEN_EXPIRES_IN: "{{ jiskefet_api_general_settings.SUB_SYSTEM_TOKEN_EXPIRES_IN if ((jiskefet_api_general_settings.SUB_SYSTEM_TOKEN_EXPIRES_IN is defined) and (jiskefet_api_general_settings.SUB_SYSTEM_TOKEN_EXPIRES_IN | trim != '')) else '365 days'}}" 
+      USE_INFO_LOGGER: "{{ jiskefet_api_general_settings.USE_INFO_LOGGER if ((jiskefet_api_general_settings.USE_INFO_LOGGER is defined) and (jiskefet_api_general_settings.USE_INFO_LOGGER | trim != '')) else 'false'}}"
+    jiskefet_api_optional_settings:
+      TEST_DB_CONNECTION: "{{ jiskefet_api_optional_settings.TEST_DB_CONNECTION if ((jiskefet_api_optional_settings.TEST_DB_CONNECTION is defined) and (jiskefet_api_optional_settings.TEST_DB_CONNECTION | trim != '')) else 'mysql'}}"
+      TEST_DB_DATABASE: "{{ jiskefet_api_optional_settings.TEST_DB_DATABASE if ((jiskefet_api_optional_settings.TEST_DB_DATABASE is defined) and (jiskefet_api_optional_settings.TEST_DB_DATABASE | trim != '')) else 'test_{{ DATABASE_NAME }}'}}"
+      TEST_DB_PORT: "{{ jiskefet_api_optional_settings.TEST_DB_PORT if ((jiskefet_api_optional_settings.TEST_DB_PORT is defined) and (jiskefet_api_optional_settings.TEST_DB_PORT | trim != '')) else 3306}}"
+      TEST_DB_SYNCHRONIZE: "{{ jiskefet_api_optional_settings.TEST_DB_SYNCHRONIZE if ((jiskefet_api_optional_settings.TEST_DB_SYNCHRONIZE is defined) and (jiskefet_api_optional_settings.TEST_DB_SYNCHRONIZE | trim != '')) else 'true'}}"
+      TEST_DB_LOGGING: "{{ jiskefet_api_optional_settings.TEST_DB_LOGGING if ((jiskefet_api_optional_settings.TEST_DB_LOGGING is defined) and (jiskefet_api_optional_settings.TEST_DB_LOGGING | trim != '')) else 'true'}}"
+  delegate_to: "{{ item }}"
+  with_items:
+    - "{{ groups.all }}"
+    - localhost
+  delegate_facts: true

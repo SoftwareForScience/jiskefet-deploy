@@ -28,7 +28,7 @@ For the separate **Jenkins CI** playbook, see table of contents.
 
 ## Quick Start
 
-1. Copy the `ansible.config.json.template` as `ansible.config.json` and change the variables to the appropriate values ([more info](docs/configuration_file.md)).
+1. Copy the `ansible.config.yml.template` as `ansible.config.yml` and change the variables to the appropriate values ([more info](docs/configuration_file.md)).
 2. Make sure that the two CentOS server are online ([more info](docs/setting_up_ssh.md)):
     ```bash 
     $ ping IP_ADDR_SERVER_1

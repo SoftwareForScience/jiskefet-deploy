@@ -38,7 +38,9 @@
 - name: Set USE_CERN_SSO flag for jiskefet-api .env
   lineinfile:
     path: /var/lib/jiskefet/jiskefet-api/.env
-    line: "USE_CERN_SSO={{ USE_CERN_SSO }}"
+    line: "{{ item.key }}={{ item.value }}"
+  with_items: 
+    - { key: USE_CERN_SSO, value: "{{ USE_CERN_SSO | lower}}" }
 
 - name: Set general settings for jiskefet-api .env
   lineinfile:
