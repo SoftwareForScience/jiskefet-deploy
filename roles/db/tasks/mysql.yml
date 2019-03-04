@@ -99,6 +99,8 @@
   notify: restart mysql
 
 - name: Add daily backup cron job
+  become: yes
+  become_user: root
   cron:
     name: "jiskefet-db-backup"
     minute: "0"
