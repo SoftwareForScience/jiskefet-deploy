@@ -17,13 +17,13 @@
   stat:
     path: ./host_vars/{{ host }}/vault.yml
   register: vault_yml_exists
-  when: hostvars.localhost.setup_vault_bool.user_input | bool == true == true
+  when: hostvars.localhost.setup_vault_bool.user_input | bool == true
 
 - pause:
     prompt: "A vault.yml already exists at ./host_vars/{{ host }}/vault.yml, do you want to overwrite it? (yes/no)"
   register: overwrite_existing_file_bool
   delegate_to: localhost
-  when: (hostvars.localhost.setup_vault_bool.user_input | bool == true == true
+  when: (hostvars.localhost.setup_vault_bool.user_input | bool == true
         and
         vault_yml_exists.stat.exists)
 
@@ -31,7 +31,7 @@
     prompt: "Do you want to store vault.yml at this location `./host_vars/{{ host }}/` ? (yes/no)"
   register: correct_path_bool
   delegate_to: localhost
-  when: (hostvars.localhost.setup_vault_bool.user_input | bool == true == true
+  when: (hostvars.localhost.setup_vault_bool.user_input | bool == true
         and
         not vault_yml_exists.stat.exists)
 
@@ -284,9 +284,9 @@
         and
         hostvars.localhost.correct_path_bool.user_input is defined) 
         and
-        hostvars.localhost.correct_path_bool.user_input | bool == true
+        hostvars.localhost.correct_path_bool.user_input | bool == false
         and
-        not hostvars.localhost.encrypt_vault_bool.user_input | bool == true)
+        not hostvars.localhost.encrypt_vault_bool.user_input | bool == false)
 
 - debug:
     msg: Ignore the following error 'ERROR! Attempting to decrypt but no vault secrets found' and run the playbook again in order to use the created vault.
