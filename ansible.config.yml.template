@@ -1,5 +1,7 @@
 ---
 use_local_repository: 'no'
+## set the environment of the deploy, accepted arguments are 'dev', 'staging' and 'prod'
+# deploy_environment: 'prod'
 ## remote_repository_url is an object that contains two git urls of the project.
 ## If the git url(s) is/are changed, please uncomment the object below and fill in the new url(s).
 # remote_repository_url:
