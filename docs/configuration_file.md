@@ -100,6 +100,7 @@ A list of extra configuration fields is provided in order to overwrite the defau
 
 Name | Explanation | possible values/ examples 
 ---- | ---- | ---- 
+deploy_environment | Sets the deployment environment of PM2 | value: `'dev'`, `'staging'` or `'prod'`
 remote_repository_url | object that contains the two repository URL's 
  ∟ JISKEFET_API | git URL for the jiskefet API repository 
  ∟ JISKEFET_UI | git URL for the jiskefet UI repository 
@@ -107,20 +108,20 @@ repository_branch | object that contains the branches that git should pull
  ∟ JISKEFET_API | a specific branch to pull for JISKEFET_API project, default is set to `'master'` | e.g. `'develop'` 
  ∟ JISKEFET_UI | a specific branch to pull for the JISKEFET_UI project, default is set to `'master'` |  e.g. `'develop'` 
 jiskefet_api_general_settings | object that contains all the general settings 
- ∟ USE_API_BASE_PATH | adds `'/api'` to the API url, default is set to `'true'` | `'true'` or `'false'` 
- ∟ PORT | set port number of the jiskefet API project, default port is `'3000'` | number between 1 - 65535 
+ ∟ USE_API_BASE_PATH | adds `'/api'` to the API url, default is set to `'true'` | value: `'true'` or `'false'` 
+ ∟ PORT | set port number of the jiskefet API project, default port is `'3000'` | value: number between 1 - 65535 
  ∟ TYPEORM_CONNECTION | set the connection type of TYPEORM, currently only `'mysql'` is supported | please see the [official docs](https://github.com/typeorm/typeorm/blob/master/docs/connection-options.md#what-is-connectionoptions) 
- ∟ TYPEORM_PORT | set the database port, default is set to `'3306'` | number between 1 - 65535 
- ∟ TYPEORM_SYNCHRONIZE | set if the database should synchronize with the models in the `'src/entities'` folder | `'true'` or `'false'` 
- ∟ TYPEORM_LOGGING | enables logging of all queries and errors, default is set to `'false'` | `'true'` or `'false'` 
+ ∟ TYPEORM_PORT | set the database port, default is set to `'3306'` | value: number between 1 - 65535 
+ ∟ TYPEORM_SYNCHRONIZE | set if the database should synchronize with the models in the `'src/entities'` folder | value: `'true'` or `'false'` 
+ ∟ TYPEORM_LOGGING | enables logging of all queries and errors, default is set to `'false'` | value: `'true'` or `'false'` 
  ∟ JWT_EXPIRE_TIME | sets the expire time of the user's session, default is set to `'1h'` | e.g. `'8h'` 
  ∟ SUB_SYSTEM_TOKEN_EXPIRES_IN | sets the expire time of the subsystem tokens, default is set to `'365 days'` | e.g. `'30 days'` 
- ∟ USE_INFO_LOGGER | specify whether the application should use InfoLogger, default is set to `'false'` | `'true'` or `'false'` 
+ ∟ USE_INFO_LOGGER | specify whether the application should use InfoLogger, default is set to `'false'` | value: `'true'` or `'false'` 
 jiskefet_api_optional_settings | object that contains the optional settings of the jiskefet API project 
  ∟ TEST_DB_CONNECTION | set the connection type of TYPEORM, currently only `'mysql'` is supported | please see the [official docs](https://github.com/typeorm/typeorm/blob/master/docs/connection-options.md#what-is-connectionoptions) 
   ∟ TEST_DB_DATABASE | set the test database name | if left empty/undefined, it will prefix the `'TYPEORM_DATABASE'` value with `'test_'` 
- ∟ TEST_DB_PORT | set the database port, default is set to `'3306'` | number between 1 - 65535 
- ∟ TEST_DB_SYNCHRONIZE | set if the database should synchronize with the models in the `'src/entities'` folder | `'true'` or `'false'` 
- ∟ TEST_DB_LOGGING | enables logging of all queries and errors, default is set to `'false'` | `'true'` or `'false'`
+ ∟ TEST_DB_PORT | set the database port, default is set to `'3306'` | value: number between 1 - 65535 
+ ∟ TEST_DB_SYNCHRONIZE | set if the database should synchronize with the models in the `'src/entities'` folder | value: `'true'` or `'false'` 
+ ∟ TEST_DB_LOGGING | enables logging of all queries and errors, default is set to `'false'` | value: `'true'` or `'false'`
  
  [Back to table of contents](../README.md#table-of-contents)
