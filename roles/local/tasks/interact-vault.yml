@@ -17,13 +17,13 @@
   stat:
     path: ./host_vars/{{ host }}/vault.yml
   register: vault_yml_exists
-  when: hostvars.localhost.setup_vault_bool.user_input | bool
+  when: hostvars.localhost.setup_vault_bool.user_input | bool == true
 
 - pause:
     prompt: "A vault.yml already exists at ./host_vars/{{ host }}/vault.yml, do you want to overwrite it? (yes/no)"
   register: overwrite_existing_file_bool
   delegate_to: localhost
-  when: (hostvars.localhost.setup_vault_bool.user_input | bool
+  when: (hostvars.localhost.setup_vault_bool.user_input | bool == true
         and
         vault_yml_exists.stat.exists)
 
@@ -31,7 +31,7 @@
     prompt: "Do you want to store vault.yml at this location `./host_vars/{{ host }}/` ? (yes/no)"
   register: correct_path_bool
   delegate_to: localhost
-  when: (hostvars.localhost.setup_vault_bool.user_input | bool
+  when: (hostvars.localhost.setup_vault_bool.user_input | bool == true
         and
         not vault_yml_exists.stat.exists)
 
@@ -39,57 +39,41 @@
   file:
     path: ./host_vars
     state: directory
-  when: ((hostvars.localhost.setup_vault_bool.user_input | bool
+  when: ((hostvars.localhost.setup_vault_bool.user_input | bool == true)
         and
-        hostvars.localhost.correct_path_bool.user_input is defined)
+        (hostvars.localhost.correct_path_bool.user_input is defined)
         and
-        hostvars.localhost.correct_path_bool.user_input | bool)
-        or
-        (vault_yml_exists.stat is defined
-        and
-        not vault_yml_exists.stat.exists)
+        (hostvars.localhost.correct_path_bool.user_input | bool == true))
 
 - name: Creating directory at ./host_vars/{{ host }}
   file:
     path: ./host_vars/{{ host }}
     state: directory
-  when: ((hostvars.localhost.setup_vault_bool.user_input | bool
+  when: ((hostvars.localhost.setup_vault_bool.user_input | bool == true)
         and
-        hostvars.localhost.correct_path_bool.user_input is defined)
+        (hostvars.localhost.correct_path_bool.user_input is defined)
         and
-        hostvars.localhost.correct_path_bool.user_input | bool)
-        or
-        (vault_yml_exists.stat is defined
-        and
-        not vault_yml_exists.stat.exists)
+        (hostvars.localhost.correct_path_bool.user_input | bool == true))
 
 - name: Creating file at ./host_vars/{{ host }}/vault.yml
   file:
     path: ./host_vars/{{ host }}/vault.yml
     state: touch
-  when: ((hostvars.localhost.setup_vault_bool.user_input | bool
+  when: ((hostvars.localhost.setup_vault_bool.user_input | bool == true)
         and
-        hostvars.localhost.correct_path_bool.user_input is defined)
+        (hostvars.localhost.correct_path_bool.user_input is defined)
         and 
-        hostvars.localhost.correct_path_bool.user_input | bool)
-        or
-        (vault_yml_exists.stat is defined
-        and
-        not vault_yml_exists.stat.exists)
+        (hostvars.localhost.correct_path_bool.user_input | bool == true))
 
 - name: Creating file at ./host_vars/{{ host }}/vars.yml
   file:
     path: ./host_vars/{{ host }}/vars.yml
     state: touch
-  when: ((hostvars.localhost.setup_vault_bool.user_input | bool
+  when: ((hostvars.localhost.setup_vault_bool.user_input | bool == true)
         and
-        hostvars.localhost.correct_path_bool.user_input is defined)
+        (hostvars.localhost.correct_path_bool.user_input is defined)
         and 
-        hostvars.localhost.correct_path_bool.user_input | bool)
-        or
-        (vault_yml_exists.stat is defined
-        and
-        not vault_yml_exists.stat.exists)
+        (hostvars.localhost.correct_path_bool.user_input | bool == true))
 
 - name: Insert key in vars.yml
   lineinfile:
@@ -99,15 +83,11 @@
     - "---"
     - "ansible_user: root"
     - "ansible_ssh_pass: \"{{ '{{' }} vault_ansible_ssh_pass {{ '}}' }}\""
-  when: ((hostvars.localhost.setup_vault_bool.user_input | bool
+  when: ((hostvars.localhost.setup_vault_bool.user_input | bool == true)
         and
-        hostvars.localhost.correct_path_bool.user_input is defined)
+        (hostvars.localhost.correct_path_bool.user_input is defined)
         and 
-        hostvars.localhost.correct_path_bool.user_input | bool)
-        or
-        (vault_yml_exists.stat is defined
-        and
-        not vault_yml_exists.stat.exists)
+        (hostvars.localhost.correct_path_bool.user_input | bool == true))
 
 - name: Insert key in vault.yml
   lineinfile:
@@ -116,110 +96,106 @@
   with_items:
     - "---"
     - "vault_ansible_ssh_pass:"
-  when: ((hostvars.localhost.setup_vault_bool.user_input | bool
+  when: ((hostvars.localhost.setup_vault_bool.user_input | bool == true)
         and
-        hostvars.localhost.correct_path_bool.user_input is defined)
+        (hostvars.localhost.correct_path_bool.user_input is defined)
         and 
-        hostvars.localhost.correct_path_bool.user_input | bool)
-        or
-        (vault_yml_exists.stat is defined
-        and
-        not vault_yml_exists.stat.exists)
+        (hostvars.localhost.correct_path_bool.user_input | bool == true))
 
 - fail:
     msg: This setup is currently unable to accept a custom path, please setup the vault manually.
-  when: ((hostvars.localhost.setup_vault_bool.user_input | bool
+  when: ((hostvars.localhost.setup_vault_bool.user_input | bool == true)
         and
-        hostvars.localhost.correct_path_bool.user_input is defined)
+        (hostvars.localhost.correct_path_bool.user_input is defined)
         and 
-        not hostvars.localhost.correct_path_bool.user_input | bool)
+        (not hostvars.localhost.correct_path_bool.user_input | bool == true))
 
 - pause:
     prompt: "Please enter the ssh password of host: {{ host }}"
     echo: no
   register: user_ssh_pass
   delegate_to: localhost
-  when: ((hostvars.localhost.setup_vault_bool.user_input | bool
+  when: (((hostvars.localhost.setup_vault_bool.user_input | bool == true)
         and
-        hostvars.localhost.correct_path_bool.user_input is defined)
+        (hostvars.localhost.correct_path_bool.user_input is defined)
         and 
-        hostvars.localhost.correct_path_bool.user_input | bool)
+        (hostvars.localhost.correct_path_bool.user_input | bool == true))
         or
-        (hostvars.localhost.setup_vault_bool.user_input | bool
+        ((hostvars.localhost.setup_vault_bool.user_input | bool == true)
         and
-        hostvars.localhost.overwrite_existing_file_bool.user_input | bool
+        (hostvars.localhost.overwrite_existing_file_bool.user_input | bool == true)
         and
-        vault_yml_exists.stat.exists)
+        (vault_yml_exists.stat.exists)))
 
 - name: Write to vault.yml
   lineinfile:
     path: ./host_vars/{{ host }}/vault.yml
     regexp: 'vault_ansible_ssh_pass:'
     line: "vault_ansible_ssh_pass: {{ hostvars.localhost.user_ssh_pass.user_input }}"
-  when: ((hostvars.localhost.setup_vault_bool.user_input | bool
+  when: ((hostvars.localhost.setup_vault_bool.user_input | bool == true)
         and
-        hostvars.localhost.correct_path_bool.user_input is defined)
+        (hostvars.localhost.correct_path_bool.user_input is defined)
         and 
-        hostvars.localhost.correct_path_bool.user_input | bool
+        (hostvars.localhost.correct_path_bool.user_input | bool == true)
         and
-        not vault_yml_exists.stat.exists)
+        (not vault_yml_exists.stat.exists))
 
 - pause:
     prompt: "Do you want to encrypt the vault.yml? (yes/no)"
   register: encrypt_vault_bool
   delegate_to: localhost
-  when: ((hostvars.localhost.setup_vault_bool.user_input | bool
+  when: ((hostvars.localhost.setup_vault_bool.user_input | bool == true)
         and
-        hostvars.localhost.correct_path_bool.user_input is defined)
+        (hostvars.localhost.correct_path_bool.user_input is defined)
         and 
-        hostvars.localhost.correct_path_bool.user_input | bool)
+        (hostvars.localhost.correct_path_bool.user_input | bool == true))
 
 - name: Decrypting ./host_vars/{{ host }}/vault.yml
   command: ansible-vault decrypt ./host_vars/{{ host }}/vault.yml
   when: ((hostvars.localhost.overwrite_existing_file_bool.user_input is defined)
         and
-        hostvars.localhost.overwrite_existing_file_bool.user_input | bool
+        (hostvars.localhost.overwrite_existing_file_bool.user_input | bool == true)
         and
-        vault_yml_exists.stat.exists)
+        (vault_yml_exists.stat.exists))
 
 - name: Overwrite ssh password in vault.yml
   lineinfile:
     path: ./host_vars/{{ host }}/vault.yml
     regexp: '^vault_ansible_ssh_pass:'
     line: "vault_ansible_ssh_pass: {{ hostvars.localhost.user_ssh_pass.user_input }}"
-  when: (hostvars.localhost.setup_vault_bool.user_input | bool
+  when: ((hostvars.localhost.setup_vault_bool.user_input | bool == true)
         and
-        hostvars.localhost.overwrite_existing_file_bool.user_input is defined
+        (hostvars.localhost.overwrite_existing_file_bool.user_input is defined)
         and
-        hostvars.localhost.overwrite_existing_file_bool.user_input | bool
+        (hostvars.localhost.overwrite_existing_file_bool.user_input | bool == true)
         and
-        vault_yml_exists.stat.exists)
+        (vault_yml_exists.stat.exists))
 
 - name: Check if .vault_pass.common exist in the root
   stat:
     path: .vault_pass.common
   register: vault_pass_exists
-  when: hostvars.localhost.setup_vault_bool.user_input | bool
+  when: hostvars.localhost.setup_vault_bool.user_input | bool == true
 
 - name: Creating .vault_pass.common in the root
   file:
     path: .vault_pass.common
     state: touch
-  when: ((hostvars.localhost.setup_vault_bool.user_input | bool
+  when: ((hostvars.localhost.setup_vault_bool.user_input | bool == true)
         and
-        hostvars.localhost.correct_path_bool.user_input is defined)
+        (hostvars.localhost.correct_path_bool.user_input is defined)
         and 
-        hostvars.localhost.correct_path_bool.user_input | bool
+        (hostvars.localhost.correct_path_bool.user_input | bool == true)
         and
-        hostvars.localhost.encrypt_vault_bool.user_input | bool
+        (hostvars.localhost.encrypt_vault_bool.user_input | bool == true)
         and
-        not vault_pass_exists.stat.exists)
+        (not vault_pass_exists.stat.exists))
 
 - name: Check if ansible.cfg contains "vault_"
   shell: grep vault_ ansible.cfg
   register: grep_result
   ignore_errors: yes
-  when: hostvars.localhost.setup_vault_bool.user_input | bool
+  when: hostvars.localhost.setup_vault_bool.user_input | bool == true
 
 - name: Write to ansible.cfg
   lineinfile:
@@ -229,64 +205,69 @@
   with_items:
     - vault_password_file = .vault_pass.common
     - vault_identity_list = common@.vault_pass.common
-  when: (vault_yml_exists.stat is defined
+  when: ((vault_yml_exists.stat is defined)
         and
-        not vault_yml_exists.stat.exists
+        (not vault_yml_exists.stat.exists)
         and
-        grep_result.rc != 0)
+        (grep_result.rc != 0))
 
 - pause:
     prompt: "Please enter the vault password"
     echo: no
   register: vault_pass
   delegate_to: localhost
-  when: ((hostvars.localhost.setup_vault_bool.user_input | bool
+  when: ((hostvars.localhost.setup_vault_bool.user_input | bool == true)
         and
-        hostvars.localhost.correct_path_bool.user_input is defined)
+        (hostvars.localhost.correct_path_bool.user_input is defined)
         and 
-        hostvars.localhost.correct_path_bool.user_input | bool
+        (hostvars.localhost.correct_path_bool.user_input | bool == true)
         and
-        hostvars.localhost.encrypt_vault_bool.user_input | bool
+        (hostvars.localhost.encrypt_vault_bool.user_input | bool == true)
         and
-        not vault_pass_exists.stat.exists)
+        (not vault_pass_exists.stat.exists))
 
 - name: Write .vault_pass.common
   lineinfile:
     path: .vault_pass.common
     line: "{{ hostvars.localhost.vault_pass.user_input}}"
-  when: ((hostvars.localhost.setup_vault_bool.user_input | bool
+  when: ((hostvars.localhost.setup_vault_bool.user_input | bool == true)
         and
-        hostvars.localhost.correct_path_bool.user_input is defined)
+        (hostvars.localhost.correct_path_bool.user_input is defined)
         and 
-        hostvars.localhost.correct_path_bool.user_input | bool
+        (hostvars.localhost.correct_path_bool.user_input | bool == true)
         and
-        hostvars.localhost.encrypt_vault_bool.user_input | bool
+        (hostvars.localhost.encrypt_vault_bool.user_input | bool == true)
         and
-        not vault_pass_exists.stat.exists)
+        (not vault_pass_exists.stat.exists))
 
 - name: Encrypting ./host_vars/{{ host }}/vault.yml
   command: ansible-vault encrypt --encrypt-vault-id common ./host_vars/{{ host }}/vault.yml
-  when: ((hostvars.localhost.setup_vault_bool.user_input | bool
+  when: (((hostvars.localhost.setup_vault_bool.user_input | bool == true)
         and
-        hostvars.localhost.correct_path_bool.user_input is defined)
+        (hostvars.localhost.correct_path_bool.user_input is defined)
         and 
-        hostvars.localhost.correct_path_bool.user_input | bool)
+        (hostvars.localhost.correct_path_bool.user_input | bool == true))
         or
-        (hostvars.localhost.setup_vault_bool.user_input | bool
+        ((hostvars.localhost.setup_vault_bool.user_input | bool == true)
         and
-        hostvars.localhost.overwrite_existing_file_bool.user_input | bool
+        (hostvars.localhost.overwrite_existing_file_bool.user_input | bool == true)
         and
-        vault_yml_exists.stat.exists)
+        (vault_yml_exists.stat.exists)))
 
 - debug:
     msg: Please remember to encrypt the vault at ./host_vars/{{ host }}/vault.yml
-  when: ((hostvars.localhost.setup_vault_bool.user_input | bool
+  when: ((hostvars.localhost.setup_vault_bool.user_input | bool == true)
         and
-        hostvars.localhost.correct_path_bool.user_input is defined) 
+        (hostvars.localhost.correct_path_bool.user_input is defined) 
         and
-        hostvars.localhost.correct_path_bool.user_input | bool
+        (hostvars.localhost.correct_path_bool.user_input | bool == false)
         and
-        not hostvars.localhost.encrypt_vault_bool.user_input | bool)
+        (not hostvars.localhost.encrypt_vault_bool.user_input | bool == false))
 
 - debug:
     msg: Ignore the following error 'ERROR! Attempting to decrypt but no vault secrets found' and run the playbook again in order to use the created vault.
+  when: ((hostvars.localhost.setup_vault_bool.user_input | bool == true)
+        and
+        (hostvars.localhost.correct_path_bool.user_input is defined)
+        and 
+        (hostvars.localhost.correct_path_bool.user_input | bool == true))
