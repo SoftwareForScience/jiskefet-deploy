@@ -13,8 +13,24 @@
 # Check variables
 - import_tasks: check-variables.yml
 
+- name: ping hosts
+  command: ping -c 1 {{ item }}
+  register: ping_results
+  ignore_errors: yes
+  with_items:
+  - "{{ groups.all }}"
+
+- name: filter ping_result and check which host has a return code of 0
+  debug:
+    var: item
+  register: online_hosts
+  with_items: "{{ ping_results | json_query(unreachable_ping) }}"
+  vars:
+    unreachable_ping: "results[?to_string(rc) == '0'].{ host: item}"
+
 # Check ssh
-- import_tasks: test-ssh.yml
+- include_tasks: test-ssh.yml
+  when: online_hosts.results | length > 0
 
 # Do vault interaction
 - include_tasks: interact-vault.yml

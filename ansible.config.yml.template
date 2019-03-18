@@ -1,56 +1,16 @@
 ---
+# see https://github.com/SoftwareForScience/jiskefet-deploy/blob/develop/docs/configuration_file.md for more information
+# regarding the configuration fields.
+
 use_local_repository: 'no'
-## remote_repository_url is an object that contains two git urls of the project.
-## If the git url(s) is/are changed, please uncomment the object below and fill in the new url(s).
-# remote_repository_url:
-#   JISKEFET_API: https://github.com/SoftwareForScience/jiskefet-api.git
-#   JISKEFET_UI: https://github.com/SoftwareForScience/jiskefet-ui.git
-# repository_branch:
-#   JISKEFET_API: master
-#   JISKEFET_UI: master
-
-## USE_CERN_SSO is set to 'false' by default, please uncomment the line below if you wish to use CERN's SSO provider
-## instead of Github's SSO.
-# USE_CERN_SSO: 'false'
-
 jiskefet_api_general_settings:
-  ## USE_API_BASE_PATH is set to 'true' by default, please uncomment the line below if you wish to use the API without the 
-  ## '/api' base path. Please note when setting the USE_API_BASE_PATH value to 'false', 
-  ## it will cause the UI to fail when sending requests to the API.
-  # USE_API_BASE_PATH: 'true'
-
-  ## PORT is set to 3000 by default for the API, please uncomment the line below if another PORT is used
-  # PORT: 3000
-
-  ## Currently the application only supports MySQL (MariaDB variant).
-  ## TYPEORM_CONNECTION is set to 'mysql' by default, please uncomment the TYPEORM_CONNECTION line if another database is used.
-  ## the supported TYPEORM_CONNECTION values can be found at 
-  ## https://github.com/typeorm/typeorm/blob/master/docs/connection-options.md#common-connection-options
-  # TYPEORM_CONNECTION: mysql
-
   TYPEORM_HOST:
   TYPEORM_USERNAME:
   TYPEORM_PASSWORD:
   TYPEORM_DATABASE:
-  ## TYPEORM_PORT is set to 3306 by default, please uncomment the line below if another TYPEORM_PORT is used.
-  # TYPEORM_PORT: 3306
-
-  ## TYPEORM_SYNCHRONIZE is set to 'true' by default, please uncomment the line below when deploying the application to production.
-  # TYPEORM_SYNCHRONIZE: 'false'
-
-  ## TYPEORM_LOGGING is set to 'false' by default, please uncomment the line below if you wish to see the logging of TYPEORM.
-  # TYPEORM_LOGGING: 'true'
-
   JWT_SECRET_KEY:
-
-  ## JWT_EXPIRE_TIME is set to '1h' by default, the user's session will be invalidated if he is inactive for more than 1 hour.
   JWT_EXPIRE_TIME: 1h
-
-  ## SUB_SYSTEM_TOKEN_EXPIRES_IN is set to '365 days' by default, the JWT subsystem tokens will expire in 1 year.
   SUB_SYSTEM_TOKEN_EXPIRES_IN: 365 days
-
-  ## USE_INFO_LOGGER is set to 'false' by default, please uncomment the line below and set it to 'true' if you wish to use
-  ## InfoLogger https://github.com/AliceO2Group/InfoLogger 
   # USE_INFO_LOGGER: 'true'
 
 jiskefet_oauth_settings:
@@ -58,25 +18,18 @@ jiskefet_oauth_settings:
   CLIENT_SECRET:
   AUTH_REDIRECT_URI:
 jiskefet_cern_oauth_settings:
-  ## CERN_REGISTERED_URI only needs to be filled in when using CERN SSO
   CERN_REGISTERED_URI:
 jiskefet_api_optional_settings:
-  ## These are settings for when running tests
-  # TEST_DB_CONNECTION: mysql
   TEST_DB_HOST: localhost
   TEST_DB_USERNAME:
   TEST_DB_PASSWORD:
-  # TEST_DB_DATABASE: 
-  # TEST_DB_PORT:3306
-  # TEST_DB_SYNCHRONIZE: 'true''
-  # TEST_DB_LOGGING: 'true
 jiskefet_ui_settings:
   API_URL: http://{{ ansible_default_ipv4.address }}/api/
 allow_csp_payload: >-
-  "default-src 'self' http://{{ ansible_default_ipv4.address }}
-  https://{{ ansible_default_ipv4.address }} https://github.com https://api.github.com;
-  script-src 'self' https://use.fontawesome.com/releases/v5.3.1/js/all.js https://github.com
-  https://api.github.com; style-src 'self' 'unsafe-inline'; object-src 'none';
-  font-src 'self'; data fonts.gstatic.com; img-src https://*.githubusercontent.com
-  http://{{ ansible_default_ipv4.address }} https://{{ ansible_default_ipv4.address }};"
+  "default-src 'self' http://{{ ansible_default_ipv4.address }} https://{{ ansible_default_ipv4.address }}
+  http://localhost:{{jiskefet_api_general_settings.PORT}} https://localhost:{{jiskefet_api_general_settings.PORT}}
+  https://github.com https://api.github.com; script-src 'self' https://use.fontawesome.com/releases/v5.3.1/js/all.js
+  https://github.com https://api.github.com; style-src 'self' 'unsafe-inline'; object-src 'none'; font-src 'self'
+  data: fonts.gstatic.com; img-src https://*.githubusercontent.com
+  http://{{ ansible_default_ipv4.address }} https://{{ ansible_default_ipv4.address }}"
 

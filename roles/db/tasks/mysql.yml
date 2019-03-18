@@ -58,7 +58,7 @@
 - name: Copy create_test_db_charset_utf8mb4.sql from local to remote
   template: 
     src: create_test_db_charset_utf8mb4.sql.j2 
-    dest: /var/lib/jiskefet/sql/create_test_db_charset_utf8mb4.sql.sql
+    dest: /var/lib/jiskefet/sql/create_test_db_charset_utf8mb4.sql
 
 - name: Update mysql root password for all root accounts
   become: yes
@@ -71,6 +71,25 @@
     login_password: "{{ jiskefet_api_general_settings.TYPEORM_PASSWORD }}"
     check_implicit_admin: yes
     priv: "*.*:ALL,GRANT"
+  with_items:
+    - "{{ ansible_hostname }}"
+    - 127.0.0.1
+    - ::1
+    - localhost
+    - "%"
+
+- name: Create mysql "{{ jiskefet_api_optional_settings.TEST_DB_USERNAME }}" user
+  become: yes
+  become_user: root
+  mysql_user:
+    name: "{{ jiskefet_api_optional_settings.TEST_DB_USERNAME }}"
+    host: "{{ item }}"
+    password: "{{ jiskefet_api_optional_settings.TEST_DB_PASSWORD }}"
+    login_user: "{{ jiskefet_api_general_settings.TYPEORM_USERNAME }}"
+    login_password: "{{ jiskefet_api_general_settings.TYPEORM_PASSWORD }}"
+    priv: "{{ jiskefet_api_optional_settings.TEST_DB_DATABASE }}.*:ALL,GRANT"
+    state: present
+    check_implicit_admin: yes
   with_items:
     - "{{ ansible_hostname }}"
     - 127.0.0.1
@@ -91,8 +110,8 @@
 - name: Create test database
   ignore_errors: yes
   mysql_db: 
-    login_user: '{{ jiskefet_api_optional_settings.TEST_DB_USERNAME }}' 
-    login_password: '{{ jiskefet_api_optional_settings.TEST_DB_PASSWORD }}'
+    login_user: '{{ jiskefet_api_general_settings.TYPEORM_USERNAME }}' 
+    login_password: '{{ jiskefet_api_general_settings.TYPEORM_PASSWORD }}'
     state: import
     name: 'all'
     target: /var/lib/jiskefet/sql/create_test_db_charset_utf8mb4.sql

@@ -13,8 +13,10 @@
   connection: local
   ignore_errors: yes
   changed_when: False
-  with_inventory_hostnames:
-    - all
+  with_items:
+    - "{{ online_hosts | json_query(get_online_hosts) }}"
+  vars:
+    get_online_hosts: "results[*].item.host"
 
 - name: filter result_using_key where host is unable to connect
   debug: 
