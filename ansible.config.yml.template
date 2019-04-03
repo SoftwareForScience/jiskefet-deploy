@@ -9,10 +9,6 @@ jiskefet_api_general_settings:
   TYPEORM_PASSWORD:
   TYPEORM_DATABASE:
   JWT_SECRET_KEY:
-  JWT_EXPIRE_TIME: 1h
-  SUB_SYSTEM_TOKEN_EXPIRES_IN: 365 days
-  # USE_INFO_LOGGER: 'true'
-
 jiskefet_oauth_settings:
   CLIENT_ID:
   CLIENT_SECRET:
