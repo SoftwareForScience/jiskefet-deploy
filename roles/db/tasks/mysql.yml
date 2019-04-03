@@ -96,6 +96,9 @@
     - ::1
     - localhost
     - "%"
+  when: (jiskefet_api_optional_settings.TEST_DB_USERNAME | trim != ''
+        and
+        jiskefet_api_optional_settings.TEST_DB_PASSWORD | trim != '')
 
 - name: Create main database
   ignore_errors: yes
@@ -116,4 +119,7 @@
     name: 'all'
     target: /var/lib/jiskefet/sql/create_test_db_charset_utf8mb4.sql
   notify: restart mysql
+  when: (jiskefet_api_optional_settings.TEST_DB_USERNAME | trim != ''
+        and
+        jiskefet_api_optional_settings.TEST_DB_PASSWORD | trim != '')
 ...

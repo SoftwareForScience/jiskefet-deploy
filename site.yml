@@ -26,7 +26,7 @@
 
 - name: deploy MySQL and configure the databases
   hosts: dbservers
-  become_user: jiskefet-api
+  become_user: "{{ jiskefet_user }}"
   become: yes
   vars_files:
     - ansible.config.yml
@@ -36,7 +36,7 @@
 
 - name: configure and deploy the webservers and application code
   hosts: webservers
-  become_user: jiskefet-api
+  become_user: "{{ jiskefet_user }}"
   become: yes
   vars_files:
     - ansible.config.yml

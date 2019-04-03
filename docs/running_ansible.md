@@ -22,7 +22,7 @@ This ansible playbook currently supports the following tags:
 
 Tag name | Description  
 ---- | ---   
-git_pull | Pulls the latest version of UI and API based on the branch specified in the ansible.config.json from git and deploys it to the servers. (this tag cannot complete without failure if the command `ansible-playbook site.yml` has not been executed)  
+git_pull | Pulls the latest version of UI and API based on the branch specified in the ansible.config.yml from git and deploys it to the servers. (this tag cannot complete without failure if the command `ansible-playbook site.yml` has not been executed)  
 
 To use these tags in ansible, execute the following command:
 ```zsh

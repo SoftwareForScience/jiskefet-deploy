@@ -9,9 +9,13 @@
 ---
 # Set default variables
 - import_tasks: set-default-values.yml
+  tags:
+    - git_pull
 
 # Check variables
 - import_tasks: check-variables.yml
+  tags:
+    - git_pull
 
 - name: ping hosts
   command: ping -c 1 {{ item }}

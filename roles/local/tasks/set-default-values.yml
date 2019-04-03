@@ -23,6 +23,7 @@
 
 - name: Set ansible default facts for jiskefet
   set_fact:
+    jiskefet_user: "{{ jiskefet_user if ((jiskefet_user is defined) and (jiskefet_user | trim != '')) else 'jiskefet'}}"
     deploy_environment: "{{ deploy_environment if ((deploy_environment is defined) and (deploy_environment | trim != '')) else 'prod'}}"
     remote_repository_url:
       JISKEFET_API: "{{ remote_repository_url.JISKEFET_API if ((remote_repository_url is defined) and (remote_repository_url.JISKEFET_API is defined) and (remote_repository_url.JISKEFET_API | trim != '')) else 'https://github.com/SoftwareForScience/jiskefet-api.git'}}"

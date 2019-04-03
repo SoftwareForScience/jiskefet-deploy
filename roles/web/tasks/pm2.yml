@@ -28,6 +28,8 @@
   become: true
   become_method: su
   become_user: root
+  tags:
+    - git_pull
 
 - name: stop current pm2 daemon if it exits
   command: pm2 kill
