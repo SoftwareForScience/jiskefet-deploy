@@ -18,7 +18,7 @@
             "env_staging": {
                 "NODE_ENV": "staging"
             },
-            "env_production": {
+            "env_prod": {
                 "NODE_ENV": "prod"
             }
         }
