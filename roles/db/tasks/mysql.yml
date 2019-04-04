@@ -90,15 +90,19 @@
     priv: "{{ jiskefet_api_optional_settings.TEST_DB_DATABASE }}.*:ALL,GRANT"
     state: present
     check_implicit_admin: yes
-  with_items:
+  with_items: 
     - "{{ ansible_hostname }}"
     - 127.0.0.1
     - ::1
     - localhost
     - "%"
-  when: (jiskefet_api_optional_settings.TEST_DB_USERNAME | trim != ''
-        and
-        jiskefet_api_optional_settings.TEST_DB_PASSWORD | trim != '')
+  when: 
+    not
+    ((jiskefet_api_optional_settings.TEST_DB_USERNAME is undefined)
+    or
+    (jiskefet_api_optional_settings.TEST_DB_USERNAME is none)
+    or
+    (jiskefet_api_optional_settings.TEST_DB_USERNAME | trim == ''))
 
 - name: Create main database
   ignore_errors: yes
@@ -119,7 +123,11 @@
     name: 'all'
     target: /var/lib/jiskefet/sql/create_test_db_charset_utf8mb4.sql
   notify: restart mysql
-  when: (jiskefet_api_optional_settings.TEST_DB_USERNAME | trim != ''
-        and
-        jiskefet_api_optional_settings.TEST_DB_PASSWORD | trim != '')
+  when: 
+    not
+    ((jiskefet_api_optional_settings.TEST_DB_USERNAME is undefined)
+    or
+    (jiskefet_api_optional_settings.TEST_DB_USERNAME is none)
+    or
+    (jiskefet_api_optional_settings.TEST_DB_USERNAME | trim == ''))
 ...
