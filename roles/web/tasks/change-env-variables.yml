@@ -56,7 +56,7 @@
   with_dict: "{{ jiskefet_oauth_settings }}"
 
 - name: Set CERN oauth settings for jiskefet-api .env
-  when: USE_CERN_SSO == "true"
+  when: USE_CERN_SSO | lower == "true"
   lineinfile:
     path: /var/lib/jiskefet/jiskefet-api/.env
     line: "{{ item.key }}={{ item.value }}"
