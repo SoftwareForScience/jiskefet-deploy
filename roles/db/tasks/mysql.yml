@@ -9,7 +9,7 @@
 --- # Install mariadb via ansible on centOS
 - name: Add official MariaDB repository
   become: yes
-  become_user: root
+  become_user: "{{ remote_privileged_user }}"
   yum_repository:
     name: MariaDB
     description: Official MariaDB repository
@@ -20,7 +20,7 @@
 
 - name: Install packages
   become: yes
-  become_user: root
+  become_user: "{{ remote_privileged_user }}"
   package:
     name: "{{ item }}"
     state: installed
@@ -33,14 +33,14 @@
 
 - name: Start mysql server and enable it on reboot
   become: true
-  become_user: root
+  become_user: "{{ remote_privileged_user }}"
   service: name=mariadb state=started enabled=true #debian: mysql
 
 - name: make sql directory at /var/lib/jiskefet
   file:
     path: /var/lib/jiskefet/sql
     state: directory
-    owner: jiskefet-api
+    owner: "{{ jiskefet_user }}"
 
 - name: Copy my.cnf from local to remote
   copy:
@@ -48,7 +48,7 @@
     dest: /etc/my.cnf
   become: true
   become_method: su
-  become_user: root
+  become_user: "{{ remote_privileged_user }}"
 
 - name: Copy create_db_charset_utf8mb4.sql from local to remote
   template: 
@@ -62,7 +62,7 @@
 
 - name: Update mysql root password for all root accounts
   become: yes
-  become_user: root
+  become_user: "{{ remote_privileged_user }}"
   mysql_user:
     name: "{{ jiskefet_api_general_settings.TYPEORM_USERNAME }}"
     host: "{{ item }}"
@@ -80,7 +80,7 @@
 
 - name: Create mysql "{{ jiskefet_api_optional_settings.TEST_DB_USERNAME }}" user
   become: yes
-  become_user: root
+  become_user: "{{ remote_privileged_user }}"
   mysql_user:
     name: "{{ jiskefet_api_optional_settings.TEST_DB_USERNAME }}"
     host: "{{ item }}"

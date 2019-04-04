@@ -18,7 +18,7 @@
     mode: "u+x"
 
 - name: Node.js | Execute installation script
-  become_user: root
+  become_user: "{{ remote_privileged_user }}"
   shell: "{{ temp_folder }}/nodejs.sh"
 
 - name: Node.js | Remove installation script
@@ -28,7 +28,7 @@
 
 - name: Node.js | Install Node.js
   become: yes
-  become_user: root
+  become_user: "{{ remote_privileged_user }}"
   yum:
     name: nodejs
     state: present

@@ -21,11 +21,11 @@
   command: passwd --expire {{ jiskefet_user }}
   become: true
   become_method: su
-  become_user: root
+  become_user: "{{ remote_privileged_user }}"
 
 - name: Force user to change password
   command: chage -l {{ jiskefet_user }}
   become: true
   become_method: su
-  become_user: root
+  become_user: "{{ remote_privileged_user }}"
 ...

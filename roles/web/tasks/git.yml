@@ -9,7 +9,7 @@
 ---
 - name: install git
   become: yes
-  become_user: root
+  become_user: "{{ remote_privileged_user }}"
   yum:
     name: git
     state: present

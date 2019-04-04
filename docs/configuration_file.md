@@ -100,7 +100,8 @@ A list of extra configuration fields is provided in order to overwrite the defau
 
 Name | Explanation | possible values/ examples 
 ---- | ---- | ---- 
-jiskefet_user | Sets the name of the remote user to create, default is `'jiskefet'` |  
+jiskefet_user | Sets the name of the remote user to create, default is `'jiskefet'` | 
+remote_privileged_user | Set the remote privileged user to use, default is `'root'` | 
 deploy_environment | Sets the deployment environment of PM2 | value: `'dev'`, `'staging'` or `'prod'`
 remote_repository_url | object that contains the two repository URL's 
  ∟ JISKEFET_API | git URL for the jiskefet API repository 

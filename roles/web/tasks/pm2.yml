@@ -13,13 +13,13 @@
     global: yes
   become: true
   become_method: su
-  become_user: root
+  become_user: "{{ remote_privileged_user }}"
 
 - name: install "pm2 typescript interperter"
   command: pm2 install typescript
   become: true
   become_method: su
-  become_user: root
+  become_user: "{{ remote_privileged_user }}"
 
 - name: Copy ecosystem.json from local to remote
   copy:
@@ -27,7 +27,7 @@
     dest: /var/lib/jiskefet/ecosystem.json
   become: true
   become_method: su
-  become_user: root
+  become_user: "{{ remote_privileged_user }}"
   tags:
     - git_pull
 
@@ -58,6 +58,6 @@
   command: env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u jiskefet-api --hp /var/lib/jiskefet
   become: true
   become_method: su
-  become_user: root
+  become_user: "{{ remote_privileged_user }}"
 
 ...

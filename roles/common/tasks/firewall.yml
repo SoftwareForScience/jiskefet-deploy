@@ -9,7 +9,7 @@
 ---
 - name: enable and start firewalld
   become: true
-  become_user: root
+  become_user: "{{ remote_privileged_user }}"
   command: "systemctl {{ item }}"
   with_items:
   - enable firewalld

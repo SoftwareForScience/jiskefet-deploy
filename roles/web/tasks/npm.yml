@@ -9,21 +9,21 @@
 ---
 - name: run npm install on jiskefet-api
   become: yes
-  become_user: root
+  become_user: "{{ remote_privileged_user }}"
   command: npm install
   args:
     chdir: "/var/lib/jiskefet/jiskefet-api"
 
 - name: run npm install on jiskefet-ui
   become: yes
-  become_user: root
+  become_user: "{{ remote_privileged_user }}"
   command: npm install
   args:
     chdir: "/var/lib/jiskefet/jiskefet-ui"
 
 - name: run npm build on jiskefet-ui
   become: yes
-  become_user: root
+  become_user: "{{ remote_privileged_user }}"
   command: npm run build
   args:
     chdir: "/var/lib/jiskefet/jiskefet-ui"
