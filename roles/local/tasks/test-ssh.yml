@@ -8,7 +8,7 @@
 
 ---
 - name: Check if connection is possible using ssh key
-  command: ssh -o User=root -o ConnectTimeout=10 -o PreferredAuthentications=publickey -o PubkeyAuthentication=yes {{ item }} echo "Passed"
+  command: ssh -o User={{ remote_privileged_user }} -o ConnectTimeout=10 -o PreferredAuthentications=publickey -o PubkeyAuthentication=yes {{ item }} echo "Passed"
   register: result_using_key
   connection: local
   ignore_errors: yes
@@ -27,7 +27,7 @@
     get_host: "results[?stdout==''].{ host: item }"
 
 - name: Check if connection is possible using username and password
-  command: sshpass -p {{ hostvars[item.item.host].ansible_ssh_pass }} ssh -o User=root -o ConnectTimeout=10 -o PreferredAuthentications=password {{ item.item.host }} echo "Passed"
+  command: sshpass -p {{ hostvars[item.item.host].ansible_ssh_pass }} ssh -o User={{ remote_privileged_user }} -o ConnectTimeout=10 -o PreferredAuthentications=password {{ item.item.host }} echo "Passed"
   register: result_using_actual_pass
   connection: local
   ignore_errors: yes
@@ -39,7 +39,7 @@
         unable_to_connect_hosts_key.results | length > 0)
 
 - name: Check if connection is possible using username without password
-  command: sshpass -p "" ssh -o User=root -o ConnectTimeout=10 -o PreferredAuthentications=password {{ item.item.host }} echo "Passed"
+  command: sshpass -p "" ssh -o User={{ remote_privileged_user }} -o ConnectTimeout=10 -o PreferredAuthentications=password {{ item.item.host }} echo "Passed"
   register: result_using_non_existing_pass
   connection: local
   ignore_errors: yes
