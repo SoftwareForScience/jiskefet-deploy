@@ -23,6 +23,7 @@
 
 - name: Set ansible default facts for jiskefet
   set_fact:
+    mysql_root_password: "{{ mysql_root_password if ((mysql_root_password is defined) and (mysql_root_password | trim != '')) else \"{{ lookup('password', '/tmp/passwordfile chars=ascii_letters,digits length=10') }}\" }}"
     jiskefet_user: "{{ jiskefet_user if ((jiskefet_user is defined) and (jiskefet_user | trim != '')) else 'jiskefet'}}"
     remote_privileged_user: "{{ remote_privileged_user if ((remote_privileged_user is defined) and (remote_privileged_user | trim != '')) else 'root'}}"
     deploy_environment: "{{ deploy_environment if ((deploy_environment is defined) and (deploy_environment | trim != '')) else 'prod'}}"
