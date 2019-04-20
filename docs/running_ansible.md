@@ -23,6 +23,7 @@ This ansible playbook currently supports the following tags:
 Tag name | Description  
 ---- | ---   
 git_pull | Pulls the latest version of UI and API based on the branch specified in the ansible.config.yml from git and deploys it to the servers. (this tag cannot complete without failure if the command `ansible-playbook site.yml` has not been executed)  
+recreate_database | Drops and creates the database specified in the variable `jiskefet_api_general_settings.TYPEORM_DATABASE`. This task will only run when explicitly called.
 
 To use these tags in ansible, execute the following command:
 ```zsh

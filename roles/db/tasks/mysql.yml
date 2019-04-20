@@ -39,7 +39,7 @@
     baseurl: "https://yum.mariadb.org/10.1/centos7-amd64"
     gpgkey: https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
     gpgcheck: true
-  tags: mariadb
+  # tags: mariadb
 
 - name: Install packages
   become: yes
@@ -49,7 +49,7 @@
     state: installed
   register: yum_output
   notify: enable mariadb on reboot
-  tags: mariadb
+  # tags: mariadb
   
 - name: Start mysql server and enable it on reboot
   become: true
@@ -159,7 +159,13 @@
     or
     (jiskefet_api_optional_settings.TEST_DB_USERNAME | trim == ''))
 
-- name: Create main database
+- name: Drop database "{{ jiskefet_api_general_settings.TYPEORM_DATABASE }}" (only for testing purposes)
+  command: 'mysql -u root -p"{{ mysql_root_password }}" -ne "{{ item }}"'
+  with_items:
+    - DROP database "{{ jiskefet_api_general_settings.TYPEORM_DATABASE }}"
+  tags: ['never', 'recreate_database']
+
+- name: Create database "{{ jiskefet_api_general_settings.TYPEORM_DATABASE }}"
   ignore_errors: yes
   mysql_db: 
     login_user: 'root' 
@@ -168,6 +174,7 @@
     name: 'all'
     target: /var/lib/jiskefet/sql/create_db_charset_utf8mb4.sql
   notify: restart mysql
+  tags: 'recreate_database'
 
 - name: Create test database
   ignore_errors: yes

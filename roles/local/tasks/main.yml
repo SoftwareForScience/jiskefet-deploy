@@ -11,6 +11,7 @@
 - import_tasks: set-default-values.yml
   tags:
     - git_pull
+    - recreate_database
 
 - name: generate random pass
   debug:
@@ -20,6 +21,7 @@
 - import_tasks: check-variables.yml
   tags:
     - git_pull
+    - recreate_database
 
 - name: ping hosts to see if hosts are up
   command: ping -c 1 {{ item }}
