@@ -76,6 +76,14 @@
   debug:
     msg: "{{ ansible_hostname }}"
 
+- name: Copy my.cnf from local to remote
+  template:
+    src: my.cnf.j2
+    dest: /etc/my.cnf
+  become: true
+  become_method: su
+  become_user: "{{ remote_privileged_user }}"
+
 - name: Set root password
   mysql_user:
     name: root
@@ -87,13 +95,6 @@
   with_items:
     - "{{ host_group }}"
   # when: yum_output.results | select('search', 'installed') | list | count != 3 # when statement is used to ensure that the task is only run once
-
-- name: Copy my.cnf from local to remote
-  template:
-    src: my.cnf.j2
-    dest: /var/lib/jiskefet/.my.cnf
-    owner: "{{ jiskefet_user }}"
-    mode: 0600
 
 - name: Reload privilege tables
   command: 'mysql -u root -p"{{ mysql_root_password }}" -ne "{{ item }}"'
@@ -108,10 +109,6 @@
     - DELETE FROM mysql.user WHERE User=''
   changed_when: False
   # when: yum_output.results | select('search', 'installed') | list | count != 3
-
-- name: print host_group concatenated
-  debug:
-    msg: "{{joined_host_group}}"
 
 - name: Disallow root from logging in remotely
   command: 'mysql -u root -p"{{ mysql_root_password }}" -ne "{{ item }}"'
