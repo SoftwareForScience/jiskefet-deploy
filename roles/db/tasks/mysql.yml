@@ -72,10 +72,6 @@
     src: create_test_db_charset_utf8mb4.sql.j2 
     dest: /var/lib/jiskefet/sql/create_test_db_charset_utf8mb4.sql
 
-- name: print variable ansible_hostname
-  debug:
-    msg: "{{ ansible_hostname }}"
-
 - name: Copy my.cnf from local to remote
   template:
     src: my.cnf.j2
