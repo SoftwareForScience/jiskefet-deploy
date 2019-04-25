@@ -55,9 +55,10 @@
     - git_pull
 
 - name: set pm2 to run on system startup
-  command: env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u jiskefet-api --hp /var/lib/jiskefet
+  command: env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u "{{ jiskefet_user }}" --hp /var/lib/jiskefet
   become: true
   become_method: su
   become_user: "{{ remote_privileged_user }}"
-
+  tags:
+    - git_pull
 ...

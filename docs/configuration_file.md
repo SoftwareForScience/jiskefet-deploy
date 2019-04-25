@@ -100,9 +100,10 @@ A list of extra configuration fields is provided in order to overwrite the defau
 
 Name | Explanation | possible values/ examples 
 ---- | ---- | ---- 
-jiskefet_user | Sets the name of the remote user to create, default is `'jiskefet'` | 
-remote_privileged_user | Set the remote privileged user to use, default is `'root'` | 
-deploy_environment | Sets the deployment environment of PM2 | value: `'dev'`, `'staging'` or `'prod'`
+jiskefet_user | sets the name of the remote user to create, default is `'jiskefet'` | 
+remote_privileged_user | set the remote privileged user to use, default is `'root'` | 
+deploy_environment | sets the deployment environment of PM2 | value: `'dev'`, `'staging'` or `'prod'`  
+mysql_root_password | set the password of the root account when mysql is getting installed. If this variable is not present in the `ansible.config.yml`, ansible will generate a passwordfile at `/tmp/passwordfile` |
 remote_repository_url | object that contains the two repository URL's 
  ∟ JISKEFET_API | git URL for the jiskefet API repository 
  ∟ JISKEFET_UI | git URL for the jiskefet UI repository 

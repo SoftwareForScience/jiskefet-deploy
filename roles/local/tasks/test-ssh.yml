@@ -8,7 +8,7 @@
 
 ---
 - name: Check if connection is possible using ssh key
-  command: ssh -o User={{ remote_privileged_user }} -o ConnectTimeout=10 {{ item }} echo "Passed"
+  command: ssh -o User={{ remote_privileged_user }} -o ConnectTimeout=10 -o PreferredAuthentications=publickey,hostbased {{ item }} echo "Passed"
   register: result_using_key
   connection: local
   ignore_errors: yes

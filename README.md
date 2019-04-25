@@ -24,6 +24,7 @@ For the separate **Jenkins CI** playbook, see table of contents.
   - [System requirements](docs/system_requirements.md)
   - [Deployment diagram](docs/deployment_diagram.md)
 -  [Continuous integration with Jenkins (separate playbook)](ci/README.md)
+-  [Troubleshooting](#troubleshooting)
 
 
 ## Quick Start
@@ -39,5 +40,14 @@ For the separate **Jenkins CI** playbook, see table of contents.
     $ ansible-playbook site.yml
     ```
 4. Open a browser and navigate to http://SERVER_IP_HERE/api/doc/ to see the swagger documentation of the project.
+
+## Troubleshooting
+
+Having troubles deploying this playbook?  Please see if the table below can solve the problem(s).
+
+Question | Answer
+--- | ---
+task `ping hosts to see if hosts are up` returns the error `'{{ name }}: Name or service not known'` | This error occurs when an alias is used in the `hosts` file. In order for the ping command to know where to send the ping request to, the alias with the ip address needs to be added to `/etc/hosts`. e.g. `'127.0.0.1 lorem-ipsum'`
+
 
 [Back to table of contents](#table-of-contents)
