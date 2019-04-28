@@ -187,8 +187,9 @@
     (jiskefet_api_optional_settings.TEST_DB_USERNAME | trim == ''))
 
 - name: Add daily backup cron job
-  become: yes
-  become_user: root
+  become: yes  
+  become_method: su
+  become_user: "{{ remote_privileged_user }}"
   cron:
     name: "jiskefet-db-backup"
     minute: "0"
