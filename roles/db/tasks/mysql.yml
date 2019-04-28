@@ -185,4 +185,16 @@
     (jiskefet_api_optional_settings.TEST_DB_USERNAME is none)
     or
     (jiskefet_api_optional_settings.TEST_DB_USERNAME | trim == ''))
+
+- name: Add daily backup cron job
+  become: yes
+  become_user: root
+  cron:
+    name: "jiskefet-db-backup"
+    minute: "0"
+    hour: "0"
+    day: "*"
+    weekday: "*"
+    month: "*"
+    job: '/usr/bin/mysqldump -u{{ jiskefet_api_general_settings.TYPEORM_USERNAME }} -p{{ jiskefet_api_general_settings.TYPEORM_PASSWORD}} {{ jiskefet_api_general_settings.TYPEORM_DATABASE }} > /var/lib/jiskefet/backup-`date +\%Y-\%m-\%dT\%H-\%M-\%S`.sql'
 ...
