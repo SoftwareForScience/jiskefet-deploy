@@ -50,9 +50,9 @@
   become_method: su
   become_user: "{{ remote_privileged_user }}"
 
-- name: Replace defualt nginx.conf with new one where the default server runs on port 1000
-  copy: 
-    src: nginx.conf
+- name: Replace default nginx.conf
+  template: 
+    src: nginx.conf.j2
     dest: /etc/nginx/nginx.conf
   become: true
   become_method: su
