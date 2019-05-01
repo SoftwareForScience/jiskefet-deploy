@@ -9,7 +9,11 @@
 ---
 - name: Add firewall exceptions
   become: yes
+  become_method: sudo
   become_user: "{{ remote_privileged_user }}"
-  command: firewall-cmd --permanent --add-service=mysql 
+  firewalld:
+    service: mysql
+    permanent: yes
+    state: enabled
   notify: restart firewalld
 ...

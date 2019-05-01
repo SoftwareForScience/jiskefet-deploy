@@ -31,7 +31,7 @@
     joined_host_group: "'{{  \"', '\".join(host_group) }}'"
 
 - name: Add official MariaDB repository
-  become: yes
+  become_method: sudo
   become_user: "{{ remote_privileged_user }}"
   yum_repository:
     name: MariaDB
@@ -42,7 +42,7 @@
   # tags: mariadb
 
 - name: Install packages
-  become: yes
+  become_method: sudo
   become_user: "{{ remote_privileged_user }}"
   yum:
     name: ['MariaDB', 'MariaDB-server', 'MySQL-python']
@@ -52,9 +52,12 @@
   # tags: mariadb
   
 - name: Start mysql server and enable it on reboot
-  become: true
+  become_method: sudo
   become_user: "{{ remote_privileged_user }}"
-  service: name=mariadb state=started enabled=true #debian: mysql
+  service: 
+    name: mariadb
+    state: started
+    enabled: true
 
 - name: make sql directory at /var/lib/jiskefet
   file:
@@ -76,7 +79,6 @@
   template:
     src: my.cnf.j2
     dest: /etc/my.cnf
-  become: true
   become_method: su
   become_user: "{{ remote_privileged_user }}"
 
@@ -187,9 +189,6 @@
     (jiskefet_api_optional_settings.TEST_DB_USERNAME | trim == ''))
 
 - name: Add daily backup cron job
-  become: yes  
-  become_method: su
-  become_user: "{{ remote_privileged_user }}"
   cron:
     name: "jiskefet-db-backup"
     minute: "0"
