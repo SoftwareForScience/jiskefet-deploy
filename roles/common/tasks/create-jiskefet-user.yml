@@ -8,6 +8,8 @@
 
 ---
 - name: create {{ jiskefet_user }} user
+  become: true
+  become_method: sudo
   user:
     name: "{{ jiskefet_user }}"
     password: '$6$DEav2edxHDzuWWjG$O0Fd7TPcUDOpMORgEYlrI2QlbNlt8MOA./n9OG0XCI0ik7vPoXLj5DJopMr0pOtZsVXrc2ScFD8AdZlOJ/pFx/'
@@ -16,19 +18,14 @@
     system: no
     createhome: yes
     home: /var/lib/jiskefet
-  become: true
-  become_method: sudo
-  become_user: "{{ remote_privileged_user }}"
 
 - name: Set user's password to expire
-  command: passwd --expire {{ jiskefet_user }}
   become: true
-  become_method: su
-  become_user: "{{ remote_privileged_user }}"
+  become_method: sudo
+  command: passwd --expire {{ jiskefet_user }}
 
 - name: Force user to change password
-  command: chage -l {{ jiskefet_user }}
   become: true
-  become_method: su
-  become_user: "{{ remote_privileged_user }}"
+  become_method: sudo
+  command: chage -l {{ jiskefet_user }}
 ...
