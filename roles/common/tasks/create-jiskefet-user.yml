@@ -17,7 +17,7 @@
     createhome: yes
     home: /var/lib/jiskefet
   become: true
-  become_method: su
+  become_method: sudo
   become_user: "{{ remote_privileged_user }}"
 
 - name: Set user's password to expire
