@@ -9,16 +9,19 @@
 ---
 - name: run npm install on jiskefet-api
   command: npm install
+  become_user: "{{ jiskefet_user }}"
   args:
     chdir: "/var/lib/jiskefet/jiskefet-api"
 
 - name: run npm install on jiskefet-ui
   command: npm install
+  become_user: "{{ jiskefet_user }}"
   args:
     chdir: "/var/lib/jiskefet/jiskefet-ui"
 
 - name: run npm build on jiskefet-ui
   command: npm run build
+  become_user: "{{ jiskefet_user }}"
   args:
     chdir: "/var/lib/jiskefet/jiskefet-ui"
   notify: restart NGiNX
