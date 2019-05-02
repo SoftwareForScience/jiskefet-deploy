@@ -21,13 +21,14 @@
   hosts: all
   remote_user: "{{ remote_privileged_user }}"
   become: yes
-  
+
   roles:
   - common
 
 - name: deploy MySQL and configure the databases
   hosts: dbservers
-  remote_user: "{{ jiskefet_user }}"
+  remote_user: "{{ remote_privileged_user }}"
+  # become_user: "{{ jiskefet_user }}"
   become: yes
   vars_files:
     - ansible.config.yml
@@ -37,7 +38,7 @@
 
 - name: configure and deploy the webservers and application code
   hosts: webservers
-  remote_user: "{{ jiskefet_user }}"
+  remote_user: "{{ remote_privileged_user }}"
   become: yes
   vars_files:
     - ansible.config.yml

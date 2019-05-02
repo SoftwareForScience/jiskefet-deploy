@@ -32,7 +32,6 @@
 
 - name: Add official MariaDB repository
   become_method: sudo
-  become_user: "{{ remote_privileged_user }}"
   yum_repository:
     name: MariaDB
     description: Official MariaDB repository
@@ -43,7 +42,6 @@
 
 - name: Install packages
   become_method: sudo
-  become_user: "{{ remote_privileged_user }}"
   yum:
     name: ['MariaDB', 'MariaDB-server', 'MySQL-python']
     state: installed
@@ -53,7 +51,6 @@
   
 - name: Start mysql server and enable it on reboot
   become_method: sudo
-  become_user: "{{ remote_privileged_user }}"
   service: 
     name: mariadb
     state: started
@@ -69,18 +66,19 @@
   template: 
     src: create_db_charset_utf8mb4.sql.j2 
     dest: /var/lib/jiskefet/sql/create_db_charset_utf8mb4.sql
+    owner: "{{ jiskefet_user }}"
 
 - name: Copy create_test_db_charset_utf8mb4.sql from local to remote
   template: 
     src: create_test_db_charset_utf8mb4.sql.j2 
     dest: /var/lib/jiskefet/sql/create_test_db_charset_utf8mb4.sql
+    owner: "{{ jiskefet_user }}"
 
 - name: Copy my.cnf from local to remote
   template:
     src: my.cnf.j2
     dest: /etc/my.cnf
-  become_method: su
-  become_user: "{{ remote_privileged_user }}"
+  become_method: sudo
 
 - name: Set root password
   mysql_user:
