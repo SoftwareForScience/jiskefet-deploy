@@ -8,7 +8,6 @@
 
 ---
 - name: Add firewall exceptions
-  become: yes
   become_method: sudo
   become_user: "{{ remote_privileged_user }}"
   firewalld:

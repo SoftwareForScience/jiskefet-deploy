@@ -8,14 +8,12 @@
 
 ---
 - name: restart firewalld
-  become: true
   become_user: "{{ remote_privileged_user }}"
   service:
     name: firewalld
     state: restarted
 
 - name: enable mariadb on reboot
-  become: true
   become_user: "{{ remote_privileged_user }}"
   service: 
     name: mariadb 
@@ -23,7 +21,6 @@
     enabled: true
 
 - name: restart mysql
-  become: true
   become_user: "{{ remote_privileged_user }}"
   service:
     name: mysql
