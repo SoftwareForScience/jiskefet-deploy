@@ -8,20 +8,20 @@
 
 ---
 - name: restart firewalld
-  become_user: "{{ remote_privileged_user }}"
+  become_method: sudo
   service:
     name: firewalld
     state: restarted
 
 - name: enable mariadb on reboot
-  become_user: "{{ remote_privileged_user }}"
+  become_method: sudo
   service: 
     name: mariadb 
     state: started 
     enabled: true
 
 - name: restart mysql
-  become_user: "{{ remote_privileged_user }}"
+  become_method: sudo
   service:
     name: mysql
     state: restarted

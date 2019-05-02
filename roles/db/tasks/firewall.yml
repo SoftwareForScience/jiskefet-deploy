@@ -9,7 +9,6 @@
 ---
 - name: Add firewall exceptions
   become_method: sudo
-  become_user: "{{ remote_privileged_user }}"
   firewalld:
     service: mysql
     permanent: yes
