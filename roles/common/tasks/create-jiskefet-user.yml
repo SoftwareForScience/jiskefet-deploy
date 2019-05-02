@@ -8,7 +8,6 @@
 
 ---
 - name: create {{ jiskefet_user }} user
-  become: true
   become_method: sudo
   user:
     name: "{{ jiskefet_user }}"
@@ -20,12 +19,10 @@
     home: /var/lib/jiskefet
 
 - name: Set user's password to expire
-  become: true
   become_method: sudo
   command: passwd --expire {{ jiskefet_user }}
 
 - name: Force user to change password
-  become: true
   become_method: sudo
   command: chage -l {{ jiskefet_user }}
 ...
