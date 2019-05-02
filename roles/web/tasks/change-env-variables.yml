@@ -11,12 +11,14 @@
   stat:
     path: /var/lib/jiskefet/jiskefet-ui/.env
   register: stat_result
+  become_user: "{{ jiskefet_user }}"
 
 - name: Create .env in jiskefet-ui if it does not exist.
   when: stat_result.stat.exists == False 
   file:
     path: /var/lib/jiskefet/jiskefet-ui/.env
     state: touch
+  become_user: "{{ jiskefet_user }}"
 
 - name: Set general settings for jiskefet-ui .env
   lineinfile:

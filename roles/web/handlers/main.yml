@@ -8,8 +8,7 @@
 
 ---
 - name: restart NGiNX
-  become: yes
-  become_user: "{{ remote_privileged_user }}"
+  become_method: sudo
   service:
     name: nginx
     state: restarted
@@ -17,8 +16,7 @@
     - git_pull
 
 - name: restart firewalld
-  become: yes
-  become_user: "{{ remote_privileged_user }}"
+  become_method: sudo
   service:
     name: firewalld
     state: restarted
