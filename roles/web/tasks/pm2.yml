@@ -53,7 +53,7 @@
 
 - name: set pm2 to run on system startup
   command: env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u "{{ jiskefet_user }}" --hp /var/lib/jiskefet
-  become_method: ssudo
+  become_method: sudo
   tags:
     - git_pull
 ...
