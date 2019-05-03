@@ -13,10 +13,6 @@
     - git_pull
     - recreate_database
 
-- name: generate random pass
-  debug:
-    msg: "{{ mysql_root_password }}"
-
 # Check variables
 - import_tasks: check-variables.yml
   tags:

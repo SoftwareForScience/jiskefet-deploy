@@ -7,6 +7,39 @@
 #  */
 
 ---
+# Set fact to overwrite the variable "{{ ansible_remote_address }}" with the remote its address if
+# "{{ ansible_remote_address }}" does not exist or "{{ ansible_remote_address }}"'s ip does not equal the remotes
+# ansible_default_ipv4.address
+- name: set_fact to get the correct ip of the host
+  set_fact:
+    ansible_remote_address: "{{ ansible_remote_address if ((ansible_remote_address is defined) and (ansible_remote_address | trim != '') and (ansible_remote_address == ansible_default_ipv4.address)) else ansible_default_ipv4.address }}"
+  when: ((custom_ansible_remote_address is defined) and (custom_ansible_remote_address | trim == ''))
+        or
+        (custom_ansible_remote_address is undefined)
+
+# Two commands to determine what the value of "{{ ansible_remote_address }}" is.
+# if "{{ use_hostname_as_remote_address }}" is set to true, it will run the command 'hostname' on the hosts defined
+# at webservers.
+- name: get hostname
+  command: hostname
+  register: hostname_output
+  when: use_hostname_as_remote_address == true
+
+- name: set_fact when use_hostname_as_remote_address is true
+  set_fact:
+    ansible_remote_address: "{{ hostname_output.stdout }}"
+  when: use_hostname_as_remote_address == true
+# When "{{ use_hostname_as_remote_address }}" is set to false, ansible will check if the "{{ ansible_remote_address }}"
+# If the variable is defined, it will use the user defined value, otherwise it will default to the result of variable
+# "{{ ansible_default_ipv4.address }}".
+
+- name: print variables
+  debug:
+    var: "{{ item }}"
+  with_items:
+    - ansible_remote_address
+    - custom_ansible_remote_address
+
 # Install git
 - include_tasks: git.yml
   when: use_local_repository == "no"

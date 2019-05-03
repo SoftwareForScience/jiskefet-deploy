@@ -12,7 +12,7 @@ jiskefet_api_general_settings:
 jiskefet_oauth_settings:
   CLIENT_ID:
   CLIENT_SECRET:
-  AUTH_REDIRECT_URI:
+  AUTH_REDIRECT_URI: http://{{ ansible_remote_address }}/callback
 jiskefet_cern_oauth_settings:
   CERN_REGISTERED_URI:
 jiskefet_api_optional_settings:
@@ -20,12 +20,12 @@ jiskefet_api_optional_settings:
   TEST_DB_USERNAME:
   TEST_DB_PASSWORD:
 jiskefet_ui_settings:
-  API_URL: http://{{ ansible_default_ipv4.address }}/api/
+  API_URL: http://{{ ansible_remote_address }}/api/
 allow_csp_payload: >-
-  "default-src 'self' http://{{ ansible_default_ipv4.address }} https://{{ ansible_default_ipv4.address }}
+  "default-src 'self' http://{{ ansible_remote_address }} https://{{ ansible_remote_address }}
   http://localhost:{{jiskefet_api_general_settings.PORT}} https://localhost:{{jiskefet_api_general_settings.PORT}}
   https://github.com https://api.github.com; script-src 'self' https://use.fontawesome.com/releases/v5.3.1/js/all.js
   https://github.com https://api.github.com; style-src 'self' 'unsafe-inline'; object-src 'none'; font-src 'self'
   data: fonts.gstatic.com; img-src https://*.githubusercontent.com
-  http://{{ ansible_default_ipv4.address }} https://{{ ansible_default_ipv4.address }}"
+  http://{{ ansible_remote_address }} https://{{ ansible_remote_address }}"
 

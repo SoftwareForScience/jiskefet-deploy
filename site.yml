@@ -28,7 +28,6 @@
 - name: deploy MySQL and configure the databases
   hosts: dbservers
   remote_user: "{{ remote_privileged_user }}"
-  # become_user: "{{ jiskefet_user }}"
   become: yes
   vars_files:
     - ansible.config.yml
