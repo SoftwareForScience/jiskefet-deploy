@@ -33,13 +33,6 @@
 # If the variable is defined, it will use the user defined value, otherwise it will default to the result of variable
 # "{{ ansible_default_ipv4.address }}".
 
-- name: print variables
-  debug:
-    var: "{{ item }}"
-  with_items:
-    - ansible_remote_address
-    - custom_ansible_remote_address
-
 # Install git
 - include_tasks: git.yml
   when: use_local_repository == "no"
