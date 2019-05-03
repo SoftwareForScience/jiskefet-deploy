@@ -9,6 +9,7 @@
 ---
 - name: install git
   become: yes
+  become_method: sudo
   become_user: "{{ remote_privileged_user }}"
   yum:
     name: git
