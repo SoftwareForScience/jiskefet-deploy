@@ -8,12 +8,10 @@
 
 ---
 - name: install git
-  become: yes
-  become_method: sudo
-  become_user: "{{ remote_privileged_user }}"
   yum:
     name: git
     state: present
+  become_method: sudo
 
 - name: checkout jiskefet-api
   git:

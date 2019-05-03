@@ -11,9 +11,7 @@
   service_facts:
 
 - name: enable and start firewalld
-  become: yes
   become_method: sudo
-  become_user: "{{ remote_privileged_user }}"
   command: "systemctl {{ item }}"
   with_items:
   - enable firewalld

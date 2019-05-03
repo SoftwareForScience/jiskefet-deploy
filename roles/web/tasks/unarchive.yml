@@ -12,16 +12,12 @@
     owner: "{{ jiskefet_user }}"
     src: ../jiskefet-api.tar
     dest: /var/lib/jiskefet
-  become: yes
-  become_method: su
-  become_user: "{{ remote_privileged_user }}"
+  become_method: sudo
 
 - name: Unarchive ui files to remote
   unarchive:
     owner: "{{ jiskefet_user }}"
     src: ../jiskefet-ui.tar
     dest: /var/lib/jiskefet
-  become: yes
-  become_method: su
-  become_user: "{{ remote_privileged_user }}"
+  become_method: sudo
 ...
