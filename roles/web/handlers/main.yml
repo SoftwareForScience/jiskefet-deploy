@@ -8,8 +8,7 @@
 
 ---
 - name: restart NGiNX
-  become: true
-  become_user: root
+  become_method: sudo
   service:
     name: nginx
     state: restarted
@@ -17,8 +16,7 @@
     - git_pull
 
 - name: restart firewalld
-  become: true
-  become_user: root
+  become_method: sudo
   service:
     name: firewalld
     state: restarted

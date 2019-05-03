@@ -8,23 +8,20 @@
 
 ---
 - name: restart firewalld
-  become: true
-  become_user: root
+  become_method: sudo
   service:
     name: firewalld
     state: restarted
 
 - name: enable mariadb on reboot
-  become: true
-  become_user: root
+  become_method: sudo
   service: 
     name: mariadb 
     state: started 
     enabled: true
 
 - name: restart mysql
-  become: true
-  become_user: root
+  become_method: sudo
   service:
     name: mysql
     state: restarted

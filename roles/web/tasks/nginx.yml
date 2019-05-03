@@ -8,36 +8,30 @@
 
 ---
 - name: Add epel-release repo
-  become: yes
-  become_user: root
   yum:
     name: epel-release
     state: present
 
 - name: Ensure semanage is installed for port management
-  become: yes
-  become_user: root
+  become_method: sudo
   yum:
     name: policycoreutils-python
     state: present
 
 # Allow errors here
 - name: Allow port 1000 to be run
-  become: yes
-  become_user: root
+  become_method: sudo
   command: semanage port -a -t http_port_t -p tcp 1000
   ignore_errors: yes
 
 - name: Ensure NGiNX is installed.
-  become: yes
-  become_user: root
+  become_method: sudo
   yum:
     name: nginx
     state: present
 
 - name: Make NGiNX directory for custom configs
-  become: yes
-  become_user: root
+  become_method: sudo
   file: 
     path: /etc/nginx/conf.d
     state: directory
@@ -46,34 +40,26 @@
   template:
     src: proxy.conf.j2
     dest: /etc/nginx/conf.d/proxy.conf
-  become: true
-  become_method: su
-  become_user: root
+  become_method: sudo
 
-- name: Replace defualt nginx.conf with new one where the default server runs on port 1000
-  copy: 
-    src: nginx.conf
+- name: Replace default nginx.conf
+  template: 
+    src: nginx.conf.j2
     dest: /etc/nginx/nginx.conf
-  become: true
-  become_method: su
-  become_user: root
+  become_method: sudo
 
 - name: Test NGiNX config
   command: nginx -T
-  become: true
-  become_method: su
-  become_user: root
+  become_method: sudo
 
 - name: Stop NGiNX services
-  become: true
-  become_user: root
+  become_method: sudo
   service:
     name: nginx
     state: stopped
 
 - name: Setup firewall to allow connections to port 80 and 443
-  become: true
-  become_user: root
+  become_method: sudo
   command: "{{ item }}"
   with_items:
   - firewall-cmd --permanent --zone=public --add-service=http
@@ -81,13 +67,11 @@
   notify: restart firewalld
 
 - name: Allow http network to connect in SELinux
-  become: true
-  become_user: root
+  become_method: sudo
   command: setsebool httpd_can_network_connect on -P
 
 - name: Set NGiNX to start on startup
-  become: true
-  become_user: root
+  become_method: sudo
   command: systemctl enable nginx
   notify: restart NGiNX
 ...

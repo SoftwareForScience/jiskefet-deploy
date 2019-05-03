@@ -9,7 +9,7 @@
 ---
 - name: install git
   become: yes
-  become_user: root
+  become_user: "{{ remote_privileged_user }}"
   yum:
     name: git
     state: present
@@ -20,6 +20,7 @@
     dest: /var/lib/jiskefet/jiskefet-api
     force: yes
     version: "{{ repository_branch.JISKEFET_API }}"
+  become_user: "{{ jiskefet_user }}"
   tags:
     - git_pull
 
@@ -29,6 +30,7 @@
     dest: /var/lib/jiskefet/jiskefet-ui
     force: yes
     version: "{{ repository_branch.JISKEFET_UI }}"
+  become_user: "{{ jiskefet_user }}"
   tags:
     - git_pull
 ...

@@ -8,8 +8,10 @@
 
 ---
 - name: Add firewall exceptions
-  become: yes
-  become_user: root
-  command: firewall-cmd --permanent --add-service=mysql 
+  become_method: sudo
+  firewalld:
+    service: mysql
+    permanent: yes
+    state: enabled
   notify: restart firewalld
 ...

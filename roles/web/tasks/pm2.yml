@@ -11,25 +11,22 @@
   npm:
     name: pm2
     global: yes
-  become: true
-  become_method: su
-  become_user: root
+  become_method: sudo
 
 - name: install "pm2 typescript interperter"
   command: pm2 install typescript
-  become: true
-  become_method: su
-  become_user: root
+  become_method: sudo
 
 - name: Copy ecosystem.json from local to remote
   copy:
     src: ecosystem.json
     dest: /var/lib/jiskefet/ecosystem.json
-  become: true
-  become_method: su
-  become_user: root
+  become_user: "{{ jiskefet_user }}"
+  tags:
+    - git_pull
 
 - name: stop current pm2 daemon if it exits
+  become_user: "{{ jiskefet_user }}"
   command: pm2 kill
   tags:
     - git_pull
@@ -38,6 +35,7 @@
   command: pm2 start ecosystem.json --env {{ deploy_environment }}
   args:
     chdir: "/var/lib/jiskefet"
+  become_user: "{{ jiskefet_user }}"
   tags:
     - git_pull
 
@@ -49,13 +47,13 @@
 
 - name: save current pm2 processes
   command: pm2 save
+  become_user: "{{ jiskefet_user }}"
   tags:
     - git_pull
 
 - name: set pm2 to run on system startup
-  command: env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u jiskefet-api --hp /var/lib/jiskefet
-  become: true
-  become_method: su
-  become_user: root
-
+  command: env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u "{{ jiskefet_user }}" --hp /var/lib/jiskefet
+  become_method: sudo
+  tags:
+    - git_pull
 ...

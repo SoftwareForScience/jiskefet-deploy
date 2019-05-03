@@ -81,7 +81,7 @@
     line: "{{ item }}"
   with_items:
     - "---"
-    - "ansible_user: root"
+    - "ansible_user: {{ remote_privileged_user }}"
     - "ansible_ssh_pass: \"{{ '{{' }} vault_ansible_ssh_pass {{ '}}' }}\""
   when: ((hostvars.localhost.setup_vault_bool.user_input | bool == true)
         and

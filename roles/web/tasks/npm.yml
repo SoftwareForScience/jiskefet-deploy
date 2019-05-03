@@ -8,30 +8,21 @@
 
 ---
 - name: run npm install on jiskefet-api
-  become: yes
-  become_user: root
   command: npm install
+  become_user: "{{ jiskefet_user }}"
   args:
     chdir: "/var/lib/jiskefet/jiskefet-api"
-  tags:
-    - git_pull
 
 - name: run npm install on jiskefet-ui
-  become: yes
-  become_user: root
   command: npm install
+  become_user: "{{ jiskefet_user }}"
   args:
     chdir: "/var/lib/jiskefet/jiskefet-ui"
-  tags:
-    - git_pull
 
 - name: run npm build on jiskefet-ui
-  become: yes
-  become_user: root
   command: npm run build
+  become_user: "{{ jiskefet_user }}"
   args:
     chdir: "/var/lib/jiskefet/jiskefet-ui"
   notify: restart NGiNX
-  tags:
-    - git_pull
 ...

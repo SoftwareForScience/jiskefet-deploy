@@ -12,6 +12,7 @@
     url_ip: '(http(s)?:\/\/)?\b(?:(?:2(?:[0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])\.){3}(?:(?:2([0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9]))(.+)?\b|([--:\w?@%&+~#=]*\.[a-z]{2,4}\/{0,2})((?:[?&](?:\w+)=(?:\w+))+|[--:\w?@%&+~#=]+)?|(http(s)?:\/\/)?(localhost)(\.+)?'
     boolean: '^(tru|fals)e$'
     port_number: ^([1-9]|[1-8][0-9]|9[0-9]|[1-8][0-9]{2}|9[0-8][0-9]|99[0-9]|[1-8][0-9]{3}|9[0-8][0-9]{2}|99[0-8][0-9]|999[0-9]|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$
+    http_protocol: '(^http(s)?)'
 
 - name: Verify if hostmachine meets the jiskefet-deploy's playbook Ansible requirement
   assert:
@@ -57,6 +58,13 @@
     - { key: AUTH_REDIRECT_URI, value: "{{ jiskefet_oauth_settings.AUTH_REDIRECT_URI }}" }
     - { key: API_URL, value: "{{ jiskefet_ui_settings.API_URL }}" }
   when: not item.value is match(url_ip)
+
+- name: Check if TYPEORM_HOST contains http protocol
+  fail:
+    msg: " {{ item.key }} should not contain a http protocol"
+  with_items: 
+    - { key: TYPEORM_HOST, value: "{{ jiskefet_api_general_settings.TYPEORM_HOST }}" }
+  when: item.value is match(http_protocol)
 
 - name: Check if jiskefet_ui_settings.API_URL ends with /api/
   fail: 

@@ -23,6 +23,12 @@
 
 - name: Set ansible default facts for jiskefet
   set_fact:
+    use_hostname_as_remote_address: "{{ use_hostname_as_remote_address | bool if ((use_hostname_as_remote_address is defined) and (use_hostname_as_remote_address | bool)) else 'false' }}"
+    custom_ansible_remote_address: "{{ custom_ansible_remote_address if ((custom_ansible_remote_address is defined) and (custom_ansible_remote_address | trim != '')) else '' }}"
+    ansible_remote_address: "{{ custom_ansible_remote_address if ((custom_ansible_remote_address is defined) and (custom_ansible_remote_address | trim != '')) else ansible_default_ipv4.address }}"
+    mysql_root_password: "{{ mysql_root_password if ((mysql_root_password is defined) and (mysql_root_password | trim != '')) else \"{{ lookup('password', '/tmp/passwordfile chars=ascii_letters,digits length=10') }}\" }}"
+    jiskefet_user: "{{ jiskefet_user if ((jiskefet_user is defined) and (jiskefet_user | trim != '')) else 'jiskefet'}}"
+    remote_privileged_user: "{{ remote_privileged_user if ((remote_privileged_user is defined) and (remote_privileged_user | trim != '')) else 'root'}}"
     deploy_environment: "{{ deploy_environment if ((deploy_environment is defined) and (deploy_environment | trim != '')) else 'prod'}}"
     remote_repository_url:
       JISKEFET_API: "{{ remote_repository_url.JISKEFET_API if ((remote_repository_url is defined) and (remote_repository_url.JISKEFET_API is defined) and (remote_repository_url.JISKEFET_API | trim != '')) else 'https://github.com/SoftwareForScience/jiskefet-api.git'}}"
@@ -34,6 +40,7 @@
     jiskefet_api_general_settings: 
       USE_API_BASE_PATH: "{{ jiskefet_api_general_settings.USE_API_BASE_PATH if ((jiskefet_api_general_settings.USE_API_BASE_PATH is defined) and (jiskefet_api_general_settings.USE_API_BASE_PATH | trim != '')) else 'true'}}"
       PORT: "{{ jiskefet_api_general_settings.PORT if ((jiskefet_api_general_settings.PORT is defined) and (jiskefet_api_general_settings.PORT | trim != '')) else 3000}}"
+      # TYPEORM_HOST: "{{ jiskefet_api_general_settings.TYPEORM_HOST if ((jiskefet_api_general_settings.TYPEORM_HOST is defined) and (jiskefet_api_general_settings.TYPEORM_HOST | trim != '')) else ansible_default_ipv4.address }}"
       TYPEORM_CONNECTION: "{{ jiskefet_api_general_settings.TYPEORM_CONNECTION if ((jiskefet_api_general_settings.TYPEORM_CONNECTION is defined) and (jiskefet_api_general_settings.TYPEORM_CONNECTION | trim != '')) else 'mysql'}}"
       TYPEORM_PORT: "{{ jiskefet_api_general_settings.TYPEORM_PORT if ((jiskefet_api_general_settings.TYPEORM_PORT is defined) and (jiskefet_api_general_settings.TYPEORM_PORT | trim != '')) else 3306}}"
       TYPEORM_SYNCHRONIZE: "{{ jiskefet_api_general_settings.TYPEORM_SYNCHRONIZE if ((jiskefet_api_general_settings.TYPEORM_SYNCHRONIZE is defined) and (jiskefet_api_general_settings.TYPEORM_SYNCHRONIZE | trim != '')) else 'true'}}"
@@ -42,6 +49,7 @@
       SUB_SYSTEM_TOKEN_EXPIRES_IN: "{{ jiskefet_api_general_settings.SUB_SYSTEM_TOKEN_EXPIRES_IN if ((jiskefet_api_general_settings.SUB_SYSTEM_TOKEN_EXPIRES_IN is defined) and (jiskefet_api_general_settings.SUB_SYSTEM_TOKEN_EXPIRES_IN | trim != '')) else '365 days'}}" 
       USE_INFO_LOGGER: "{{ jiskefet_api_general_settings.USE_INFO_LOGGER if ((jiskefet_api_general_settings.USE_INFO_LOGGER is defined) and (jiskefet_api_general_settings.USE_INFO_LOGGER | trim != '')) else 'false'}}"
     jiskefet_api_optional_settings:
+      # TEST_DB_HOST: "{{ jiskefet_api_optional_settings.TEST_DB_HOST if ((jiskefet_api_optional_settings.TEST_DB_HOST is defined) and (jiskefet_api_optional_settings.TEST_DB_HOST | trim != '')) else ansible_default_ipv4.address }}"
       TEST_DB_CONNECTION: "{{ jiskefet_api_optional_settings.TEST_DB_CONNECTION if ((jiskefet_api_optional_settings.TEST_DB_CONNECTION is defined) and (jiskefet_api_optional_settings.TEST_DB_CONNECTION | trim != '')) else 'mysql'}}"
       TEST_DB_DATABASE: "{{ jiskefet_api_optional_settings.TEST_DB_DATABASE if ((jiskefet_api_optional_settings.TEST_DB_DATABASE is defined) and (jiskefet_api_optional_settings.TEST_DB_DATABASE | trim != '')) else 'test_{{ DATABASE_NAME }}'}}"
       TEST_DB_PORT: "{{ jiskefet_api_optional_settings.TEST_DB_PORT if ((jiskefet_api_optional_settings.TEST_DB_PORT is defined) and (jiskefet_api_optional_settings.TEST_DB_PORT | trim != '')) else 3306}}"
@@ -52,3 +60,4 @@
     - "{{ groups.all }}"
     - localhost
   delegate_facts: true
+  
