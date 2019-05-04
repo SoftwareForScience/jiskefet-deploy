@@ -12,7 +12,7 @@ If the ansible-playbook has been deployed successfully, then the Node.js process
 -  Hot reloading
 -  Cluster mode
 
-PM2 will run under user `jiskefet-api` with the json file below.
+PM2 will run under user that has been defined at the variable `"{{ jiskefet_user }}"` (default is `jiskefet`) with the json file below.
 ```json
 {
     "apps": [
@@ -34,7 +34,7 @@ PM2 will run under user `jiskefet-api` with the json file below.
             "env_staging": {
                 "NODE_ENV": "staging"
             },
-            "env_production": {
+            "env_prod": {
                 "NODE_ENV": "prod"
             }
         }
@@ -45,13 +45,22 @@ PM2 will run under user `jiskefet-api` with the json file below.
 ## PM2 quick start
 1. Go to the directory `/var/lib/jiskefet`.
 2. Check if `ecosystem.json` exists in the directory.
-3. Run `pm2 start ecosystem.json` in your terminal.
+3. Run command the following command in your terminal
+```bash
+$ pm2 start ecosystem.json # starts the application with NODE_ENV=dev
+```
+Or specify an environment flag as shown below
+
+```bash
+$ pm2 start ecosystem.json --env prod # starts the application with variables defined from `env_prod`
+```
 4. Run `pm2 list` to get an overview of the processes or `pm2 monit` to use the monitoring functionality.
 
 ## PM2 additional information
 -  If your `ecosystem.json` has been updated, please run `pm2 reload ecosystem.json --update-env` to get the new changes.
 -  If the API has been updated, you need to run the following in order to get the latest API running:
    1.  `pm2 kill` to stop all the current pm2 processes.
-   2.  `pm2 start ecosystem.json` to start pm2 again
+   2.  `pm2 start ecosystem.json` to start pm2 again.
+   3.  `pm2 save` to save the new environment for the startup process.
 
 [Back to table of contents](../README.md#table-of-contents)
