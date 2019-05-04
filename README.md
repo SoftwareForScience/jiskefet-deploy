@@ -39,6 +39,10 @@ For the separate **Jenkins CI** playbook, see table of contents.
     ```bash
     $ ansible-playbook site.yml
     ```
+    or run command if you are not root on the remotes
+    ```bash
+    $ ansible-playbook site.yml -K
+    ```
 4. Open a browser and navigate to http://SERVER_IP_HERE/api/doc/ to see the swagger documentation of the project.
 
 ## Troubleshooting
