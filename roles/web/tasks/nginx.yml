@@ -18,12 +18,6 @@
     name: policycoreutils-python
     state: present
 
-# Allow errors here
-- name: Allow port 1000 to be run
-  become_method: sudo
-  command: semanage port -a -t http_port_t -p tcp 1000
-  ignore_errors: yes
-
 - name: Ensure NGiNX is installed.
   become_method: sudo
   yum:
