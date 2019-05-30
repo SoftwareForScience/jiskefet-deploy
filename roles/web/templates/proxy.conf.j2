@@ -35,7 +35,7 @@ server {
         add_header Content-Security-Policy {{ allow_csp_payload }};
     }
 
-    ## reverse proxy
+    ## reverse proxy 
     location /api/ {
         proxy_pass http://localhost:{{ jiskefet_api_general_settings.PORT }}/;
         proxy_http_version 1.1;
@@ -43,6 +43,7 @@ server {
         proxy_set_header Connection 'upgrade';
         proxy_set_header Host $host;
         proxy_cache_bypass $http_upgrade;
+        client_max_body_size {{ file_upload_limit }}; # Setting the file upload limit for the API
     }
 
     ## Media: images, icons, video, audio, HTC

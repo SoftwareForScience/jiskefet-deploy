@@ -3,5 +3,6 @@
 [client-server]
 
 [mysqld]
+max-allowed-packet = {{ database_packet_limit }}
 character-set-client-handshake = FALSE
 character-set-server = utf8mb4
