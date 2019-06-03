@@ -43,7 +43,11 @@
   wait_for:
     port: "{{ jiskefet_api_general_settings.PORT }}"
     delay: 10
-    msg: "API is unable to start, please ssh to host:{{ play_hosts }} and run command `$ pm2 logs PM2 --lines 30` to view the error(s)"
+    timeout: 50
+    msg: 
+    - "API is unable to start, please ssh to host:{{ play_hosts }} and run command `$ pm2 logs PM2 --lines 30` to view the error(s)"
+    - "PM2 is unable to create the startup process."
+    - "Please run the application again after solving the problem in order to let PM2 create the startup process."
 
 - name: save current pm2 processes
   command: pm2 save
