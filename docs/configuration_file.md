@@ -104,6 +104,7 @@ jiskefet_user | sets the name of the remote user to create, default is `'jiskefe
 remote_privileged_user | set the remote privileged user to use, default is `'root'` | 
 deploy_environment | sets the deployment environment of PM2 | value: `'dev'`, `'staging'` or `'prod'`  
 file_upload_limit | sets the file upload limit for the database and API, default is `5` MB| number in MB's, e.g. `1, 2, 3, ...`
+application_name | sets the name of the UI (such as the Welcome screen and document title) and API (such as SWAGGER document title), default is `'Jiskefet'` |
 use_hostname_as_remote_address | boolean to tell ansible to use the hostname, default is set to `false`. If set to `true`, ansible will overwrite the value at `ansible_remote_address` | value: `true` or `false`.  **Note: if set to `true`, this variable takes precedence over `custom_ansible_remote_address`**
 custom_ansible_remote_address | field to set the url of the remote, default value is the result of ansible command `ansible_default_ipv4.address` and it will overwrite the value at `ansible_remote_address`| 
 ansible_remote_address | this field is used by ansible to deploy to the remotes. The value of this fields is set by either the variable `custom_ansible_remote_address` or `use_hostname_as_remote_address`| **Note: Do not assign anything to this variable, since it will be overwritten.**

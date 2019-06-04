@@ -15,7 +15,9 @@
 - name: Set facts that will be used in the next task
   set_fact:
     file_upload_limit: "{{ file_upload_limit if ((file_upload_limit is defined) and (file_upload_limit | trim != '')) else 5}}"
-    DATABASE_NAME: "{{ jiskefet_api_general_settings.TYPEORM_DATABASE }}"
+    database_name: "{{ jiskefet_api_general_settings.TYPEORM_DATABASE }}"
+    application_name: "{{ application_name if ((application_name is defined) and (application_name | trim != '')) else 'Jiskefet'}}"
+    ansible_remote_address: ""
   delegate_to: "{{ item }}"
   with_items:
     - "{{ groups.all }}"
@@ -40,7 +42,8 @@
       JISKEFET_UI: "{{ repository_branch.JISKEFET_UI if ((repository_branch is defined) and (repository_branch.JISKEFET_UI is defined) and (repository_branch.JISKEFET_UI | trim != '')) else 'master'}}"
     USE_CERN_SSO: "{{ USE_CERN_SSO if ((USE_CERN_SSO is defined) and (USE_CERN_SSO | trim != '')) else 'false'}}"
     jiskefet_api_general_settings: 
-      FILE_UPLOAD_LIMIT: "{{ ( file_upload_limit | int ) * 1024 * 1024 }}"
+      FILE_UPLOAD_LIMIT: "{{ file_upload_limit }}"
+      APPLICATION_NAME: "{{ jiskefet_api_general_settings.APPLICATION_NAME if ((jiskefet_api_general_settings.APPLICATION_NAME is defined) and (jiskefet_api_general_settings.APPLICATION_NAME | trim != '')) else '{{ application_name }}' }}"
       USE_API_BASE_PATH: "{{ jiskefet_api_general_settings.USE_API_BASE_PATH if ((jiskefet_api_general_settings.USE_API_BASE_PATH is defined) and (jiskefet_api_general_settings.USE_API_BASE_PATH | trim != '')) else 'true'}}"
       PORT: "{{ jiskefet_api_general_settings.PORT if ((jiskefet_api_general_settings.PORT is defined) and (jiskefet_api_general_settings.PORT | trim != '')) else 3000}}"
       # TYPEORM_HOST: "{{ jiskefet_api_general_settings.TYPEORM_HOST if ((jiskefet_api_general_settings.TYPEORM_HOST is defined) and (jiskefet_api_general_settings.TYPEORM_HOST | trim != '')) else ansible_default_ipv4.address }}"
@@ -54,10 +57,13 @@
     jiskefet_api_optional_settings:
       # TEST_DB_HOST: "{{ jiskefet_api_optional_settings.TEST_DB_HOST if ((jiskefet_api_optional_settings.TEST_DB_HOST is defined) and (jiskefet_api_optional_settings.TEST_DB_HOST | trim != '')) else ansible_default_ipv4.address }}"
       TEST_DB_CONNECTION: "{{ jiskefet_api_optional_settings.TEST_DB_CONNECTION if ((jiskefet_api_optional_settings.TEST_DB_CONNECTION is defined) and (jiskefet_api_optional_settings.TEST_DB_CONNECTION | trim != '')) else 'mysql'}}"
-      TEST_DB_DATABASE: "{{ jiskefet_api_optional_settings.TEST_DB_DATABASE if ((jiskefet_api_optional_settings.TEST_DB_DATABASE is defined) and (jiskefet_api_optional_settings.TEST_DB_DATABASE | trim != '')) else 'test_{{ DATABASE_NAME }}'}}"
+      TEST_DB_DATABASE: "{{ jiskefet_api_optional_settings.TEST_DB_DATABASE if ((jiskefet_api_optional_settings.TEST_DB_DATABASE is defined) and (jiskefet_api_optional_settings.TEST_DB_DATABASE | trim != '')) else 'test_{{ database_name }}'}}"
       TEST_DB_PORT: "{{ jiskefet_api_optional_settings.TEST_DB_PORT if ((jiskefet_api_optional_settings.TEST_DB_PORT is defined) and (jiskefet_api_optional_settings.TEST_DB_PORT | trim != '')) else 3306}}"
       TEST_DB_SYNCHRONIZE: "{{ jiskefet_api_optional_settings.TEST_DB_SYNCHRONIZE if ((jiskefet_api_optional_settings.TEST_DB_SYNCHRONIZE is defined) and (jiskefet_api_optional_settings.TEST_DB_SYNCHRONIZE | trim != '')) else 'true'}}"
       TEST_DB_LOGGING: "{{ jiskefet_api_optional_settings.TEST_DB_LOGGING if ((jiskefet_api_optional_settings.TEST_DB_LOGGING is defined) and (jiskefet_api_optional_settings.TEST_DB_LOGGING | trim != '')) else 'true'}}"
+    jiskefet_ui_settings:
+      APPLICATION_NAME: "{{ jiskefet_ui_settings.APPLICATION_NAME if ((jiskefet_ui_settings.APPLICATION_NAME is defined) and (jiskefet_ui_settings.APPLICATION_NAME | trim != '')) else '{{ application_name }}' }}"
+      FILE_UPLOAD_LIMIT: "{{ file_upload_limit }}"
   delegate_to: "{{ item }}"
   with_items:
     - "{{ groups.all }}"
