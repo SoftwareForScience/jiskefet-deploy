@@ -44,10 +44,18 @@
     port: "{{ jiskefet_api_general_settings.PORT }}"
     delay: 10
     timeout: 50
-    msg: 
-    - "API is unable to start, please ssh to host:{{ play_hosts }} and run command `$ pm2 logs PM2 --lines 30` to view the error(s)"
-    - "PM2 is unable to create the startup process."
-    - "Please run the application again after solving the problem in order to let PM2 create the startup process."
+  register: wait_for_output
+  ignore_errors: yes
+
+- name: print error when API is not running on port {{ jiskefet_api_general_settings.PORT }}
+  vars:
+    msg: |
+        API is unable to start, please ssh to host:{{ play_hosts }} and run command `$ pm2 logs PM2 --lines 30` to view the error(s).
+        If the error(s) are not visible in the PM2 logs, please go to the directory of the API and run the command `$ npm run start` to view the error(s).
+        Please run the ansible-playbook again after resolving the errors in order to let PM2 create the startup process.
+  debug:
+    msg: "{{ msg.split('\n') }}"
+  failed_when: wait_for_output.failed == true
 
 - name: save current pm2 processes
   command: pm2 save

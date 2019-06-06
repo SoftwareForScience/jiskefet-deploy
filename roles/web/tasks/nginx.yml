@@ -42,6 +42,15 @@
     dest: /etc/nginx/nginx.conf
   become_method: sudo
 
+- name: Change owner of folder /var/lib/nginx to {{ jiskefet_user }}
+  file:
+    path: /var/lib/nginx
+    state: directory
+    recurse: yes
+    owner: "{{ jiskefet_user }}"
+    group: "{{ jiskefet_user }}"
+  become_method: sudo
+
 - name: Test NGiNX config
   command: nginx -T
   become_method: sudo
