@@ -6,12 +6,6 @@
 #  * copied verbatim in the file "LICENSE"
 #  */
 
-## upstream is used for defining a webserver cluster http://nginx.org/en/docs/http/ngx_http_upstream_module.html 
-# upstream my_http_servers {
-#     # Nodejs app upstream
-#     server localhost:3000;
-# }
-
 server {
     ## port to listen on
     listen 80;
@@ -26,8 +20,6 @@ server {
 
     ## when root is accessed, go to whatever is specified in block
     location / {
-        # root /var/lib/jiskefet/jiskefet-ui;
-        # index src/index.html;
         autoindex on;
         try_files $uri /src/index.html; # used for not resolving the oauth callback in url /callback
         proxy_set_header Host $host;
@@ -35,7 +27,7 @@ server {
         add_header Content-Security-Policy {{ allow_csp_payload }};
     }
 
-    ## reverse proxy
+    ## reverse proxy 
     location /api/ {
         proxy_pass http://localhost:{{ jiskefet_api_general_settings.PORT }}/;
         proxy_http_version 1.1;
@@ -43,6 +35,7 @@ server {
         proxy_set_header Connection 'upgrade';
         proxy_set_header Host $host;
         proxy_cache_bypass $http_upgrade;
+        client_max_body_size {{ (file_upload_limit | int) * 1024 * 1024 }}; # Setting the file upload limit for the API
     }
 
     ## Media: images, icons, video, audio, HTC

@@ -9,3 +9,5 @@ ci/variables.yml
 /host_vars/*
 .vault_*
 ansible.config.yml
+ansible.cfg
+hosts
