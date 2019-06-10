@@ -7,22 +7,25 @@
 #  */
 
 ---
-- name: create {{ jiskefet_user }} user
-  become_method: sudo
-  user:
-    name: "{{ jiskefet_user }}"
-    password: '$6$DEav2edxHDzuWWjG$O0Fd7TPcUDOpMORgEYlrI2QlbNlt8MOA./n9OG0XCI0ik7vPoXLj5DJopMr0pOtZsVXrc2ScFD8AdZlOJ/pFx/'
-    state: present
-    shell: /bin/bash
-    system: no
-    createhome: yes
-    home: /var/lib/jiskefet
+- name: user creation
+  block:
+  - name: create {{ jiskefet_user }} user
+    become_method: sudo
+    user:
+      name: "{{ jiskefet_user }}"
+      password: '$6$DEav2edxHDzuWWjG$O0Fd7TPcUDOpMORgEYlrI2QlbNlt8MOA./n9OG0XCI0ik7vPoXLj5DJopMr0pOtZsVXrc2ScFD8AdZlOJ/pFx/'
+      state: present
+      shell: /bin/bash
+      system: no
+      createhome: yes
+      home: /var/lib/jiskefet
 
-- name: Set user's password to expire
-  become_method: sudo
-  command: passwd --expire {{ jiskefet_user }}
+  - name: Set user's password to expire
+    become_method: sudo
+    command: passwd --expire {{ jiskefet_user }}
 
-- name: Force user to change password
-  become_method: sudo
-  command: chage -l {{ jiskefet_user }}
+  - name: Force user to change password
+    become_method: sudo
+    command: chage -l {{ jiskefet_user }}
+  when: "jiskefet_user != 'root'"
 ...
