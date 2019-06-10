@@ -58,7 +58,11 @@
 
 # Install and run nginx
 - import_tasks: nginx.yml
+  tags:
+    - git_pull
 
 # Install and run pm2
 - import_tasks: pm2.yml
+  tags:
+    - git_pull
 ...
