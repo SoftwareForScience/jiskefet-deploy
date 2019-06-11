@@ -23,12 +23,12 @@
 - name: get hostname
   command: hostname
   register: hostname_output
-  when: use_hostname_as_remote_address == true
+  when: use_hostname_as_remote_address | bool == true
 
 - name: set_fact when use_hostname_as_remote_address is true
   set_fact:
     ansible_remote_address: "{{ hostname_output.stdout }}"
-  when: use_hostname_as_remote_address == true
+  when: use_hostname_as_remote_address | bool == true
 # When "{{ use_hostname_as_remote_address }}" is set to false, ansible will check if the "{{ ansible_remote_address }}"
 # If the variable is defined, it will use the user defined value, otherwise it will default to the result of variable
 # "{{ ansible_default_ipv4.address }}".
