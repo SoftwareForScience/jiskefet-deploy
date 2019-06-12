@@ -25,4 +25,10 @@
   service:
     name: mysql
     state: restarted
+
+- name: start mysqld
+  become_method: sudo
+  service: 
+    name: mysql
+    state: started 
 ...

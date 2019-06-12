@@ -48,13 +48,6 @@
   register: yum_output
   notify: enable mariadb on reboot
   # tags: mariadb
-  
-- name: Start mysql server and enable it on reboot
-  become_method: sudo
-  service: 
-    name: mariadb
-    state: started
-    enabled: true
 
 - name: make sql directory at /var/lib/jiskefet
   file:
@@ -79,8 +72,12 @@
     src: my.cnf.j2
     dest: /etc/my.cnf
   become_method: sudo
+  notify: start mysqld
 
-- name: Set root password
+- name: Force all notified handlers to run at this point
+  meta: flush_handlers
+
+- name: Try to set root password
   mysql_user:
     name: root
     host: "{{ item }}"
@@ -90,101 +87,120 @@
     check_implicit_admin: yes
   with_items:
     - "{{ host_group }}"
+  register: output_set_root_password
+  ignore_errors: yes
   # when: yum_output.results | select('search', 'installed') | list | count != 3 # when statement is used to ensure that the task is only run once
 
-- name: Reload privilege tables
-  command: 'mysql -u root -p"{{ mysql_root_password }}" -ne "{{ item }}"'
-  with_items:
-    - FLUSH PRIVILEGES
-  changed_when: False
-  # when: yum_output.results | select('search', 'installed') | list | count != 3
+- name: Setup mysql
+  block:
+  - name: Reload privilege tables
+    command: 'mysql -u root -p"{{ mysql_root_password }}" -ne "{{ item }}"'
+    with_items:
+      - FLUSH PRIVILEGES
+    changed_when: False
+    # when: yum_output.results | select('search', 'installed') | list | count != 3
 
-- name: Remove anonymous users
-  command: 'mysql -u root -p"{{ mysql_root_password }}" -ne "{{ item }}"'
-  with_items:
-    - DELETE FROM mysql.user WHERE User=''
-  changed_when: False
-  # when: yum_output.results | select('search', 'installed') | list | count != 3
+  - name: Remove anonymous users
+    command: 'mysql -u root -p"{{ mysql_root_password }}" -ne "{{ item }}"'
+    with_items:
+      - DELETE FROM mysql.user WHERE User=''
+    changed_when: False
+    # when: yum_output.results | select('search', 'installed') | list | count != 3
 
-- name: Disallow root from logging in remotely
-  command: 'mysql -u root -p"{{ mysql_root_password }}" -ne "{{ item }}"'
-  with_items:
-    - DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ({{ joined_host_group }})
-  changed_when: False
-  # when: yum_output.results | select('search', 'installed') | list | count != 3
+  - name: Disallow root from logging in remotely
+    command: 'mysql -u root -p"{{ mysql_root_password }}" -ne "{{ item }}"'
+    with_items:
+      - DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ({{ joined_host_group }})
+    changed_when: False
+    # when: yum_output.results | select('search', 'installed') | list | count != 3
 
-- name: Remove test database
-  command: 'mysql -u root -p"{{ mysql_root_password }}" -ne "{{ item }}"'
-  with_items:
-    - DROP DATABASE IF EXISTS test
-    - DELETE FROM mysql.db WHERE Db='test'
-  changed_when: False
-  # when: yum_output.results | select('search', 'installed') | list | count != 3
+  - name: Remove test database
+    command: 'mysql -u root -p"{{ mysql_root_password }}" -ne "{{ item }}"'
+    with_items:
+      - DROP DATABASE IF EXISTS test
+      - DELETE FROM mysql.db WHERE Db='test'
+    changed_when: False
+    # when: yum_output.results | select('search', 'installed') | list | count != 3
 
-- name: Create mysql user "{{ jiskefet_api_general_settings.TYPEORM_USERNAME }}"
-  mysql_user:
-    name: "{{ jiskefet_api_general_settings.TYPEORM_USERNAME }}"
-    host: "{{ item }}"
-    password: "{{ jiskefet_api_general_settings.TYPEORM_PASSWORD }}"
-    login_user: "root"
-    login_password: "{{ mysql_root_password }}"
-    priv: "{{ jiskefet_api_general_settings.TYPEORM_DATABASE }}.*:ALL,GRANT"
-    state: present
-  with_items:
-    - "{{ host_group }}"
+  - name: Create mysql user "{{ jiskefet_api_general_settings.TYPEORM_USERNAME }}"
+    mysql_user:
+      name: "{{ jiskefet_api_general_settings.TYPEORM_USERNAME }}"
+      host: "{{ item }}"
+      password: "{{ jiskefet_api_general_settings.TYPEORM_PASSWORD }}"
+      login_user: "root"
+      login_password: "{{ mysql_root_password }}"
+      priv: "{{ jiskefet_api_general_settings.TYPEORM_DATABASE }}.*:ALL,GRANT"
+      state: present
+    with_items:
+      - "{{ host_group }}"
 
-- name: Create mysql test user "{{ jiskefet_api_optional_settings.TEST_DB_USERNAME }}"
-  mysql_user:
-    name: "{{ jiskefet_api_optional_settings.TEST_DB_USERNAME }}"
-    host: "{{ item }}"
-    password: "{{ jiskefet_api_optional_settings.TEST_DB_PASSWORD }}"
-    login_user: "root"
-    login_password: "{{ mysql_root_password }}"
-    priv: "{{ jiskefet_api_optional_settings.TEST_DB_DATABASE }}.*:ALL,GRANT"
-    state: present
-  with_items: 
-    - "{{ host_group }}"
-  when: 
-    not
-    ((jiskefet_api_optional_settings.TEST_DB_USERNAME is undefined)
-    or
-    (jiskefet_api_optional_settings.TEST_DB_USERNAME is none)
-    or
-    (jiskefet_api_optional_settings.TEST_DB_USERNAME | trim == ''))
+  - name: Create mysql test user "{{ jiskefet_api_optional_settings.TEST_DB_USERNAME }}"
+    mysql_user:
+      name: "{{ jiskefet_api_optional_settings.TEST_DB_USERNAME }}"
+      host: "{{ item }}"
+      password: "{{ jiskefet_api_optional_settings.TEST_DB_PASSWORD }}"
+      login_user: "root"
+      login_password: "{{ mysql_root_password }}"
+      priv: "{{ jiskefet_api_optional_settings.TEST_DB_DATABASE }}.*:ALL,GRANT"
+      state: present
+    with_items: 
+      - "{{ host_group }}"
+    when: 
+      not
+      ((jiskefet_api_optional_settings.TEST_DB_USERNAME is undefined)
+      or
+      (jiskefet_api_optional_settings.TEST_DB_USERNAME is none)
+      or
+      (jiskefet_api_optional_settings.TEST_DB_USERNAME | trim == ''))
 
-- name: Drop database "{{ jiskefet_api_general_settings.TYPEORM_DATABASE }}" (only for testing purposes)
-  command: 'mysql -u root -p"{{ mysql_root_password }}" -ne "{{ item }}"'
-  with_items:
-    - DROP database "{{ jiskefet_api_general_settings.TYPEORM_DATABASE }}"
-  tags: ['never', 'recreate_database']
+  - name: Drop database "{{ jiskefet_api_general_settings.TYPEORM_DATABASE }}" (only for testing purposes)
+    command: 'mysql -u root -p"{{ mysql_root_password }}" -ne "{{ item }}"'
+    with_items:
+      - DROP database "{{ jiskefet_api_general_settings.TYPEORM_DATABASE }}"
+    tags: ['never', 'recreate_database']
 
-- name: Create database "{{ jiskefet_api_general_settings.TYPEORM_DATABASE }}"
+  - name: Create database "{{ jiskefet_api_general_settings.TYPEORM_DATABASE }}"
+    ignore_errors: yes
+    mysql_db: 
+      login_user: 'root' 
+      login_password: "{{ mysql_root_password }}"
+      state: import
+      name: 'all'
+      target: /var/lib/jiskefet/sql/create_db_charset_utf8mb4.sql
+    notify: restart mysql
+    tags: 'recreate_database'
+
+  - name: Create test database "{{ jiskefet_api_optional_settings.TEST_DB_DATABASE }}"
+    ignore_errors: yes
+    mysql_db: 
+      login_user: 'root' 
+      login_password: "{{ mysql_root_password }}"
+      state: import
+      name: 'all'
+      target: /var/lib/jiskefet/sql/create_test_db_charset_utf8mb4.sql
+    notify: restart mysql
+    when: 
+      not
+      ((jiskefet_api_optional_settings.TEST_DB_USERNAME is undefined)
+      or
+      (jiskefet_api_optional_settings.TEST_DB_USERNAME is none)
+      or
+      (jiskefet_api_optional_settings.TEST_DB_USERNAME | trim == ''))
+  when: output_set_root_password.failed is undefined
+
+- name: print error when system is unable to login using mysql_root_password
+  vars:
+    msg: |
+        Unable to interact with mysql due to incorrect mysql_root_password.
+        Please fill in the correct mysql_root_password and try again.
+        If you forgot the password, please set a new root password and try again.
+  debug:
+    msg: "{{ msg.split('\n') }}"
+  failed_when: (output_set_root_password.failed is defined) and (output_set_root_password.failed == true)
+  when: (output_set_root_password.failed is defined) 
+        and 
+        (output_set_root_password.failed == true)
   ignore_errors: yes
-  mysql_db: 
-    login_user: 'root' 
-    login_password: "{{ mysql_root_password }}"
-    state: import
-    name: 'all'
-    target: /var/lib/jiskefet/sql/create_db_charset_utf8mb4.sql
-  notify: restart mysql
-  tags: 'recreate_database'
-
-- name: Create test database
-  ignore_errors: yes
-  mysql_db: 
-    login_user: 'root' 
-    login_password: "{{ mysql_root_password }}"
-    state: import
-    name: 'all'
-    target: /var/lib/jiskefet/sql/create_test_db_charset_utf8mb4.sql
-  notify: restart mysql
-  when: 
-    not
-    ((jiskefet_api_optional_settings.TEST_DB_USERNAME is undefined)
-    or
-    (jiskefet_api_optional_settings.TEST_DB_USERNAME is none)
-    or
-    (jiskefet_api_optional_settings.TEST_DB_USERNAME | trim == ''))
 
 - name: Add daily backup cron job
   cron:
