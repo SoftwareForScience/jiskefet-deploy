@@ -13,7 +13,7 @@
     global: yes
   become_method: sudo
 
-- name: install "pm2 typescript interperter"
+- name: install "pm2 typescript interpreter"
   command: pm2 install typescript
   become_method: sudo
 

@@ -1,1 +1,7 @@
 ---
+jiskefet_api_general_settings:
+  TYPEORM_HOST: jiskefet-staging.cern.ch
+  TYPEORM_USERNAME: jiskefet
+  TYPEORM_PASSWORD: Kaas
+  TYPEORM_DATABASE: jiskefetdb
+  JWT_SECRET_KEY: Kaas123

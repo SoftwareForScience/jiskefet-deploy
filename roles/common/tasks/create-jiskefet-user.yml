@@ -19,13 +19,16 @@
       system: no
       createhome: yes
       home: /var/lib/jiskefet
+    tags: configuration
 
   - name: Set user's password to expire
     become_method: sudo
     command: passwd --expire {{ jiskefet_user }}
+    tags: configuration
 
   - name: Force user to change password
     become_method: sudo
     command: chage -l {{ jiskefet_user }}
   when: "jiskefet_user != 'root'"
+  tags: configuration
 ...

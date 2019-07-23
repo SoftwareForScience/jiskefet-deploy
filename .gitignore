@@ -11,3 +11,4 @@ ci/variables.yml
 ansible.config.yml
 ansible.cfg
 hosts
+.DS_Store

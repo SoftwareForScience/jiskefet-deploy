@@ -55,15 +55,15 @@
   when: online_hosts.results | length > 0
 
 # Do vault interaction
-- include_tasks: interact-vault.yml
-  with_items: "{{ unable_to_connect_to_hosts | default({}) | json_query(get_hosts) }}"
-  vars:
-    get_hosts: "results[*].item.host"
-  loop_control:
-    loop_var: host
-  when: ((unable_to_connect_to_hosts is defined)
-        and
-        (unable_to_connect_to_hosts.results is defined)
-        and 
-        (unable_to_connect_to_hosts.results | length > 0))
+# - include_tasks: interact-vault.yml
+#   with_items: "{{ unable_to_connect_to_hosts | default({}) | json_query(get_hosts) }}"
+#   vars:
+#     get_hosts: "results[*].item.host"
+#   loop_control:
+#     loop_var: host
+#   when: ((unable_to_connect_to_hosts is defined)
+#         and
+#         (unable_to_connect_to_hosts.results is defined)
+#         and 
+#         (unable_to_connect_to_hosts.results | length > 0))
 ...

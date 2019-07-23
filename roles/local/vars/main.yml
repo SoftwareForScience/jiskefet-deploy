@@ -3,18 +3,18 @@
 # regarding the configuration fields.
 
 use_local_repository: 'no'
-jiskefet_api_general_settings:
-  TYPEORM_HOST:
-  TYPEORM_USERNAME:
-  TYPEORM_PASSWORD:
-  TYPEORM_DATABASE:
-  JWT_SECRET_KEY:
+# jiskefet_api_general_settings:
+#   TYPEORM_HOST: jiskefet-staging.cern.ch
+#   TYPEORM_USERNAME: jiskefet
+#   TYPEORM_PASSWORD: Kaas
+#   TYPEORM_DATABASE: jiskefetdb
+#   JWT_SECRET_KEY: Kaas123
 jiskefet_oauth_settings:
-  CLIENT_ID:
-  CLIENT_SECRET:
-  AUTH_REDIRECT_URI: http://{{ ansible_remote_address }}/callback
+  CLIENT_ID: jiskefet-testing
+  CLIENT_SECRET: 1mkB4NSmSEEOWfeSna0iimaiR9DEI2d9WI4utfHg1zk1
+  AUTH_REDIRECT_URI: https://{{ ansible_remote_address }}/callback
 jiskefet_cern_oauth_settings:
-  CERN_REGISTERED_URI:
+  CERN_REGISTERED_URI: https://{{ ansible_remote_address }}/callback
 jiskefet_api_optional_settings:
   TEST_DB_HOST: localhost
   TEST_DB_USERNAME:

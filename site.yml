@@ -7,43 +7,10 @@
 #  */
 
 ---
+- import_playbook: local.yml
+- import_playbook: common.yml
+- import_playbook: database.yml
+- import_playbook: webserver.yml
+
 # This playbook deploys the whole application stack in this site.
-
-- name: pre check run
-  hosts: localhost
-  vars_files: 
-    - ansible.config.yml
-
-  roles:
-  - local
-
-- name: apply common configuration to all nodes
-  hosts: all
-  remote_user: "{{ remote_privileged_user }}"
-  become: yes
-
-  roles:
-  - common
-
-- name: deploy MySQL and configure the databases
-  hosts: dbservers
-  remote_user: "{{ remote_privileged_user }}"
-  become: yes
-  vars_files:
-    - ansible.config.yml
-  
-  roles:
-  - db
-
-- name: configure and deploy the webservers and application code
-  hosts: webservers
-  remote_user: "{{ remote_privileged_user }}"
-  become: yes
-  vars_files:
-    - ansible.config.yml
-  vars:
-    - temp_folder: /tmp
-  
-  roles:
-  - web
 ...
