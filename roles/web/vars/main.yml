@@ -1,1 +1,3 @@
 ---
+use_hostname_as_remote_address: true
+use_local_repository: 'no'

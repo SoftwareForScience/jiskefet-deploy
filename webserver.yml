@@ -3,8 +3,6 @@
   hosts: webservers
   remote_user: "{{ remote_privileged_user }}"
   become: yes
-  vars_files:
-    - ansible.config.yml
   vars:
     - temp_folder: /tmp
   

@@ -7,17 +7,9 @@
 #  */
 
 ---
-# Set default variables
-- import_tasks: set-default-values.yml
-  tags:
-    - git_pull
-    - recreate_database
 
 # Check variables
-- import_tasks: check-variables.yml
-  tags:
-    - git_pull
-    - recreate_database
+#- import_tasks: check-variables.yml
 
 - name: ping hosts to see if hosts are up
   command: ping -c 1 {{ item }}

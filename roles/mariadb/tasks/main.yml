@@ -204,25 +204,3 @@
     state: enabled
   notify: restart firewalld
 ...
-
-# - name: Ensure database ports are open
-#   firewalld:
-#     permanent: true
-#     immediate: true
-#     port: "{{ item }}/tcp"
-#     zone: public
-#     state: enabled
-#   ignore_errors: yes
-#   with_items:
-#     - "3306"
-#   tags: installation
-
-# - name: Set root user password
-#   mysql_user: name=root
-#               host=localhost
-#               password="{{ mysql_root_password }}"
-#               check_implicit_admin=yes
-#               login_user="root"
-#               login_password="{{ mysql_root_old_password }}"
-#               state=present
-#   tags: configuration

@@ -33,6 +33,8 @@
 # If the variable is defined, it will use the user defined value, otherwise it will default to the result of variable
 # "{{ ansible_default_ipv4.address }}".
 
+- import_tasks: set-default-values.yml
+
 # Install git
 - include_tasks: git.yml
   when: use_local_repository == "no"

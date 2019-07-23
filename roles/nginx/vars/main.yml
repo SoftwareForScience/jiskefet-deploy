@@ -1,0 +1,16 @@
+---
+jiskefet_oauth_settings:
+  CLIENT_ID: jiskefet-testing
+  CLIENT_SECRET: 1mkB4NSmSEEOWfeSna0iimaiR9DEI2d9WI4utfHg1zk1
+  AUTH_REDIRECT_URI: https://{{ inventory_hostname }}/callback
+jiskefet_cern_oauth_settings:
+  CERN_REGISTERED_URI: https://{{ inventory_hostname }}/callback
+jiskefet_ui_settings:
+  API_URL: http://{{ inventory_hostname }}/api/
+allow_csp_payload: >-
+  "default-src 'self' http://{{ inventory_hostname }} https://{{ inventory_hostname }}
+  http://localhost:{{jiskefet_api_general_settings.PORT}} https://localhost:{{jiskefet_api_general_settings.PORT}}
+  https://github.com https://api.github.com; script-src 'self' https://use.fontawesome.com/releases/v5.3.1/js/all.js
+  https://github.com https://api.github.com; style-src 'self' 'unsafe-inline'; object-src 'none'; font-src 'self'
+  data: fonts.gstatic.com; img-src https://*.githubusercontent.com
+  http://{{ inventory_hostname }} https://{{ inventory_hostname }}"

@@ -1,7 +1,18 @@
 ---
+remote_user: root
+remote_privileged_user: root
+jiskefet_user: jiskefet
+mysql_root_password: 'abd1516812'
+
 jiskefet_api_general_settings:
   TYPEORM_HOST: jiskefet-staging.cern.ch
   TYPEORM_USERNAME: jiskefet
   TYPEORM_PASSWORD: Kaas
   TYPEORM_DATABASE: jiskefetdb
   JWT_SECRET_KEY: Kaas123
+  PORT: 3000
+jiskefet_api_optional_settings:
+  TEST_DB_HOST: localhost
+  TEST_DB_DATABASE: 
+  TEST_DB_USERNAME:
+  TEST_DB_PASSWORD:

@@ -1,4 +1,5 @@
 ---
+
 - name: apply common configuration to all nodes
   hosts: all
   remote_user: "{{ remote_privileged_user }}"
