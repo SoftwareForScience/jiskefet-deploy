@@ -9,7 +9,6 @@
 - name: "Ensure mariadb service runs immediately and on startup"
   systemd:
     name: mariadb
-    enabled: yes
     state: started
     daemon_reload: yes
   tags: installation

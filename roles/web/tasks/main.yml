@@ -48,16 +48,8 @@
   tags:
     - git_pull
 
-# Install Node.js
-- import_tasks: nodejs.yml
-
 # Do npm install
 - import_tasks: npm.yml
-  tags:
-    - git_pull
-
-# Install and run nginx
-- import_tasks: nginx.yml
   tags:
     - git_pull
 
