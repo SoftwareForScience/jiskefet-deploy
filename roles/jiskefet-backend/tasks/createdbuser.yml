@@ -1,0 +1,12 @@
+---
+- name: Set {{ jiskefet_api_general_settings.TYPEORM_USERNAME }} user password
+  mysql_user: 
+    name: "{{ jiskefet_api_general_settings.TYPEORM_USERNAME }}"
+    host: "{{inventory_hostname}}"
+    password: "{{ jiskefet_api_general_settings.TYPEORM_PASSWORD }}"
+    check_implicit_admin: "yes"
+    login_user: "root"
+    login_password: "{{ mysql_root_password }}"
+    state: "present"
+  tags: configuration
+...

@@ -1,0 +1,8 @@
+---
+use_local_repository: 'no'
+
+remote_repository_url:
+  JISKEFET_UI: https://github.com/SoftwareForScience/jiskefet-ui.git
+repository_branch:
+  JISKEFET_UI: develop
+...

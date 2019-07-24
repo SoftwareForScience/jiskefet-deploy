@@ -7,12 +7,10 @@
 #  */
 
 ---
-
-- import_playbook: local.yml
-- import_playbook: database.yml
-- import_playbook: jiskefet_common.yml
-- import_playbook: jiskefet_backend.yml
-- import_playbook: jiskefet_frontend.yml
-
-# This playbook deploys the whole application stack in this site.
+- name: Unarchive api files to remote
+  unarchive:
+    owner: "{{ jiskefet_user }}"
+    src: ../jiskefet-api.tar
+    dest: /var/lib/jiskefet
+  become_method: sudo
 ...

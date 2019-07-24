@@ -1,0 +1,11 @@
+---
+- name: checkout jiskefet-ui
+  git:
+    repo: "{{ remote_repository_url.JISKEFET_UI }}"
+    dest: /var/lib/jiskefet/jiskefet-ui
+    force: yes
+    version: "{{ repository_branch.JISKEFET_UI }}"
+  become_user: "{{ jiskefet_user }}"
+  tags:
+    - git_pull
+...

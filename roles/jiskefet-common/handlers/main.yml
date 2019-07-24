@@ -7,12 +7,17 @@
 #  */
 
 ---
+- name: restart NGiNX
+  become_method: sudo
+  service:
+    name: nginx
+    state: restarted
+  tags:
+    - git_pull
 
-- import_playbook: local.yml
-- import_playbook: database.yml
-- import_playbook: jiskefet_common.yml
-- import_playbook: jiskefet_backend.yml
-- import_playbook: jiskefet_frontend.yml
-
-# This playbook deploys the whole application stack in this site.
+- name: restart firewalld
+  become_method: sudo
+  service:
+    name: firewalld
+    state: restarted
 ...

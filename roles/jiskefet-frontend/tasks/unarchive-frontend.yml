@@ -1,0 +1,8 @@
+---
+- name: Unarchive ui files to remote
+  unarchive:
+    owner: "{{ jiskefet_user }}"
+    src: ../jiskefet-ui.tar
+    dest: /var/lib/jiskefet
+  become_method: sudo
+...

@@ -3,11 +3,11 @@ Create your own inventory for tests
 An Ansible inventory is basically a list of hostnames grouped into logical sets: 
 ```
 # example from official documentation
-[webservers]
+[jiskefet-frontend]
 foo.example.com
 bar.example.com
 
-[dbservers]
+[jiskefet-backend]
 one.example.com
 two.example.com
 three.example.com

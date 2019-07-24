@@ -122,10 +122,10 @@ host_vars
 It is possible to set the ssh parameters in the host file as displayed below. The drawback is that the credentials will be exposed. If possible, please refrain from using this setup.
 
 ```ini
-[webservers]
+[jiskefet-frontend]
 jiskefet-api  ansible=your_user_here ansible_ssh_pass=your_password_here
 
-[dbservers]
+[jiskefet-backend]
 jiskefet-db   ansible=your_user_here ansible_ssh_pass=your_password_here
 ```
 
