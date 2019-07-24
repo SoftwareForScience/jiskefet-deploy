@@ -1,7 +1,7 @@
 ---
 use_hostname_as_remote_address: true
 use_local_repository: 'no'
-deploy_environment: test
+deploy_environment: prod
 
 remote_repository_url:
   JISKEFET_API: https://github.com/SoftwareForScience/jiskefet-api 

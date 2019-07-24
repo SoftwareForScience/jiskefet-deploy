@@ -62,8 +62,10 @@
       TEST_DB_SYNCHRONIZE: "{{ jiskefet_api_optional_settings.TEST_DB_SYNCHRONIZE if ((jiskefet_api_optional_settings.TEST_DB_SYNCHRONIZE is defined) and (jiskefet_api_optional_settings.TEST_DB_SYNCHRONIZE | trim != '')) else 'true'}}"
       TEST_DB_LOGGING: "{{ jiskefet_api_optional_settings.TEST_DB_LOGGING if ((jiskefet_api_optional_settings.TEST_DB_LOGGING is defined) and (jiskefet_api_optional_settings.TEST_DB_LOGGING | trim != '')) else 'true'}}"
     jiskefet_ui_settings:
+      USE_API_PREFIX: true
       APPLICATION_NAME: "{{ jiskefet_ui_settings.APPLICATION_NAME if ((jiskefet_ui_settings.APPLICATION_NAME is defined) and (jiskefet_ui_settings.APPLICATION_NAME | trim != '')) else '{{ application_name }}' }}"
       FILE_UPLOAD_LIMIT: "{{ file_upload_limit }}"
+      ALLOW_ANONYMOUS: "{{ jiskefet_ui_settings.ALLOW_ANONYMOUS }}"
   delegate_to: "{{ item }}"
   with_items:
     - "{{ groups.all }}"

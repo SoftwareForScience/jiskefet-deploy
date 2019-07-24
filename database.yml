@@ -1,6 +1,6 @@
 ---
 - name: deploy MariaDB and configure the databases
-  hosts: dbservers
+  hosts: dbserver
   remote_user: "{{ remote_privileged_user }}"
   become: yes
   

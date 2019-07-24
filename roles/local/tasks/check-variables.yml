@@ -44,6 +44,7 @@
   # This only happens with the USE_CERN_SSO key. Workaround for now is to use the jinja2 lower filter.
     - { key: USE_CERN_SSO, value: "{{ USE_CERN_SSO | lower }}" }
     - { key: USE_API_BASE_PATH, value: "{{ jiskefet_api_general_settings.USE_API_BASE_PATH }}" }
+    - { key: USE_API_PREFIX, value: "{{ jiskefet_api_general_settings.USE_API_PREFIX }}" }
     - { key: TYPEORM_SYNCHRONIZE, value: "{{ jiskefet_api_general_settings.TYPEORM_SYNCHRONIZE }}" }
     - { key: TYPEORM_LOGGING, value: "{{ jiskefet_api_general_settings.TYPEORM_LOGGING }}" }
     - { key: USE_INFO_LOGGER, value: "{{ jiskefet_api_general_settings.USE_INFO_LOGGER }}" }

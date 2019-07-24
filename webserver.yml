@@ -1,6 +1,6 @@
 ---
 - name: configure and deploy the webservers and application code
-  hosts: webservers
+  hosts: webserver
   remote_user: "{{ remote_privileged_user }}"
   become: yes
   vars:
