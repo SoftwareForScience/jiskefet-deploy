@@ -38,8 +38,8 @@
       JISKEFET_API: "{{ remote_repository_url.JISKEFET_API if ((remote_repository_url is defined) and (remote_repository_url.JISKEFET_API is defined) and (remote_repository_url.JISKEFET_API | trim != '')) else 'https://github.com/SoftwareForScience/jiskefet-api.git'}}"
       JISKEFET_UI: "{{ remote_repository_url.JISKEFET_UI if ((remote_repository_url is defined) and (remote_repository_url.JISKEFET_UI is defined) and (remote_repository_url.JISKEFET_UI | trim != '')) else 'https://github.com/SoftwareForScience/jiskefet-ui.git'}}"
     repository_branch:
-      JISKEFET_API: "{{ repository_branch.JISKEFET_API if ((repository_branch is defined) and (repository_branch.JISKEFET_API is defined) and (repository_branch.JISKEFET_API | trim != '')) else 'master'}}"
-      JISKEFET_UI: "{{ repository_branch.JISKEFET_UI if ((repository_branch is defined) and (repository_branch.JISKEFET_UI is defined) and (repository_branch.JISKEFET_UI | trim != '')) else 'master'}}"
+      JISKEFET_API: "{{ repository_branch.JISKEFET_API if ((repository_branch is defined) and (repository_branch.JISKEFET_API is defined) and (repository_branch.JISKEFET_API | trim != '')) else 'develop'}}"
+      JISKEFET_UI: "{{ repository_branch.JISKEFET_UI if ((repository_branch is defined) and (repository_branch.JISKEFET_UI is defined) and (repository_branch.JISKEFET_UI | trim != '')) else 'develop'}}"
     USE_CERN_SSO: "{{ USE_CERN_SSO if ((USE_CERN_SSO is defined) and (USE_CERN_SSO | trim != '')) else 'false'}}"
     jiskefet_api_general_settings: 
       FILE_UPLOAD_LIMIT: "{{ file_upload_limit }}"

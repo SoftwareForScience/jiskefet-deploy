@@ -20,6 +20,9 @@
             },
             "env_prod": {
                 "NODE_ENV": "prod"
+            },
+            "env_test": {
+                "NODE_ENV": "test"
             }
         }
     ]

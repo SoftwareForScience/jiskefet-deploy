@@ -29,6 +29,15 @@
   - name: Force user to change password
     become_method: sudo
     command: chage -l {{ jiskefet_user }}
-  when: "jiskefet_user != 'root'"
-  tags: configuration
+    when: "jiskefet_user != 'root'"
+    tags: configuration
+
+  - name: Ensure group {{ jiskefet_user}} exists
+    group:
+      name: jiskefet
+      state: present
+
+  - name: Change default group of user jiskefet
+    become_method: sudo
+    command: usermod -g jiskefet {{ jiskefet_user }}
 ...

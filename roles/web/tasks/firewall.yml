@@ -1,0 +1,14 @@
+---
+- name: Setup firewall to allow connections to port 80 and 443
+  become_method: sudo
+  command: "{{ item }}"
+  with_items:
+  - firewall-cmd --permanent --zone=public --add-service=http
+  - firewall-cmd --permanent --zone=public --add-service=https
+  notify: restart firewalld
+  tags: configuration
+
+- name: Allow http network to connect in SELinux
+  become_method: sudo
+  command: setsebool httpd_can_network_connect on -P
+  tags: configuration
