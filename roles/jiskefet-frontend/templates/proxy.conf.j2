@@ -1,0 +1,54 @@
+# /*
+#  * Copyright (C) 2018 Amsterdam University of Applied Sciences (AUAS)
+#  *
+#  * This software is distributed under the terms of the
+#  * GNU General Public Licence version 3 (GPL) version 3,
+#  * copied verbatim in the file "LICENSE"
+#  */
+
+server {
+    ## port to listen on
+    listen 80;
+    listen [::]:80;
+    listen 443;
+    listen [::]:443;
+    ## set root directory
+    root /var/lib/jiskefet/jiskefet-ui/;
+
+    ## if a page is not specified look for index.html
+    index src/index.html;
+
+    ## when root is accessed, go to whatever is specified in block
+    location / {
+        autoindex on;
+        try_files $uri /src/index.html; # used for not resolving the oauth callback in url /callback
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        add_header Content-Security-Policy {{ allow_csp_payload }};
+    }
+
+    ## reverse proxy 
+    location /api/ {
+        proxy_pass http://localhost:{{ jiskefet_api_general_settings.PORT }}/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+        client_max_body_size {{ (file_upload_limit | int) * 1024 * 1024 }}; # Setting the file upload limit for the API
+    }
+
+    ## Media: images, icons, video, audio, HTC
+    location ~* \.(?:jpg|jpeg|gif|png|ico|cur|gz|svg|svgz|mp4|ogg|ogv|webm|htc)$ {
+        expires 1M;
+        access_log off;
+        add_header Cache-Control "public";
+    }
+
+    ## CSS and Javascript
+    #location ~* \.(?:css|js)$ {
+    # 	expires 1y;
+    # 	access_log off;
+    #	add_header Cache-Control "public";
+    #}
+}

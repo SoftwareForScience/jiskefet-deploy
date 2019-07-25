@@ -34,11 +34,13 @@
   tags: installation
 
 - name: Set root user password
-  mysql_user: name=root
-              host=localhost
-              password="{{ mysql_root_password }}"
-              check_implicit_admin=yes
-              login_user="root"
-              login_password="{{ mysql_root_old_password }}"
-              state=present
+  mysql_user: 
+    name: "root"
+    host: "localhost"
+    password: "{{ mysql_root_password }}"
+    login_user: "root"
+    login_password: "{{ mysql_root_old_password }}"
+    state: present
+    check_implicit_admin: yes
+    priv: "*.*:ALL,GRANT"
   tags: configuration

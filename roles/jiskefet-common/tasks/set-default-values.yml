@@ -42,12 +42,15 @@
       JISKEFET_UI: "{{ repository_branch.JISKEFET_UI if ((repository_branch is defined) and (repository_branch.JISKEFET_UI is defined) and (repository_branch.JISKEFET_UI | trim != '')) else 'develop'}}"
     USE_CERN_SSO: "{{ USE_CERN_SSO if ((USE_CERN_SSO is defined) and (USE_CERN_SSO | trim != '')) else 'false'}}"
     jiskefet_api_general_settings: 
+      AUTH_REDIRECT_URI: "{{ jiskefet_oauth_settings.AUTH_REDIRECT_URI if ((jiskefet_oauth_settings.AUTH_REDIRECT_URI is defined) and (jiskefet_oauth_settings.AUTH_REDIRECT_URI | trim != '')) else 'http://{{inventory_hostname}}/callback' }}"
+      JWT_SECRET_KEY: "{{ jiskefet_api_general_settings.JWT_SECRET_KEY if ((jiskefet_api_general_settings.JWT_SECRET_KEY is defined) and (jiskefet_api_general_settings.JWT_SECRET_KEY | trim != '')) else 'NHcW7x9K' }}"
       FILE_UPLOAD_LIMIT: "{{ file_upload_limit }}"
       APPLICATION_NAME: "{{ jiskefet_api_general_settings.APPLICATION_NAME if ((jiskefet_api_general_settings.APPLICATION_NAME is defined) and (jiskefet_api_general_settings.APPLICATION_NAME | trim != '')) else '{{ application_name }}' }}"
       USE_API_BASE_PATH: "{{ jiskefet_api_general_settings.USE_API_BASE_PATH if ((jiskefet_api_general_settings.USE_API_BASE_PATH is defined) and (jiskefet_api_general_settings.USE_API_BASE_PATH | trim != '')) else 'true'}}"
       PORT: "{{ jiskefet_api_general_settings.PORT if ((jiskefet_api_general_settings.PORT is defined) and (jiskefet_api_general_settings.PORT | trim != '')) else 3000}}"
-      # TYPEORM_HOST: "{{ jiskefet_api_general_settings.TYPEORM_HOST if ((jiskefet_api_general_settings.TYPEORM_HOST is defined) and (jiskefet_api_general_settings.TYPEORM_HOST | trim != '')) else ansible_default_ipv4.address }}"
       TYPEORM_CONNECTION: "{{ jiskefet_api_general_settings.TYPEORM_CONNECTION if ((jiskefet_api_general_settings.TYPEORM_CONNECTION is defined) and (jiskefet_api_general_settings.TYPEORM_CONNECTION | trim != '')) else 'mysql'}}"
+      TYPEORM_HOST: "{{ jiskefet_api_general_settings.TYPEORM_HOST if ((jiskefet_api_general_settings.TYPEORM_HOST is defined) and (jiskefet_api_general_settings.TYPEORM_HOST | trim != '')) else 'localhost'}}"
+      TYPEORM_DATABASE: "{{ jiskefet_api_general_settings.TYPEORM_DATABASE if ((jiskefet_api_general_settings.TYPEORM_DATABASE is defined) and (jiskefet_api_general_settings.TYPEORM_DATABASE | trim != '')) else 'jiskefetdb'}}"
       TYPEORM_USERNAME: "{{ jiskefet_api_general_settings.TYPEORM_USERNAME if ((jiskefet_api_general_settings.TYPEORM_USERNAME is defined) and (jiskefet_api_general_settings.TYPEORM_USERNAME | trim != '')) else 'jiskefet'}}"
       TYPEORM_PASSWORD: "{{ jiskefet_api_general_settings.TYPEORM_PASSWORD if ((jiskefet_api_general_settings.TYPEORM_PASSWORD is defined) and (jiskefet_api_general_settings.TYPEORM_PASSWORD | trim != '')) else 'abd1516812'}}"
       TYPEORM_PORT: "{{ jiskefet_api_general_settings.TYPEORM_PORT if ((jiskefet_api_general_settings.TYPEORM_PORT is defined) and (jiskefet_api_general_settings.TYPEORM_PORT | trim != '')) else 3306}}"
@@ -57,7 +60,7 @@
       SUB_SYSTEM_TOKEN_EXPIRES_IN: "{{ jiskefet_api_general_settings.SUB_SYSTEM_TOKEN_EXPIRES_IN if ((jiskefet_api_general_settings.SUB_SYSTEM_TOKEN_EXPIRES_IN is defined) and (jiskefet_api_general_settings.SUB_SYSTEM_TOKEN_EXPIRES_IN | trim != '')) else '365 days'}}" 
       USE_INFO_LOGGER: "{{ jiskefet_api_general_settings.USE_INFO_LOGGER if ((jiskefet_api_general_settings.USE_INFO_LOGGER is defined) and (jiskefet_api_general_settings.USE_INFO_LOGGER | trim != '')) else 'false'}}"
     jiskefet_api_optional_settings:
-      # TEST_DB_HOST: "{{ jiskefet_api_optional_settings.TEST_DB_HOST if ((jiskefet_api_optional_settings.TEST_DB_HOST is defined) and (jiskefet_api_optional_settings.TEST_DB_HOST | trim != '')) else ansible_default_ipv4.address }}"
+      TEST_DB_HOST: "{{ jiskefet_api_optional_settings.TEST_DB_HOST if ((jiskefet_api_optional_settings.TEST_DB_HOST is defined) and (jiskefet_api_optional_settings.TEST_DB_HOST | trim != '')) else 'localhost' }}"
       TEST_DB_CONNECTION: "{{ jiskefet_api_optional_settings.TEST_DB_CONNECTION if ((jiskefet_api_optional_settings.TEST_DB_CONNECTION is defined) and (jiskefet_api_optional_settings.TEST_DB_CONNECTION | trim != '')) else 'mysql'}}"
       TEST_DB_DATABASE: "{{ jiskefet_api_optional_settings.TEST_DB_DATABASE if ((jiskefet_api_optional_settings.TEST_DB_DATABASE is defined) and (jiskefet_api_optional_settings.TEST_DB_DATABASE | trim != '')) else 'test_{{ database_name }}'}}"
       TEST_DB_PORT: "{{ jiskefet_api_optional_settings.TEST_DB_PORT if ((jiskefet_api_optional_settings.TEST_DB_PORT is defined) and (jiskefet_api_optional_settings.TEST_DB_PORT | trim != '')) else 3306}}"
@@ -68,6 +71,8 @@
       APPLICATION_NAME: "{{ jiskefet_ui_settings.APPLICATION_NAME if ((jiskefet_ui_settings.APPLICATION_NAME is defined) and (jiskefet_ui_settings.APPLICATION_NAME | trim != '')) else '{{ application_name }}' }}"
       FILE_UPLOAD_LIMIT: "{{ file_upload_limit }} if ((jiskefet_ui_settings.FILE_UPLOAD_LIMIT is defined) and (jiskefet_ui_settings.FILE_UPLOAD_LIMIT | trim != '')) else '50000' }}"
       ALLOW_ANONYMOUS: "{{ jiskefet_ui_settings.ALLOW_ANONYMOUS }} if ((jiskefet_ui_settings.ALLOW_ANONYMOUS is defined) and (jiskefet_ui_settings.ALLOW_ANONYMOUS | trim != '')) else 'true' }}"
+    jiskefet_oauth_settings: 
+      AUTH_REDIRECT_URI: "{{ jiskefet_oauth_settings.AUTH_REDIRECT_URI if ((jiskefet_oauth_settings.AUTH_REDIRECT_URI is defined) and (jiskefet_oauth_settings.AUTH_REDIRECT_URI | trim != '')) else 'http://{{inventory_hostname}}/callback' }}"
   delegate_to: "{{ item }}"
   with_items:
     - "{{ groups.all }}"
