@@ -5,7 +5,6 @@
 #  * GNU General Public Licence version 3 (GPL) version 3,
 #  * copied verbatim in the file "LICENSE"
 #  */
-
 ---
 - name: run npm install on jiskefet-ui
   command: npm install

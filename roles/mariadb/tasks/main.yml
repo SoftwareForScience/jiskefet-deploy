@@ -33,6 +33,8 @@
     - "3306"
   tags: installation
 
+
+
 - name: Set root user password
   mysql_user: 
     name: "root"

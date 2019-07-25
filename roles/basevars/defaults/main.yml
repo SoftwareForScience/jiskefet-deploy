@@ -3,26 +3,44 @@ application_name: "Logbook ITS"
 remote_privileged_user: root
 jiskefet_user: jiskefet
 mysql_root_password: abd1516812
-USE_CERN_SSO: true
+mysql_root_old_password: abd1516812
+
+file_upload_limit: 50000
+ALLOW_ANONYMOUS: true
+USE_CERN_SSO: true   
+
+jiskefet_cern_oauth_settings:
+  OAUTH_CLIENT_ID: 'fillin'
+  OAUTH_CLIENT_SECRET: 'fillin'
+  AUTH_REDIRECT_URI: "http://{{ groups.jiskefet_backend | first }}/callback"
+  CERN_REGISTERED_URI: "http://{{ groups.jiskefet_backend | first }}/callback"
+  EGROUP: ""
+
+jiskefet_oauth_settings:
+  OAUTH_CLIENT_ID: 'fillin'
+  OAUTH_CLIENT_SECRET: 'fillin'
+  AUTH_REDIRECT_URI: "http://{{ groups.jiskefet_backend | first }}/callback"
 
 jiskefet_api_general_settings:
-  TYPEORM_HOST: "{{inventory_hostname}}"
+  TYPEORM_HOST: "localhost"
   TYPEORM_USERNAME: 'jiskefet'
   TYPEORM_PASSWORD: 'abd1516812'
   TYPEORM_DATABASE: 'jiskefetdb'
+  TYPEORM_SYNCHRONIZE: 'false'
+  TYPEORM_LOGGING: 'false'
+  TYPEORM_PORT: 3306
+  USE_INFO_LOGGER: 'false'
   JWT_SECRET_KEY: 'NHcW7x9K'
   PORT: 3000
-
+  USE_API_BASE_PATH: 'true'
+  USE_API_PREFIX: 'true'
+  
 jiskefet_api_optional_settings:
   TEST_DB_HOST: localhost
-  TEST_DB_DATABASE: 
-  TEST_DB_USERNAME:
-  TEST_DB_PASSWORD:
+  TEST_DB_DATABASE: 'jiskefet_testdb'
+  TEST_DB_USERNAME: 'jiskefet'
+  TEST_DB_PASSWORD: 'jiskefetpw'
 
 jiskefet_ui_settings:
-  USE_API_PREFIX: true
-  ALLOW_ANONYMOUS: true
-
-# If you use CERN SSO set true then you need to use the correct settings below. Check CERN oauth page to setup credentials.
-jiskefet_cern_oauth_settings:
-  CERN_REGISTERED_URI: "http://{{inventory_hostname}}/callback"
+  API_URL: "http://{{ groups.jiskefet_backend | first }}/api/"
+...

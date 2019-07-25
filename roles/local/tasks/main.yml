@@ -9,7 +9,7 @@
 ---
 
 # Check variables
-#- import_tasks: check-variables.yml
+- import_tasks: check-variables.yml
 
 - name: ping hosts to see if hosts are up
   command: ping -c 1 {{ item }}
