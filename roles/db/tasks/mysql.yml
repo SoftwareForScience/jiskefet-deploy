@@ -35,7 +35,7 @@
   yum_repository:
     name: MariaDB
     description: Official MariaDB repository
-    baseurl: "https://yum.mariadb.org/10.1/centos7-amd64"
+    baseurl: "https://yum.mariadb.org/10.1/centos7-amd64" # Check if a higher version is compatible with the API.
     gpgkey: https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
     gpgcheck: true
   # tags: mariadb

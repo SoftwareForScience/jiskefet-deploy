@@ -24,13 +24,21 @@
     - localhost
   delegate_facts: true
 
+- name: Auto generate mysql root password when none is given.
+  msg: A mysql root password has been generated as none is given. The generated password can be found at /tmp/passwordfile
+  when: (mysql_root_password is undefined)
+        or
+        (mysql_root_password is none)
+        and 
+        (mysql_root_password | trim == ''))
+
 - name: Set ansible default facts for jiskefet
   set_fact:
     use_hostname_as_remote_address: "{{ use_hostname_as_remote_address | bool if ((use_hostname_as_remote_address is defined) and (use_hostname_as_remote_address | bool)) else 'false' }}"
     custom_ansible_remote_address: "{{ custom_ansible_remote_address if ((custom_ansible_remote_address is defined) and (custom_ansible_remote_address | trim != '')) else '' }}"
     ansible_remote_address: "{{ custom_ansible_remote_address if ((custom_ansible_remote_address is defined) and (custom_ansible_remote_address | trim != '')) else ansible_default_ipv4.address }}"
     mysql_root_password: "{{ mysql_root_password if ((mysql_root_password is defined) and (mysql_root_password | trim != '')) else \"{{ lookup('password', '/tmp/passwordfile chars=ascii_letters,digits length=10') }}\" }}"
-    jiskefet_user: "{{ jiskefet_user if ((jiskefet_user is defined) and (jiskefet_user | trim != '')) else 'jiskefet'}}"
+    # jiskefet_user: "{{ jiskefet_user if ((jiskefet_user is defined) and (jiskefet_user | trim != '')) else 'jiskefet'}}"
     remote_privileged_user: "{{ remote_privileged_user if ((remote_privileged_user is defined) and (remote_privileged_user | trim != '')) else 'root'}}"
     deploy_environment: "{{ deploy_environment if ((deploy_environment is defined) and (deploy_environment | trim != '')) else 'prod'}}"
     database_packet_limit: "{{ (( file_upload_limit | int ) * 1024 * 1024 * 1.5) | round | int }}" # rounding the numbers

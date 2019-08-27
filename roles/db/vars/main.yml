@@ -1,0 +1,12 @@
+---
+jiskefet_user: jiskefet
+mysql_root_password: 
+jiskefet_api_general_settings:
+  TYPEORM_USERNAME: jiskefet
+  TYPEORM_PASSWORD: 
+  TYPEORM_DATABASE: 
+jiskefet_api_optional_settings:
+  TEST_DB_USERNAME: test_jiskefet
+  TEST_DB_PASSWORD: 
+  TEST_DB_DATABASE:
+...
