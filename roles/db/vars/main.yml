@@ -1,5 +1,6 @@
 ---
 jiskefet_user: jiskefet
+database_packet_limit: "{{ (5 * 1024 * 1024 * 1.5) | round | int }}"
 mysql_root_password: 
 jiskefet_api_general_settings:
   TYPEORM_USERNAME: jiskefet
