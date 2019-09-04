@@ -1,0 +1,24 @@
+---
+jiskefet_user: jiskefet
+remote_repository_url:
+  JISKEFET_API: https://github.com/SoftwareForScience/jiskefet-api.git
+  JISKEFET_UI:  https://github.com/SoftwareForScience/jiskefet-ui.git
+repository_branch:
+  JISKEFET_API: master
+  JISKEFET_UI: master
+jiskefet_ui_settings:
+  API_URL: http://{{ ansible_remote_address }}/api/
+jiskefet_api_general_settings:
+  PORT: 3000
+  FILE_UPLOAD_LIMIT: 5
+  TYPEORM_USERNAME: jiskefet
+jiskefet_api_optional_settings:
+  TEST_DB_USERNAME: test_jiskefet
+allow_csp_payload: >-
+  "default-src 'self' http://{{ ansible_remote_address }} https://{{ ansible_remote_address }}
+  http://localhost:{{jiskefet_api_general_settings.PORT}} https://localhost:{{jiskefet_api_general_settings.PORT}}
+  https://github.com https://api.github.com; script-src 'self' https://use.fontawesome.com/releases/v5.3.1/js/all.js
+  https://github.com https://api.github.com; style-src 'self' 'unsafe-inline'; object-src 'none'; font-src 'self'
+  data: fonts.gstatic.com; img-src https://*.githubusercontent.com
+  http://{{ ansible_remote_address }} https://{{ ansible_remote_address }}"
+...

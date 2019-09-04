@@ -1,0 +1,8 @@
+---
+jiskefet_user: jiskefet
+database_packet_limit: "{{ (5 * 1024 * 1024 * 1.5) | round | int }}"
+jiskefet_api_general_settings:
+  TYPEORM_USERNAME: jiskefet
+jiskefet_api_optional_settings:
+  TEST_DB_USERNAME: test_jiskefet
+...

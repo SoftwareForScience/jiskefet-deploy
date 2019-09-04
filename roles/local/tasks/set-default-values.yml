@@ -32,6 +32,11 @@
         (mysql_root_password is none)
         and 
         (mysql_root_password | trim == ''))
+  delegate_to: "{{ item }}"
+  with_items:
+    - "{{ groups.all }}"
+    - localhost
+  delegate_facts: true
 
 - name: Set ansible default facts for jiskefet
   set_fact:
