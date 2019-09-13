@@ -13,9 +13,16 @@
   hosts: localhost
   vars_files: 
     - ansible.config.yml
-
+  pre_tasks:
+  # By setting the when condition to false, we are able to load all tasks/modules for the pre check
   roles:
-  - local
+  - role: local
+  - role: common
+    when: false
+  - role: db
+    when: false
+  - role: web
+    when: false
 
 - name: apply common configuration to all nodes
   hosts: all
