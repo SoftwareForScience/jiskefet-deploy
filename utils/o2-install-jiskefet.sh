@@ -74,17 +74,6 @@ fi
 
 echo -ne "\tTesting SSH connection to $hostname on port $SSH_PORT... ";
 
-nc_output=$(nc -z $hostname $SSH_PORT 2>&1)
-
-if [[ $nc_output != *"succeeded"* ]]
-then
-    echo "❌ ";
-    echo -e "\t${TXT_RED}Connection failed, error: \"$nc_output\", script stopped.${TXT_NC}"
-    exit
-else
-    echo " done ✅ ";
-fi
-
 printf "\tSSH root username [$ssh_root_user_default]: ";
 read -r ssh_root_username
 ssh_root_username=${ssh_root_username:-"$ssh_root_user_default"}
