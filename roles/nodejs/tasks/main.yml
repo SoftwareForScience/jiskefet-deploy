@@ -1,0 +1,28 @@
+---
+- name: Download NodeJS {{ nodejs_major_version }} repo configuration
+  get_url:
+    url: https://rpm.nodesource.com/setup_{{ nodejs_major_version }}
+    dest: /tmp/setup_{{ nodejs_major_version }}
+    validate_certs: False
+  tags: installation
+
+- name: Remove old version of NodeJS
+  yum:
+    name: npm
+    state: absent
+  tags: installation
+
+- name: Configure NodeJS repo
+  shell: bash /tmp/setup_{{ nodejs_major_version }}
+  tags: installation
+
+- name: Install NodeJS
+  package:
+    name: nodejs
+    state: latest
+  tags: installation
+
+- name: Configure npm proxy
+  shell: npm config set proxy {{ ansible_env.http_proxy }} && npm config set https-proxy {{ ansible_env.https_proxy }}
+  when: "'http_proxy' in ansible_env"
+  tags: configurationn

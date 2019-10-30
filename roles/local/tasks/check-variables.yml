@@ -9,14 +9,22 @@
 ---
 - name: Set facts to check ansible.config.json against.
   set_fact:
-    url_ip: '(http(s)?:\/\/)?\b(?:(?:2(?:[0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])\.){3}(?:(?:2([0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9]))\b\/?((?:[?&](?:\w+)=(?:\w+))+|[--:\w?@%&+~#=]+)?|([--:\w?@%&+~#=]*\.[a-z]{2,4}\/{0,2})((?:[?&](?:\w+)=(?:\w+))+|[--:\w?@%&+~#=]+)?|(localhost)'
+    url_ip: '(http(s)?:\/\/)?\b(?:(?:2(?:[0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])\.){3}(?:(?:2([0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9]))(.+)?\b|([--:\w?@%&+~#=]*\.[a-z]{2,4}\/{0,2})((?:[?&](?:\w+)=(?:\w+))+|[--:\w?@%&+~#=]+)?|(http(s)?:\/\/)?(localhost)(\.+)?'
     boolean: '^(tru|fals)e$'
-    port_number: ^([0-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-9][0-9][0-9][0-9]|[1-9][0-9][0-9][0-9][0-9])$
-    
+    port_number: ^([1-9]|[1-8][0-9]|9[0-9]|[1-8][0-9]{2}|9[0-8][0-9]|99[0-9]|[1-8][0-9]{3}|9[0-8][0-9]{2}|99[0-8][0-9]|999[0-9]|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$
+    http_protocol: '(^http(s)?)'
+
 - name: Verify if hostmachine meets the jiskefet-deploy's playbook Ansible requirement
   assert:
     that: "ansible_version.full is version_compare('2.5', '>=')"
     msg: "You must update Ansible to at least 2.5 to use this playbook."
+
+- name: Checking if values are of type integer
+  fail:
+    msg: "Variable {{ item.key }} is not an integer"
+  with_items:
+    - { key: file_upload_limit, value: "{{ file_upload_limit }}"}
+  when: ( item.value | int) <= 0
 
 - name: Checking jiskefet_api_general_settings
   fail: 
@@ -32,10 +40,14 @@
   fail: 
     msg: "Key {{ item.key }} does not have value 'true' or 'false'"
   with_items: 
-    - { key: USE_API_PREFIX, value: "{{ jiskefet_api_general_settings.USE_API_PREFIX }}" }
-    - { key: TYPEORM_SYNCHRONIZE, value: "{{ jiskefet_api_general_settings.TYPEORM_SYNCHRONIZE }}" }
-    - { key: TYPEORM_LOGGING, value: "{{ jiskefet_api_general_settings.TYPEORM_LOGGING }}" }
-    - { key: USE_INFO_LOGGER, value: "{{ jiskefet_api_general_settings.USE_INFO_LOGGER }}" }
+  # for some reason ansible interperts the string 'false' as a YAML 'False', causing the check to fail.
+  # This only happens with the USE_CERN_SSO key. Workaround for now is to use the jinja2 lower filter.
+    - { key: USE_CERN_SSO, value: "{{ USE_CERN_SSO | lower }}" }
+    - { key: USE_API_BASE_PATH, value: "{{ jiskefet_api_general_settings.USE_API_BASE_PATH | lower  }}" }
+    - { key: USE_API_PREFIX, value: "{{ jiskefet_api_general_settings.USE_API_PREFIX | lower  }}" }
+    - { key: TYPEORM_SYNCHRONIZE, value: "{{ jiskefet_api_general_settings.TYPEORM_SYNCHRONIZE | lower  }}" }
+    - { key: TYPEORM_LOGGING, value: "{{ jiskefet_api_general_settings.TYPEORM_LOGGING | lower  }}" }
+    - { key: USE_INFO_LOGGER, value: "{{ jiskefet_api_general_settings.USE_INFO_LOGGER | lower  }}" }
   when: not item.value is match(boolean)
 
 - name: Checking port values
@@ -55,10 +67,17 @@
     - { key: API_URL, value: "{{ jiskefet_ui_settings.API_URL }}" }
   when: not item.value is match(url_ip)
 
+- name: Check if TYPEORM_HOST contains http protocol
+  fail:
+    msg: " {{ item.key }} should not contain a http protocol"
+  with_items: 
+    - { key: TYPEORM_HOST, value: "{{ jiskefet_api_general_settings.TYPEORM_HOST }}" }
+  when: item.value is match(http_protocol)
+
 - name: Check if jiskefet_ui_settings.API_URL ends with /api/
   fail: 
     msg: "{{ jiskefet_ui_settings.API_URL }} end with /api/"
-  when: jiskefet_api_general_settings.USE_API_PREFIX == 'true'
+  when: jiskefet_api_general_settings.USE_API_BASE_PATH == 'true'
         and
         not jiskefet_ui_settings.API_URL is match('.*(\/api\/)$')
 

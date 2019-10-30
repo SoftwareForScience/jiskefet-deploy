@@ -1,0 +1,65 @@
+# /*
+#  * Copyright (C) 2018 Amsterdam University of Applied Sciences (AUAS)
+#  *
+#  * This software is distributed under the terms of the
+#  * GNU General Public Licence version 3 (GPL) version 3,
+#  * copied verbatim in the file "LICENSE"
+#  */
+
+---
+# Set fact to overwrite the variable "{{ ansible_remote_address }}" with the remote its address if
+# "{{ ansible_remote_address }}" does not exist or "{{ ansible_remote_address }}"'s ip does not equal the remotes
+# ansible_default_ipv4.address
+- name: set_fact to get the correct ip of the host
+  set_fact:
+    ansible_remote_address: "{{ ansible_remote_address if ((ansible_remote_address is defined) and (ansible_remote_address | trim != '') and (ansible_remote_address == ansible_default_ipv4.address)) else ansible_default_ipv4.address }}"
+  when: ((custom_ansible_remote_address is defined) and (custom_ansible_remote_address | trim == ''))
+        or
+        (custom_ansible_remote_address is undefined)
+
+# Two commands to determine what the value of "{{ ansible_remote_address }}" is.
+# if "{{ use_hostname_as_remote_address }}" is set to true, it will run the command 'hostname' on the hosts defined
+# at webservers.
+- name: get hostname
+  command: hostname
+  register: hostname_output
+  when: use_hostname_as_remote_address | bool == true
+
+- name: set_fact when use_hostname_as_remote_address is true
+  set_fact:
+    ansible_remote_address: "{{ hostname_output.stdout }}"
+  when: use_hostname_as_remote_address | bool == true
+# When "{{ use_hostname_as_remote_address }}" is set to false, ansible will check if the "{{ ansible_remote_address }}"
+# If the variable is defined, it will use the user defined value, otherwise it will default to the result of variable
+# "{{ ansible_default_ipv4.address }}".
+
+
+# Install git
+- include_tasks: getapi.yml
+  when: use_local_repository == "no"
+  tags:
+    - git_pull
+
+# Unarchive projects
+- include_tasks: unarchive-backend.yml
+  when: use_local_repository == "yes"
+
+# Setting the environment variables
+- import_tasks: change-env-variables-backend.yml
+  tags:
+    - git_pull
+
+# Do npm install
+- import_tasks: npm-backend.yml
+  tags:
+    - git_pull
+
+- import_tasks: createdbuser.yml
+  tags:
+    - git_pull
+
+# Install and run pm2
+- import_tasks: pm2.yml
+  tags:
+    - git_pull
+...

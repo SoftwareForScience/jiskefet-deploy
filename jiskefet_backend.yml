@@ -1,0 +1,10 @@
+---
+- name: configure and deploy the webservers and application code
+  hosts: jiskefet_backend
+  remote_user: "{{ remote_privileged_user }}"
+  become: yes
+  vars:
+    - temp_folder: /tmp
+  
+  roles:
+  - jiskefet-backend

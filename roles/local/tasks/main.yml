@@ -7,18 +7,42 @@
 #  */
 
 ---
+
 # Check variables
 - import_tasks: check-variables.yml
 
-# Check ssh
-- import_tasks: test-ssh.yml
+- name: ping hosts to see if hosts are up
+  command: ping -c 1 {{ item }}
+  register: ping_results
+  ignore_errors: yes
+  with_items:
+  - "{{ groups.all }}"
 
-# Do vault interaction
-- include_tasks: interact-vault.yml
-  with_items: "{{ unable_to_connect_to_hosts | json_query(get_hosts) }}"
+- name: filter ping_result and check which host has a return code of 0 (hosts that are online)
+  debug:
+    var: item
+  register: online_hosts
+  with_items: "{{ ping_results | json_query(unreachable_ping) }}"
   vars:
-    get_hosts: "results[*].item.host"
-  loop_control:
-    loop_var: host
-  when: unable_to_connect_to_hosts.results | length > 0
+    unreachable_ping: "results[?to_string(rc) == '0'].{ host: item}"
+
+- name: do an ansible ping on the online hosts
+  command: ansible -m ping {{ item }}
+  register: ansible_ping_results
+  ignore_errors: yes
+  with_items: "{{ online_hosts | json_query(filter_online_hosts) }}"
+  vars:
+    filter_online_hosts: "results[*].item.host"
+
+- name: filter ansible_ping_results where ansible is unable to connect
+  debug:
+    var: item
+  register: online_hosts
+  with_items: "{{ ansible_ping_results | json_query(unreachable_ping) }}"
+  vars:
+    unreachable_ping: "results[?to_string(failed) == 'true'].{ host: item }"
+
+# Check ssh
+- include_tasks: test-ssh.yml
+  when: online_hosts.results | length > 0
 ...

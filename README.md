@@ -24,11 +24,12 @@ For the separate **Jenkins CI** playbook, see table of contents.
   - [System requirements](docs/system_requirements.md)
   - [Deployment diagram](docs/deployment_diagram.md)
 -  [Continuous integration with Jenkins (separate playbook)](ci/README.md)
+-  [Troubleshooting](#troubleshooting)
 
 
 ## Quick Start
 
-1. Copy the `ansible.config.json.template` as `ansible.config.json` and change the variables to the appropriate values ([more info](docs/configuration_file.md)).
+1. Copy the `ansible.config.yml.template` as `ansible.config.yml` and change the variables to the appropriate values ([more info](docs/configuration_file.md)).
 2. Make sure that the two CentOS server are online ([more info](docs/setting_up_ssh.md)):
     ```bash 
     $ ping IP_ADDR_SERVER_1
@@ -38,6 +39,19 @@ For the separate **Jenkins CI** playbook, see table of contents.
     ```bash
     $ ansible-playbook site.yml
     ```
+    or run command if you are not root on the remotes
+    ```bash
+    $ ansible-playbook site.yml -K
+    ```
 4. Open a browser and navigate to http://SERVER_IP_HERE/api/doc/ to see the swagger documentation of the project.
+
+## Troubleshooting
+
+Having troubles deploying this playbook?  Please see if the table below can solve the problem(s).
+
+Question | Answer
+--- | ---
+task `ping hosts to see if hosts are up` returns the error `'{{ name }}: Name or service not known'` | This error occurs when an alias is used in the `hosts` file. In order for the ping command to know where to send the ping request to, the alias with the ip address needs to be added to `/etc/hosts`. e.g. `'127.0.0.1 lorem-ipsum'`
+
 
 [Back to table of contents](#table-of-contents)

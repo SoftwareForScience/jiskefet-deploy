@@ -7,42 +7,12 @@
 #  */
 
 ---
+
+- import_playbook: local.yml
+- import_playbook: database.yml
+- import_playbook: jiskefet_common.yml
+- import_playbook: jiskefet_backend.yml
+- import_playbook: jiskefet_frontend.yml
+
 # This playbook deploys the whole application stack in this site.
-
-- name: pre check run
-  hosts: localhost
-  vars_files: 
-    - ansible.config.json
-
-  roles:
-  - local
-
-- name: apply common configuration to all nodes
-  hosts: all
-  remote_user: root
-  
-  roles:
-  - common
-
-- name: deploy MySQL and configure the databases
-  hosts: dbservers
-  become_user: jiskefet-api
-  become: yes
-  vars_files:
-    - ansible.config.json
-  
-  roles:
-  - db
-
-- name: configure and deploy the webservers and application code
-  hosts: webservers
-  become_user: jiskefet-api
-  become: yes
-  vars_files:
-    - ansible.config.json
-  vars:
-    - temp_folder: /tmp
-  
-  roles:
-  - web
 ...

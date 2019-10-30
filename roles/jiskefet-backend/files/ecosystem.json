@@ -1,0 +1,29 @@
+{
+    "apps": [
+        {
+            "name": "API",
+            "cwd": "/var/lib/jiskefet/jiskefet-api",
+            "script": "npm",
+            "args": "run start",
+            "instances": "max",
+            "exec_mode": "cluster",
+            "autorestart": true,
+            "watch": false,
+            "env": {
+                "NODE_ENV": "dev"
+            },
+            "env_dev": {
+                "NODE_ENV": "dev"
+            },
+            "env_staging": {
+                "NODE_ENV": "staging"
+            },
+            "env_prod": {
+                "NODE_ENV": "prod"
+            },
+            "env_test": {
+                "NODE_ENV": "test"
+            }
+        }
+    ]
+}

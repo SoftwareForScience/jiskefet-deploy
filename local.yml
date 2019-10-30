@@ -1,0 +1,6 @@
+---
+- name: pre check run
+  hosts: localhost
+
+  roles:
+  - local

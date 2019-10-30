@@ -1,0 +1,23 @@
+---
+- name: Install NTP
+  yum:
+    name: ntp
+    state: present
+  tags: installation
+
+- name: Configure NTP
+  template:
+    src: ntp.conf.j2
+    dest: /etc/ntp.conf
+    owner: root
+    group: root
+    mode: 0644
+  tags: configuration
+
+- name: Enable NTP client
+  systemd:
+    name: ntpd
+    state: started
+    enabled: yes
+    daemon_reload: yes
+  tags: configuration

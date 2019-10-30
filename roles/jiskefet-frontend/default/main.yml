@@ -1,0 +1,4 @@
+---
+jiskefet_ui_settings:
+  USE_API_PREFIX: true
+...

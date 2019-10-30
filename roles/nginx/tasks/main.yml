@@ -1,0 +1,50 @@
+---
+- name: Ensure nginx {{ nginx_version }} is present
+  package:
+    name:  nginx-{{ nginx_version }}
+    state: present
+    update_cache: yes
+  notify: Restart nginx
+  tags: installation
+
+
+- name: Ensures /var/www/html dir exists
+  file:
+    path: /var/www/html
+    state: directory
+  tags: installation
+
+- name: Copy main page
+  template:
+    src: index.html.j2
+    dest: /var/www/html/index.html
+  tags: configuration
+
+- name: Deploy Nginx configuration file
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+  notify: Restart nginx
+  tags: configuration
+
+- name: Deploy main configuration file
+  template:
+    src: default.conf.j2
+    dest: /etc/nginx/conf.d/default.conf
+  notify: Restart nginx
+  tags: configuration
+
+- name: Start nginx on boot
+  systemd:
+    name: nginx
+    enabled: yes
+  tags: configuration
+
+- name: Open port {{ nginx_port }} in firewall
+  firewalld:
+    port: "{{ nginx_port }}/tcp"
+    permanent: true
+    state: enabled
+    immediate: yes
+  ignore_errors: yes
+  tags: configuration

@@ -1,0 +1,17 @@
+---
+use_local_repository: 'no'
+
+
+remote_repository_url:
+  JISKEFET_UI: https://github.com/SoftwareForScience/jiskefet-ui.git
+repository_branch:
+  JISKEFET_UI: develop
+
+allow_csp_payload: >-
+    "default-src 'self' http://{{ inventory_hostname }} https://{{ inventory_hostname }}
+    http://localhost:{{jiskefet_api_general_settings.PORT}} https://localhost:{{jiskefet_api_general_settings.PORT}}
+    https://github.com https://api.github.com; script-src 'self' https://use.fontawesome.com/releases/v5.3.1/js/all.js
+    https://github.com https://api.github.com; style-src 'self' 'unsafe-inline'; object-src 'none'; font-src 'self'
+    data: fonts.gstatic.com; img-src https://*.githubusercontent.com
+    http://{{ inventory_hostname }} https://{{ inventory_hostname }}"
+...

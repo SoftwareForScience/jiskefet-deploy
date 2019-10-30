@@ -1,0 +1,9 @@
+restrict default nomodify notrap noquery
+restrict 127.0.0.1
+driftfile /var/lib/ntp/drift
+logfile /var/log/ntp.log
+# --- Lab Timeservers -----
+{% for srv in ntp_servers %}
+server {{ srv }}
+{% endfor %}
+#

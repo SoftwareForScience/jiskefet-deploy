@@ -1,0 +1,20 @@
+---
+- name: Create a new database with name {{ jiskefet_api_general_settings.TYPEORM_DATABASE }} 
+  mysql_db:
+    name: "{{ jiskefet_api_general_settings.TYPEORM_DATABASE }}"
+    login_user: "root"
+    login_password: "{{ mysql_root_password }}"
+    state: present
+
+- name: Set {{ jiskefet_api_general_settings.TYPEORM_USERNAME }} user password
+  mysql_user: 
+    name: "{{ jiskefet_api_general_settings.TYPEORM_USERNAME }}"
+    host: "localhost"
+    password: "{{ jiskefet_api_general_settings.TYPEORM_PASSWORD }}"
+    login_user: "root"
+    login_password: "{{ mysql_root_password }}"
+    state: present
+    check_implicit_admin: yes
+    priv: "*.*:ALL,GRANT"
+  tags: configuration
+...
