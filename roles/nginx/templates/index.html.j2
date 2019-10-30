@@ -583,25 +583,29 @@ pre.editor-colors .fold-marker:after {
   <body class='markdown-preview' data-use-github-style><h1 id="o-sup-2-sup-web-ui-directory">O<sup>2</sup> Web UI directory</h1>
 <h2 id="control">Control</h2>
 <ul>
-<li><a href="" onclick="javascript:event.target.port=8080">AliECS GUI</a></li>
-<li><a href="" onclick="javascript:event.target.port=5050">Mesos GUI</a></li>
+<li><a href="http://{{ ansible_fqdn }}:{{ cog_http_port }}">AliECS GUI</a></li>
+<li><a href="http://{{ ansible_fqdn }}:5050">Mesos GUI</a></li>
 </ul>
 <h2 id="logging">Logging</h2>
 <ul>
-<li><a href="" onclick="javascript:event.target.port=8081">InfoLogger GUI</a></li>
+<li><a href="http://{{ ansible_fqdn }}:{{ ilg_http_port }}">InfoLogger GUI</a></li>
 </ul>
 <h2 id="logging">Quality Control</h2>
 <ul>
-<li><a href="" onclick="javascript:event.target.port=8082">QC GUI</a></li>
-<li><a href="/browse" onclick="javascript:event.target.port=8083">CCDB browser</a></li>
-<li><a href="" onclick="javascript:event.target.port=8500">Consul</a></li>
+<li><a href="http://{{ ansible_fqdn }}:{{ qcg_http_port }}">QC GUI</a></li>
+<li><a href="http://{{ ansible_fqdn }}:{{ ccdb_port }}/browse">CCDB browser</a></li>
+<li><a href="http://{{ ansible_fqdn }}:{{ consul_port_ui }}">Consul</a></li>
 </ul>
 <h2 id="monitoring">Monitoring</h2>
 <ul>
-<li><a href="/d/M29FNzSZz/system-monitoring" onclick="javascript:event.target.port=3000">System monitoring dashboard</a></li>
-<li><a href="/d/TZsAxKIWk/readout" onclick="javascript:event.target.port=3000">Readout dashboard</a></li>
-<li><a href="/d/0W5R_ZSZk/cru" onclick="javascript:event.target.port=3000">CRU dashboard</a></li>
-<li><a href="/d/XJE5WzSWz/ccdb" onclick="javascript:event.target.port=3000">CCDB dashboard</a></li>
+<li><a href="http://{{ ansible_fqdn }}:{{ grafana_port }}/d/M29FNzSZz/system-monitoring"">System monitoring dashboard</a></li>
+<li><a href="http://{{ ansible_fqdn }}:{{ grafana_port }}/d/TZsAxKIWk/readout">Readout dashboard</a></li>
+<li><a href="http://{{ ansible_fqdn }}:{{ grafana_port }}/d/0W5R_ZSZk/cru">CRU dashboard</a></li>
+<li><a href="http://{{ ansible_fqdn }}:{{ grafana_port }}/d/XJE5WzSWz/ccdb">CCDB dashboard</a></li>
+</ul>
+<h2 id="dim">DIM</h2>
+<ul>
+<li><a href="http://{{ ansible_fqdn }}:{{ dim_webdid_port }}">DID - DIM Information Display</a></li>
 </ul>
 </body>
 </html>

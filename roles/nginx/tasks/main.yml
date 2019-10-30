@@ -1,17 +1,31 @@
 ---
 - name: Ensure nginx {{ nginx_version }} is present
   package:
-    name: "https://nginx.org/packages/rhel/7/x86_64/RPMS/nginx-{{ nginx_version }}-1.el7.ngx.x86_64.rpm"
+    name:  nginx-{{ nginx_version }}
     state: present
     update_cache: yes
   notify: Restart nginx
   tags: installation
 
-- name: Copy main page
-  copy:
-    src: "{{ role_path }}/files/index.html"
-    dest: /var/www/html/
+
+- name: Ensures /var/www/html dir exists
+  file:
+    path: /var/www/html
+    state: directory
   tags: installation
+
+- name: Copy main page
+  template:
+    src: index.html.j2
+    dest: /var/www/html/index.html
+  tags: configuration
+
+- name: Deploy Nginx configuration file
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+  notify: Restart nginx
+  tags: configuration
 
 - name: Deploy main configuration file
   template:
@@ -24,8 +38,6 @@
   systemd:
     name: nginx
     enabled: yes
-    state: restarted
-    daemon_reload: yes
   tags: configuration
 
 - name: Open port {{ nginx_port }} in firewall
