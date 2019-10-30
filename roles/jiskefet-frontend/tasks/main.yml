@@ -27,7 +27,4 @@
   tags:
     - git_pull
 
-- import_tasks: setupproxynginx.yml
-  tags:
-    - git_pull
 ...

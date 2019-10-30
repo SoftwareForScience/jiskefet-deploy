@@ -2,8 +2,6 @@
 application_name: "Logbook ITS"
 remote_privileged_user: root
 jiskefet_user: jiskefet
-mysql_root_password: abd1516812
-mysql_root_old_password: abd1516812
 
 file_upload_limit: 50000
 ALLOW_ANONYMOUS: true
@@ -33,7 +31,7 @@ jiskefet_api_general_settings:
   TYPEORM_PORT: 3306
   USE_INFO_LOGGER: 'false'
   JWT_SECRET_KEY: 'NHcW7x9K'
-  PORT: 3000
+  PORT: 4000
   USE_API_BASE_PATH: 'true'
   USE_API_PREFIX: 'true'
   
