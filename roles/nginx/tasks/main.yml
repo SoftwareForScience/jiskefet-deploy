@@ -1,24 +1,17 @@
 ---
-- name: Ensure nginx {{ nginx_version }} is present
+- name: Ensure nginx is present
   package:
-    name:  nginx-{{ nginx_version }}
+    name:  nginx
     state: present
     update_cache: yes
   notify: Restart nginx
   tags: installation
-
 
 - name: Ensures /var/www/html dir exists
   file:
     path: /var/www/html
     state: directory
   tags: installation
-
-- name: Copy main page
-  template:
-    src: index.html.j2
-    dest: /var/www/html/index.html
-  tags: configuration
 
 - name: Deploy Nginx configuration file
   template:
